@@ -1,0 +1,67 @@
+* {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #1f1f1f;
+    color: white;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* Fix the grid-template-rows to use proper units */
+    grid-template-rows: auto 1fr auto auto;
+    grid-template-areas: 
+        "header header header"
+        "main main main"
+        "footer footer footer";
+    gap: 16px; /* Add some spacing between grid areas */
+}
+
+#main {
+    grid-area: main;
+    background-color: #2a2a2a;
+    display: flex;
+}
+
+#footer {
+    grid-area: footer;
+    background-color: #2a2a2a;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+/*______________________________________________________________________________*/
+
+#carrusel{
+    width: 80%;
+    margin: auto;
+}
+
+/*______________________________________________________________________________*/
+
+svg {
+    fill:  white;
+}
+
+button {
+    border-radius: 10px;
+    border-style: none;
+    color: #1f1f1f;
+    cursor: pointer;
+
+    & svg {
+        fill: #1f1f1f;
+    }
+}
+
+#content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    & img {
+        width: 100%;
+    }
+}

@@ -1,0 +1,85 @@
+#aside{
+    position: relative;
+    width: 60px;
+    border-radius: 2px red solid;
+    background-color: rgb(77, 60, 40);
+    height: 100%;
+}
+
+#aside-container {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 40px;
+    padding: 10px;
+    overflow-y: hidden;
+    min-height: 100vh;
+    background-color: rgb(38, 29, 19);
+    transition: ease 0.4s;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    scrollbar-width: none;
+}
+
+#aside-container:hover {
+    width: 200px;
+}
+
+#logo-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+
+    & h2 {
+        margin: 0;
+        opacity: 0;
+        transition: opacity 0.4s;
+    }
+}
+
+#aside-container:hover #logo-container h2 {
+    opacity: 1;
+}
+
+#the-finals-logo {
+    width: 35px;
+    min-width: 35px;
+}
+
+.admin-side-bar {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+}
+
+.admin-side-bar-option {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    & svg {
+        width: 30px;
+        min-width: 30px;
+    }
+
+    & h3 {
+        opacity: 0;
+        transition: opacity 0.4s;
+    }
+}
+
+#aside-container:hover .admin-side-bar-option h3 {
+    opacity: 1;
+}
+
+.separator {
+    width: 100%;
+    border: 1px solid white;
+}
