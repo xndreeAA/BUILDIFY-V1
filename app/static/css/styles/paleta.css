@@ -1,0 +1,23 @@
+:root {
+    --color_titulo: #021024;
+    --color_fondo_1: #C1E8FF;
+    --color_subtitulo: #052659;
+    --color_complementario_1: #5683B3;
+    --color_complementario_2: #7DA0CA;
+}
+/* llevar root a archivo css y usar de esta manera⬇️ */
+*{
+    background-color: var(--color_subtitulo);
+}
+
+/* -----------------------------fuente */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* :root {
+
+} */
+/* roboto-mono */
+
+*{
+    font-family: "Roboto", sans-serif;
+}

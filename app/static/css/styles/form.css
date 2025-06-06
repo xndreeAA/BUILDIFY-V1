@@ -1,0 +1,45 @@
+/* .input_style{
+
+} */
+ :root {
+    --color_titulo: #021024;
+    --color_fondo_1: #C1E8FF;
+    --color_subtitulo: #052659;
+    --color_complementario_1: #5683B3;
+    --color_complementario_2: #7DA0CA;
+}
+.input_field {
+    border: 1px solid #ccc;
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 4px;
+    width: 100%;
+}
+.input_submit {
+    border: 1px solid #ccc;
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 4px;
+    width: 100%;
+    color: white;
+    background-color: var(--color_subtitulo);
+    border-radius: 5px;
+    border: none;
+}
+.input_submit:hover{
+    background-color: gray;
+    cursor: pointer;
+    font-weight: bold;
+}
+.input_style {
+    margin-bottom: 16px;
+}
+
+.form_style{
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
