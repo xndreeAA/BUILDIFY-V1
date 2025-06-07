@@ -24,6 +24,11 @@ class DevelopmentConfig:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     # Desactiva el sistema de seguimiento para mejorar el rendimiento
 
+    SESSION_COOKIE_SECURE = False     # Solo enviar cookies por HTTPS
+    REMEMBER_COOKIE_SECURE = False    # Igual para cookies de "recordar sesión"
+    SESSION_COOKIE_HTTPONLY = True   # Protección contra XSS
+    REMEMBER_COOKIE_HTTPONLY = True
+
 '''Cuando se cambia a modo produccion se desactiva el modo de depuración 
 y se asegura que la clave secreta sea obligatoria.
 las COOKIES solo se envia por HTTPS y se protegen contra XSS.'''
@@ -52,8 +57,5 @@ las COOKIES solo se envia por HTTPS y se protegen contra XSS.'''
 #     DEBUG = False
 
 #     # 🔐 Seguridad adicional (puedes ampliarla)
-#     SESSION_COOKIE_SECURE = True     # Solo enviar cookies por HTTPS
-#     REMEMBER_COOKIE_SECURE = True    # Igual para cookies de "recordar sesión"
-#     SESSION_COOKIE_HTTPONLY = True   # Protección contra XSS
-#     REMEMBER_COOKIE_HTTPONLY = True
+    
 

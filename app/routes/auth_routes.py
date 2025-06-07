@@ -9,3 +9,6 @@ auth_bp = Blueprint('auth', __name__)
 auth_bp.route('/login', methods=['GET', 'POST'])(auth_controller.login)
 
 auth_bp.route('/logout')(auth_controller.logout)
+
+# # Ruta para registrar un nuevo usuario (soporta GET para mostrar el formulario y POST para procesar el registro)
+# auth_bp.route('/register', methods=['GET', 'POST'])(auth_controller.register)
