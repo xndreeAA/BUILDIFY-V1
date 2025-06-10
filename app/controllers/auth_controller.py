@@ -3,6 +3,9 @@ from flask_login import login_user, logout_user
 from app.models.usuario import Usuario
 from app.forms.login_form import LoginForm
 import time
+from app.forms.register_form import RegisterForm
+from app import db
+
 
 # Constantes de seguridad evita ataques de fuerza bruta
 MAX_INTENTOS = 5
@@ -53,3 +56,31 @@ def login():
 def logout():
     logout_user() # Cierra la sesión del usuario actual
     return redirect(url_for('auth.login'))
+
+def register():
+    form = RegisterForm()
+    
+    if request.method == 'POST' and form.validate_on_submit():
+        existing_user = Usuario.query.filter_by(email=form.email.data).first()
+        if existing_user:
+            flash('Ya existe un usuario con ese correo.', 'danger')
+            return render_template('register.html', form=form)
+
+        nuevo_usuario = Usuario(
+            nombre=form.username.data,
+            apellido=form.lastname.data,
+            email=form.email.data,
+            direccion=form.address.data,
+            telefono=form.phone.data,
+            id_rol=2  # Por defecto "colaborador"
+        )
+        nuevo_usuario.set_password(form.password.data)
+
+        db.session.add(nuevo_usuario)
+        db.session.commit()
+
+        flash('Registro exitoso. Ahora puedes iniciar sesión.', 'success')
+        return redirect(url_for('auth.login'))
+
+    return render_template('register.html', form=form)
+ 
