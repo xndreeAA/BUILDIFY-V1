@@ -43,11 +43,15 @@ def create_app():
     from app.routes.main_routes import main_bp
     from app.routes.admin_routes import admin_bp
     from app.routes.colaborador_routes import colaborador_bp
+
+    from app.routes.user_routes import user_bp
+
     # Se registran las rutas de cada módulo en la aplicación principal
     app.register_blueprint(auth_bp)
     app.register_blueprint(main_bp)
     app.register_blueprint(admin_bp)
     app.register_blueprint(colaborador_bp)
+    app.register_blueprint(user_bp)
     
     return app
 
