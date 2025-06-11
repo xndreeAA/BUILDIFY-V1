@@ -32,26 +32,8 @@ body {
 
 #main {
     grid-area: main;
-    /* background-color: #2a2a2a; */
     display: flex;
 }
-
-#footer {
-    grid-area: footer;
-    background-color: #2a2a2a;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-}
-
-/*______________________________________________________________________________*/
-
-/* #carrusel{
-    width: 80%;
-    margin: auto;
-} */
-
-/*______________________________________________________________________________*/
 
 svg {
     fill:  white;
@@ -69,15 +51,18 @@ button {
 }
 
 #content {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    & img {
-        width: 100%;
-    }
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
-
+#footer {
+    grid-area: footer;
+    background-color: #2a2a2a;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
 
 .footer-container {
   max-width: 1200px;
@@ -111,7 +96,7 @@ button {
 .footer-title {
   font-size: 1.1rem;
   font-weight: bold;
-  color: var(--david_color_2);
+  color: var(--david_color_1);
   margin-bottom: 10px;
 }
 
