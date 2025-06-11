@@ -1,3 +1,7 @@
+html, body {
+  overflow-x: visible !important;
+}
+
 :root {
     --color_titulo: #021024;
     --color_fondo_1: #C1E8FF;
@@ -15,6 +19,8 @@
     background-color: var(--david_color_1); /* Add background to visualize */
     padding: 0;
     color: white;
+    position: relative;
+    z-index: 1000;
 }
 
 #news-row {
@@ -55,6 +61,10 @@
     grid-template-columns: 1fr 1fr 1fr;
     justify-content: center;
     gap: 16px;
+    position: sticky;
+    top: 0;
+    background-color: var(--david_color_1); 
+    z-index: 1000;
 }
 
 .header-article {
