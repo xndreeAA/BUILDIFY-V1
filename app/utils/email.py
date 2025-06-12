@@ -1,7 +1,7 @@
 from flask_mail import Message
 from flask import url_for, current_app
 from app import mail
-
+# Correo generico para restablecer la contraseña
 def send_reset_email(usuario):
     # Genera el token para restablecimiento de contraseña
     token = usuario.get_reset_token()
@@ -17,16 +17,20 @@ def send_reset_email(usuario):
     )
 
     # Cuerpo del correo (texto plano)
-    msg.body = f'''Hola {usuario.nombre},
+    msg.body = f'''Hola 👋 {usuario.nombre},
 
-Para restablecer tu contraseña, haz clic en el siguiente enlace:
+Hemos recibido una solicitud para restablecer tu contraseña en Buildify. Si fuiste tú quien la solicitó, por favor haz clic en el siguiente enlace para continuar con el proceso:
 
-{link}
+🪄{link}
 
-Si tú no solicitaste esto, simplemente ignora este correo.
+Este enlace estará disponible por un tiempo limitado por motivos de seguridad.
+
+Si no solicitaste este cambio, puedes ignorar este mensaje con total tranquilidad. Tu información permanece segura.
+
+Gracias por confiar en nosotros.😊✌️
 
 Atentamente,
-El equipo de soporte
+El equipo Buildify
 '''
 
     msg.charset = 'utf-8'  # ✅ Forzar codificación UTF-8

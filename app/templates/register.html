@@ -6,60 +6,58 @@
     <title>Registro</title>
 </head>
 <body>
-    <h2>Crear Cuenta</h2>
-    <form method="POST">
+    {% extends "auth/base.html" %}
+    {% block title %}Registrar{% endblock %}
+    {% block content %}
+    <div class="links">
+        <p>← ¿Ya tienes una cuenta? <a href="{{ url_for('auth.login') }}">Iniciar sesión</a></p>
+    </div>
+    
+    <form class="form_style" method="POST">
+        <h2 class="title2">Crear Cuenta</h2>
         {{ form.hidden_tag() }}
 
         <div>
-            {{ form.nombre.label }}<br>
-            {{ form.nombre(size=32) }}
+            {{ form.nombre.label(class="label_field", size=32)}}<br>
+            {{ form.nombre(class="input_field", size=32) }}
         </div>
 
         <div>
-            {{ form.apellido.label }}<br>
-            {{ form.apellido(size=32) }}
+            {{ form.apellido.label(class="label_field", size=32) }}<br>
+            {{ form.apellido(class="input_field", size=32) }}
         </div>
 
         <div>
-            {{ form.email.label }}<br>
-            {{ form.email(size=32) }}
+            {{ form.email.label(class="label_field", size=32)}}<br>
+            {{ form.email(class="input_field", size=32) }}
         </div>
 
         <div>
-            {{ form.direccion.label }}<br>
-            {{ form.direccion(size=32) }}
+            {{ form.direccion.label(class="label_field", size=32) }}<br>
+            {{ form.direccion(class="input_field", size=32) }}
         </div>
         
         <div>
-            {{ form.telefono.label }}<br>
-            {{ form.telefono(size=32) }}  
+            {{ form.telefono.label(class="label_field", size=32) }}<br>
+            {{ form.telefono(class="input_field", size=32) }}  
         </div>  
 
         <div>
-            {{ form.password.label }}<br>
-            {{ form.password(size=32) }}
+            {{ form.password.label(class="label_field", size=32) }}<br>
+            {{ form.password(class="input_field", size=32) }}
         </div>
 
         <div>
-            {{ form.confirm_password.label }}<br>
-            {{ form.confirm_password(size=32) }}
+            {{ form.confirm_password.label(class="label_field", size=32) }}<br>
+            {{ form.confirm_password(class="input_field", size=32) }}
         </div>
 
         <div>
-            {{ form.submit() }}
+            {{ form.submit(class="input_submit", size=32) }}
         </div>
     </form>
-    <a href="{{ url_for('auth.login') }}">Volver al login</a>
+    
+    {% endblock %}
 
-
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            <ul>
-            {% for category, message in messages %}
-                <li class="{{ category }}">{{ message }}</li>
-            {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
 </body>
 </html>

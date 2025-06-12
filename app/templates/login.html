@@ -10,29 +10,22 @@
 </head>
 
 <body>
-    <div class="container">
-
-        <div class="imagen">
-            <h2>Bienvenido a Buildify</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia assumenda consequatur repellat adipisci
-                perspiciatis corporis obcaecati quaerat, quisquam, cupiditate voluptates optio! Tenetur quo
-                exercitationem culpa eligendi quidem quod ducimus non?</p>
-            <img src="../static/images/loo.png" alt="login">
-
-        </div>
-        <div class="formulario">
+    {% extends "auth/base.html" %}
+    {% block title %}Iniciar Sesión{% endblock %}
+    {% block content %}
+        
             <form class="form_style" method="POST">
-            <h2>Iniciar Sesión</h2>
+            <h2 class="title2">Iniciar Sesión</h2>
 
                 {{ form.hidden_tag() }}
 
                 <div class="input_style">
-                    {{ form.email.label }}<br>
+                    {{ form.email.label(class="label_field", size=32) }}<br>
                     {{ form.email(class="input_field", size=32) }}
                 </div>
 
                 <div class="input_style">
-                    {{ form.password.label }}<br>
+                    {{ form.password.label(class="label_field", size=32) }}<br>
                     {{ form.password(class="input_field", size=32)  }}
                 </div>
 
@@ -41,22 +34,13 @@
                 </div>
             </form>
             <div class="register">
-                <!-- <a href="register.html">Registrarme</a> -->
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, iste?</p>
+                <p>¿Eres nuevo en Buildify? <a href="{{ url_for('auth.register') }}">Regístrate aquí</a></p>
+                <p>¿Olvidaste tu contraseña?<a href="{{ url_for('auth.forgot_password') }}">Recuperala aquí</a></p>
             </div>
-            <a href="{{ url_for('auth.register') }}">Regístrate aquí</a>
-            <a href="{{ url_for('auth.forgot_password') }}">Olvido su contraseña</a>
-        </div>
-    </div>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    <ul>
-        {% for category, message in messages %}
-        <li class="{{ category }}">{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
+            
+        
+    {% endblock %}
+    
 </body>
 
 </html>
