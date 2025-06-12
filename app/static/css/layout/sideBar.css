@@ -1,20 +1,35 @@
+:root {
+    --color_titulo: #021024;
+    --color_fondo_1: #C1E8FF;
+    --color_subtitulo: #052659;
+    --color_complementario_1: #5683B3;
+    --color_complementario_2: #7DA0CA;
+
+    --david_color_1: #0095e0;
+    --david_color_2: #ff45af;
+    --davod_color_3: rgba(0, 0, 0, 0.397);
+    --david_color_4: #1f1f1f;
+}
+
+
 #aside{
     position: relative;
     width: 60px;
-    border-radius: 2px red solid;
-    background-color: rgb(77, 60, 40);
+    background-color: var(--david_color_4);
     height: 100%;
+    color: var(--david_color_1);
 }
 
 #aside-container {
     position: sticky;
+    z-index: 2;
     top: 0;
     left: 0;
-    width: 40px;
+    width: 35px;
     padding: 10px;
     overflow-y: hidden;
     min-height: 100vh;
-    background-color: rgb(38, 29, 19);
+    background-color: var(--david_color_4);
     transition: ease 0.4s;
 
     display: flex;
@@ -24,7 +39,8 @@
 }
 
 #aside-container:hover {
-    width: 200px;
+    width: 300px;
+    /* backdrop-filter: blur(10px); */
 }
 
 #logo-container {
@@ -47,6 +63,7 @@
 
 #the-finals-logo {
     width: 35px;
+    fill: var(--david_color_1);
     min-width: 35px;
 }
 
@@ -64,22 +81,52 @@
     display: flex;
     align-items: center;
     gap: 20px;
+    margin-bottom: 20px;
     & svg {
         width: 30px;
         min-width: 30px;
     }
-
-    & h3 {
-        opacity: 0;
-        transition: opacity 0.4s;
-    }
 }
 
-#aside-container:hover .admin-side-bar-option h3 {
+.admin-side-bar-link {
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.4s;
+    overflow: hidden;
+    white-space: nowrap;
+    color: white;
+}
+
+#aside-container:hover .admin-side-bar-link {
     opacity: 1;
 }
 
 .separator {
     width: 100%;
     border: 1px solid white;
+}
+
+.admin-link-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--david_color_4);
+}
+
+.admin-side-bar-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+}
+
+.admin-side-bar-link::before, .admin-side-bar-link::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-color: var(--david_color_1);
+    padding-bottom: 2px;
 }
