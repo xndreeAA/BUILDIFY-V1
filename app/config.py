@@ -23,6 +23,16 @@ class DevelopmentConfig:
     # ----- CONFIGURACIÓN DE SQLALCHEMY -----
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     # Desactiva el sistema de seguimiento para mejorar el rendimiento
+    
+        # ✅ ----- CONFIGURACIÓN DE FLASK-MAIL -----
+    # Estas variables deben estar definidas en tu archivo .env o variables de entorno del sistema
+    MAIL_SERVER = os.getenv('MAIL_SERVER', 'smtp.gmail.com')            # Servidor SMTP (por ejemplo, smtp.gmail.com)
+    MAIL_PORT = int(os.getenv('MAIL_PORT', 587))                        # Puerto SMTP (587 para TLS, 465 para SSL)
+    MAIL_USE_TLS = os.getenv('MAIL_USE_TLS', 'true').lower() == 'true' # Activa TLS
+    MAIL_USE_SSL = os.getenv('MAIL_USE_SSL', 'false').lower() == 'true'# Activa SSL
+    MAIL_USERNAME = os.getenv('MAIL_USERNAME')                          # Correo desde el que se envían los emails
+    MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')                          # Contraseña o token de aplicación
+    MAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER', MAIL_USERNAME)  # Remitente por defecto
 
 '''Cuando se cambia a modo produccion se desactiva el modo de depuración 
 y se asegura que la clave secreta sea obligatoria.

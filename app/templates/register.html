@@ -26,6 +26,16 @@
         </div>
 
         <div>
+            {{ form.direccion.label }}<br>
+            {{ form.direccion(size=32) }}
+        </div>
+        
+        <div>
+            {{ form.telefono.label }}<br>
+            {{ form.telefono(size=32) }}  
+        </div>  
+
+        <div>
             {{ form.password.label }}<br>
             {{ form.password(size=32) }}
         </div>
@@ -39,6 +49,8 @@
             {{ form.submit() }}
         </div>
     </form>
+    <a href="{{ url_for('auth.login') }}">Volver al login</a>
+
 
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}

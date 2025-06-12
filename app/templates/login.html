@@ -41,9 +41,11 @@
                 </div>
             </form>
             <div class="register">
-                <a href="#">Registrarme</a>
+                <!-- <a href="register.html">Registrarme</a> -->
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, iste?</p>
             </div>
+            <a href="{{ url_for('auth.register') }}">Regístrate aquí</a>
+            <a href="{{ url_for('auth.forgot_password') }}">Olvido su contraseña</a>
         </div>
     </div>
     {% with messages = get_flashed_messages(with_categories=true) %}
