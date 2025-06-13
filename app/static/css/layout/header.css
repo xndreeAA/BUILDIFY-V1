@@ -18,6 +18,7 @@ html, body {
     grid-area: header;
     background-color: var(--david_color_1); /* Add background to visualize */
     padding: 0;
+    left: 0;
     color: white;
     position: relative;
     z-index: 1000;
