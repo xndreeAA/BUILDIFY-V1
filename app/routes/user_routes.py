@@ -7,4 +7,4 @@ user_bp = Blueprint('user', __name__, url_prefix='/user')
 @user_bp.route('/')
 
 def home():
-    return render_template('home/home.html')
+    return render_template('user/home.html')

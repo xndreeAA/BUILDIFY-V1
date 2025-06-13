@@ -6,11 +6,17 @@ from flask_login import login_required, current_user
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 
 # ----- RUTA: PANEL DE ADMINISTRACIÓN -----
-@admin_bp.route('/dashboard')
+@admin_bp.route('/')
 @login_required  # Requiere que el usuario haya iniciado sesión
 def dashboard():#funcion de dashboard
     
     #Muestra el panel principal del administrador.
     #Solo accesible para usuarios autenticados.
     
-    return render_template('layout-admin/index.html', nombre=current_user.nombre)
+    return render_template('admin/home.html', nombre=current_user.nombre)
+
+@admin_bp.route('/productos')
+@login_required
+
+def crud_productos():
+    return render_template('admin/crud-productos.html')
