@@ -78,6 +78,7 @@
 }
 
 .admin-side-bar-option {
+    width: 100%;
     display: flex;
     align-items: center;
     gap: 20px;
@@ -89,6 +90,9 @@
 }
 
 .admin-side-bar-link {
+    text-align: start;
+    width: 100%;
+    padding: 4px;
     text-decoration: none;
     opacity: 0;
     transition: opacity 0.4s;
@@ -101,32 +105,62 @@
     opacity: 1;
 }
 
-.separator {
-    width: 100%;
-    border: 1px solid white;
+
+@property --angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
 }
 
 .admin-link-container {
+    width: 100%;
+    padding-top: 5px;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--david_color_4);
-}
-
-.admin-side-bar-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    justify-content: start;
+    align-items: start;
+    /* background-color: var(--david_color_4); */
     position: relative;
-    z-index: 1;
 }
 
-.admin-side-bar-link::before, .admin-side-bar-link::after {
+.admin-link-container::before, .admin-link-container::after {
     content: '';
     position: absolute;
-    width: 100%;
-    height: 100%;
+    bottom: -20%;
+    width: 0%;
+    box-sizing: border-box;
+    padding: 0px;
     z-index: -1;
-    background-color: var(--david_color_1);
-    padding-bottom: 2px;
+    background-image: conic-gradient(
+        from var(--angle),
+        var(--david_color_1),
+        white,
+        var(--david_color_1)
+    );
+    /* padding-bottom: 3px; */
+    transition: .2s ease all;
+    animation: spining-shadow-box 2s linear infinite;
+}
+
+.admin-link-container:hover::before, .admin-link-container:hover::after {
+  width: 100%;
+  padding: 1px;
+}
+
+.admin-link-container::before {
+    filter: blur(10px);
+    opacity: .7;
+}
+
+@keyframes spining-shadow-box {
+    from {
+        --angle: 0deg;
+    }
+    to {
+        --angle: 360deg;
+    }
+}
+
+.separator {
+    width: 100%;
+    border: 1px solid white;
 }
