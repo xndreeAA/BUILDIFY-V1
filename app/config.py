@@ -12,7 +12,7 @@ class DevelopmentConfig:
     DB_USER = os.getenv('DB_USER')
     DB_PASSWORD = os.getenv('DB_PASSWORD')
     DB_HOST = os.getenv('DB_HOST')
-    DB_PORT = os.getenv('DB_PORT', 3306)
+    DB_PORT = os.getenv('DB_PORT', 3405)
     DB_NAME = os.getenv('DB_NAME')
 
     # ----- URI DE CONEXIÓN -----
@@ -33,6 +33,11 @@ class DevelopmentConfig:
     MAIL_USERNAME = os.getenv('MAIL_USERNAME')                          # Correo desde el que se envían los emails
     MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')                          # Contraseña o token de aplicación
     MAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER', MAIL_USERNAME)  # Remitente por defecto
+
+    SESSION_COOKIE_SECURE = False     # Solo enviar cookies por HTTPS
+    REMEMBER_COOKIE_SECURE = False    # Igual para cookies de "recordar sesión"
+    SESSION_COOKIE_HTTPONLY = True   # Protección contra XSS
+    REMEMBER_COOKIE_HTTPONLY = True
 
 '''Cuando se cambia a modo produccion se desactiva el modo de depuración 
 y se asegura que la clave secreta sea obligatoria.
@@ -62,8 +67,5 @@ las COOKIES solo se envia por HTTPS y se protegen contra XSS.'''
 #     DEBUG = False
 
 #     # 🔐 Seguridad adicional (puedes ampliarla)
-#     SESSION_COOKIE_SECURE = True     # Solo enviar cookies por HTTPS
-#     REMEMBER_COOKIE_SECURE = True    # Igual para cookies de "recordar sesión"
-#     SESSION_COOKIE_HTTPONLY = True   # Protección contra XSS
-#     REMEMBER_COOKIE_HTTPONLY = True
+    
 

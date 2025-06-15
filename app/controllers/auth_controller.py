@@ -38,6 +38,8 @@ def login():
                 return redirect(url_for('admin.dashboard'))
             elif usuario.rol == 'colaborador':
                 return redirect(url_for('colaborador.dashboard'))
+            elif usuario.rol == 'usuario':
+                return redirect(url_for('user.home'))
             else:
                 flash('Rol de usuario no autorizado.', 'danger')
                 return redirect(url_for('auth.login'))

@@ -61,6 +61,7 @@ def create_app():
     app.register_blueprint(main_bp)
     app.register_blueprint(admin_bp)
     app.register_blueprint(colaborador_bp)
+    # app.register_blueprint(user_bp)
     
     return app
 

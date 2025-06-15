@@ -1,85 +1,166 @@
-#aside{
-    position: relative;
-    width: 60px;
-    border-radius: 2px red solid;
-    background-color: rgb(77, 60, 40);
-    height: 100%;
+:root {
+  --color_titulo: #021024;
+  --color_fondo_1: #c1e8ff;
+  --color_subtitulo: #052659;
+  --color_complementario_1: #5683b3;
+  --color_complementario_2: #7da0ca;
+
+  --david_color_1: #0095e0;
+  --david_color_2: #ff45af;
+  --davod_color_3: rgba(0, 0, 0, 0.397);
+  --david_color_4: #1f1f1f;
+}
+
+#aside {
+  position: relative;
+  width: 60px;
+  background-color: var(--david_color_4);
+  height: 100%;
+  color: var(--david_color_1);
 }
 
 #aside-container {
-    position: sticky;
-    top: 0;
-    left: 0;
-    width: 40px;
-    padding: 10px;
-    overflow-y: hidden;
-    min-height: 100vh;
-    background-color: rgb(38, 29, 19);
-    transition: ease 0.4s;
+  position: sticky;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 35px;
+  padding: 10px;
+  overflow-y: hidden;
+  min-height: 100vh;
+  background-color: var(--david_color_4);
+  transition: ease 0.4s;
 
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    scrollbar-width: none;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  scrollbar-width: none;
 }
 
 #aside-container:hover {
-    width: 200px;
+  width: 300px;
+  /* backdrop-filter: blur(10px); */
 }
 
 #logo-container {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    white-space: nowrap;
-    overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  white-space: nowrap;
+  overflow: hidden;
 
-    & h2 {
-        margin: 0;
-        opacity: 0;
-        transition: opacity 0.4s;
-    }
+  & h2 {
+    margin: 0;
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
 }
 
 #aside-container:hover #logo-container h2 {
-    opacity: 1;
+  opacity: 1;
 }
 
 #the-finals-logo {
-    width: 35px;
-    min-width: 35px;
+  width: 35px;
+  fill: var(--david_color_1);
+  min-width: 35px;
 }
 
 .admin-side-bar {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    gap: 10px;
-    margin: 0;
-    padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
 }
 
 .admin-side-bar-option {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    & svg {
-        width: 30px;
-        min-width: 30px;
-    }
-
-    & h3 {
-        opacity: 0;
-        transition: opacity 0.4s;
-    }
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+  & svg {
+    width: 30px;
+    min-width: 30px;
+  }
 }
 
-#aside-container:hover .admin-side-bar-option h3 {
-    opacity: 1;
+.admin-side-bar-link {
+  text-align: start;
+  width: 100%;
+  padding: 4px;
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 0.4s;
+  overflow: hidden;
+  white-space: nowrap;
+  color: white;
+}
+
+#aside-container:hover .admin-side-bar-link {
+  opacity: 1;
+}
+
+@property --angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.admin-link-container {
+  width: 100%;
+  padding-top: 5px;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  /* background-color: var(--david_color_4); */
+  position: relative;
+}
+
+.admin-link-container::before,
+.admin-link-container::after {
+  content: "";
+  position: absolute;
+  bottom: -20%;
+  width: 0%;
+  box-sizing: border-box;
+  padding: 0px;
+  z-index: -1;
+  background-image: conic-gradient(
+    from var(--angle),
+    var(--david_color_1),
+    white,
+    var(--david_color_1)
+  );
+  /* padding-bottom: 3px; */
+  transition: 0.2s ease all;
+  animation: spining-shadow-box 2s linear infinite;
+}
+
+.admin-link-container:hover::before,
+.admin-link-container:hover::after {
+  width: 100%;
+  padding: 1px;
+}
+
+.admin-link-container::before {
+  filter: blur(10px);
+  opacity: 0.7;
+}
+
+@keyframes spining-shadow-box {
+  from {
+    --angle: 0deg;
+  }
+  to {
+    --angle: 360deg;
+  }
 }
 
 .separator {
-    width: 100%;
-    border: 1px solid white;
+  width: 100%;
+  border: 1px solid white;
 }
