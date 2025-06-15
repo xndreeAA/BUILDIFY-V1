@@ -9,13 +9,11 @@
     <link rel="stylesheet" href="../../static/css/layout/header.css">
     <link rel="stylesheet" href="../../static/css/layout/sideBar.css">
 
-    <link rel="stylesheet" href="../../static/css/layout/carrusel.css">
-    <link rel="stylesheet" href="../../static/css/layout/home.css">
     <link rel="stylesheet" href="../../static/css/cruds/stock-styles.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=search" />
-
-    <script src="../../static/js/main.js" defer></script>
+    {% block styles %}{% endblock %}
+    
     <title>BUILDIFY</title>
 </head>
 <body>
@@ -157,5 +155,8 @@
             © 2025 Buildify. Todos los derechos reservados.
         </div>
     </footer>
+    {% block scripts %} {% endblock %}
+    <script src="{{ url_for('static', filename='js/DataTables/datatables.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/DataTables/script.js') }}"></script>
 </body>
 </html>
