@@ -11,6 +11,7 @@
         <div class="container">
             <div class="left-column">
                 <div class="title">
+                    
                     <h2>Bienvenido a Buildify</h2>
                     <div class="parrafo">
                         <p>Conecta, diseña y construye desde un solo lugar</p>
@@ -32,6 +33,7 @@
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
     <div class="flash-container">
+
         {% for category, message in messages %}
         <div class="flash-message {{ category }}">
             {{ message }}

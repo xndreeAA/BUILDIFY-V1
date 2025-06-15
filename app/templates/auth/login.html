@@ -13,7 +13,8 @@
     {% extends "auth/base.html" %}
     {% block title %}Iniciar Sesión{% endblock %}
     {% block content %}
-        
+            <p id="home_link">← Regresar al home <a href="{{ url_for('main.home') }}">Volver</a></p>
+            
             <form class="form_style" method="POST">
             <h2 class="title2">Iniciar Sesión</h2>
 

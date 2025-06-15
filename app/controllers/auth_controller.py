@@ -48,7 +48,7 @@ def login():
         session['ultimo_login'] = time.time()
         flash('Credenciales incorrectas.', 'danger')
 
-    return render_template('login.html', form=form)
+    return render_template('auth/login.html', form=form)
 
 # ------------------ LOGOUT ------------------ #
 def logout():
@@ -80,7 +80,7 @@ def register():
         flash('Registro exitoso. Ahora puedes iniciar sesión.', 'success')
         return redirect(url_for('auth.register'))
 
-    return render_template('register.html', form=form)
+    return render_template('auth/register.html', form=form)
 
 # ------------------ OLVIDÉ MI CONTRASEÑA ------------------ #
 def forgot_password():
