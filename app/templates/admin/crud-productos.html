@@ -3,6 +3,7 @@
 {% block styles %}
     {{ super() }}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/DataTables/datatables.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cruds/stock-styles.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -100,7 +101,10 @@
     </section>
 {% endblock %}
 
-{%  block script %} 
+
+{%  block scripts %} 
     {{ super() }}
+    <script src="{{ url_for('static', filename='js/DataTables/datatables.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/DataTables/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/modal.js') }}"></script>
 {% endblock %}

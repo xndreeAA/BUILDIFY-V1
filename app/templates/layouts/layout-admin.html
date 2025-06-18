@@ -4,16 +4,14 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../static/css/layout/styles.css">
-
-    <link rel="stylesheet" href="../../static/css/layout/header.css">
-    <link rel="stylesheet" href="../../static/css/layout/sideBar.css">
-
-    <link rel="stylesheet" href="../../static/css/cruds/stock-styles.css">
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <!-- <link rel="stylesheet" href="../../static/css/layout/styles.css"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout/sideBar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout/header.css') }}">
 
     {% block styles %}{% endblock %}
-    
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <title>BUILDIFY</title>
 </head>
 <body>
@@ -156,7 +154,5 @@
         </div>
     </footer>
     {% block scripts %} {% endblock %}
-    <script src="{{ url_for('static', filename='js/DataTables/datatables.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/DataTables/script.js') }}"></script>
 </body>
 </html>

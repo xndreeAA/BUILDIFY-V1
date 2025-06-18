@@ -1,3 +1,15 @@
+:root {
+    --color_titulo: #021024;
+    --color_fondo_1: #C1E8FF;
+    --color_subtitulo: #052659;
+    --color_complementario_1: #5683B3;
+    --color_complementario_2: #7DA0CA;
+
+    --david_color_1: #0095e0;
+    --david_color_2: #052659;
+    --davod_color_3: rgba(0, 0, 0, 0.397);
+}
+
 #stock-container-section {
     box-sizing: border-box;
     padding: 40px;

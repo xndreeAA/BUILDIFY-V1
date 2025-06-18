@@ -13,32 +13,26 @@ migrate = Migrate()
 login_manager = LoginManager()
 
 def create_app():
-    # Configura la app, inicializa extensiones y registra blueprints.
-    
-    load_dotenv()  # Cargar variables de entorno
+  
+    load_dotenv()  
 
-    #----- CONFIGURACIÓN DE LA APLICACIÓN -----
-    app = Flask(__name__)
-    app.config.from_object('app.config.DevelopmentConfig')# Cambiar a modo producción si es necesario
+    app = Flask(__name__, template_folder='templates', static_folder='static')
+    app.config.from_object('app.config.DevelopmentConfig')
 
-    # ----- INICIALIZACIÓN DE EXTENSIONES -----
-    db.init_app(app) # Configura SQLAlchemy
-    migrate.init_app(app, db) # Configura Flask-Migrate
-    login_manager.init_app(app)# Configura Flask-Login
+    db.init_app(app) 
+    migrate.init_app(app, db)
+    login_manager.init_app(app)
 
-    login_manager.login_view = 'auth.login'#redirecciona, chequeo estatico
+    login_manager.login_view = 'auth.login'
 
-    # ✅ Importación diferida para evitar importaciones circulares
     from app.models.usuario import Usuario
     from app.models.rol import Rol
     
 
     @login_manager.user_loader
     def load_user(user_id):
-        #requerido por Flask-Login para cargar el usuario desde el ID
         return Usuario.query.get(int(user_id))
 
-    # ----- REGISTRO DE BLUEPRINTS ----- (rutas)
     from app.routes.auth_routes import auth_bp
     from app.routes.main_routes import main_bp
     from app.routes.admin_routes import admin_bp
@@ -46,7 +40,6 @@ def create_app():
 
     from app.routes.user_routes import user_bp
 
-    # Se registran las rutas de cada módulo en la aplicación principal
     app.register_blueprint(auth_bp)
     app.register_blueprint(main_bp)
     app.register_blueprint(admin_bp)
@@ -55,8 +48,6 @@ def create_app():
     
     return app
 
-# ----- EXPORTACIÓN PARA USO EXTERNO -----
-# Permite importar 'db' desde otros módulos con: from app import db
 __all__ = ['db']
 
 
