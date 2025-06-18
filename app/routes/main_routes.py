@@ -6,4 +6,4 @@ main_bp = Blueprint('main', __name__)  # NO uses url_prefix si quieres que sea r
 
 @main_bp.route('/')
 def home():
-    return render_template('home/home.html')
+    return render_template('user/home.html')
