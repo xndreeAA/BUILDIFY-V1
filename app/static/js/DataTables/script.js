@@ -27,7 +27,7 @@ $(document).ready(function() {
                     return `<div class="btn-group">
                         <a href="/admin/editar-producto/${row.id_producto}" class="btn btn-sm btn-primary">✏️</a>
                         <a href="/admin/eliminar-producto/${row.id_producto}" class="btn btn-sm btn-danger">🗑️</a>
-                        <button class="btn btn-sm btn-info view-product" data-id="${row.id_producto}">👀</button>
+                        <button class="btn btn-sm btn-info view-product" data-id="${row.id_producto}" onClick="viewProduct({ id: ${row.id_producto} })">👀</button>
                     </div>`;
                 }
             }
