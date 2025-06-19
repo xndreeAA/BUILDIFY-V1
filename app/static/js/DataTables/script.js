@@ -25,9 +25,8 @@ $(document).ready(function() {
                 orderable: false,
                 render: function(data, type, row) {
                     return `<div class="btn-group">
-                        <a href="/admin/editar-producto/${row.id_producto}" class="btn btn-sm btn-primary">✏️</a>
                         <a href="/admin/eliminar-producto/${row.id_producto}" class="btn btn-sm btn-danger">🗑️</a>
-                        <a href="/admin/ver-producto/${row.id_producto}" class="btn btn-sm btn-info">👀</a>
+                        <button class="btn btn-sm btn-info view-product" data-id="${row.id_producto}" onClick="viewProduct({ id_producto: ${row.id_producto}, categoria: '${row.categoria}' })">✏️</button>
                     </div>`;
                 }
             }

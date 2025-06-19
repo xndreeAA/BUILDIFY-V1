@@ -48,6 +48,57 @@
             </article>
         </div>
     </section>
+    <section id="modal" class="modal-detalles">  
+        <form id="modal-content">
+            <article class="modal-article">
+                <div class="modal-header">
+                    <button id="open-modal-btn" class="btn-modal" onclick="closeModal()">❌</button>
+                    <h4 id="modal-title"></h4>
+                </div>
+                <picture class="modal-img-container">
+                    <img src="https://reset.net.co/wp-content/uploads/2020/10/Procesador_AMD_Ryzen_5_5600X_3.7GHz.webp" alt="imagen de producto">
+                </picture>
+                <label for="nombre-producto" class="label_field">Nombre:
+                </label>
+                <div class="input-container">
+                    <input  class="input_field" type="text" name="nombre-producto" value="Nvidia RTX 3090" id="nombre-producto">
+                    <button class="btn-edit">✏️</button>
+                </div>
+            </article>
+            <article class="modal-article">
+                <div class="detalles-container">
+                    <h2>Detalles</h2>
+                    <label for="precio" class="label_field">Precio:
+                        <div class="input-container">
+                            <input  class="input_field" type="number" name="precio" value="1000" id="precio-producto">
+                            <button class="btn-edit">✏️</button>
+                        </div>
+                    </label>
+                    
+                    <label for="stock" class="label_field">Stock:
+                        <div class="input-container">
+                            <input  class="input_field" type="number" name="stock" value="10" id="stock-producto">
+                            <button class="btn-edit">✏️</button>
+                        </div>
+                    </label>
+                    
+                    <label for="categoria" class="label_field">Categoria:
+                        <div class="input-container">
+                            <input  class="input_field" type="number" name="categoria" value="1000" id="precio-producto">
+                            <button class="btn-edit">✏️</button>
+                        </div>
+                    </label>
+                    
+                    <label for="marca" class="label_field">Marca:
+                        <div class="input-container">
+                            <input  class="input_field" type="number" name="marca" value="10" id="stock-producto">
+                            <button class="btn-edit">✏️</button>
+                        </div>
+                    </label>
+                </div>
+            </article>
+        </form>
+    </section>
 {% endblock %}
 
 {%  block script %} 
