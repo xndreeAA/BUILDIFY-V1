@@ -1,5 +1,9 @@
 {% extends "./layouts/layout-admin.html" %}
-
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout/carrusel.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout/home.css')}}">
+{% endblock %}
 {% block content %}
     <article class="carrusel">
         Carrusel
