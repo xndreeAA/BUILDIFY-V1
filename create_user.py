@@ -15,7 +15,7 @@ with app.app_context():
         email="jose@example.com",
         direccion="Calle Falsa 123",
         telefono="123456789",
-        id_rol=1  # Asegúrate de que el rol con id_rol=1 exista en la tabla `roles`
+        id_rol=3# Asegúrate de que el rol con id_rol=1 exista en la tabla `roles`
     )
 
     nuevo_usuario.set_password("1234")  # Encriptar la contraseña

@@ -5,10 +5,10 @@
   --color_complementario_1: #5683b3;
   --color_complementario_2: #7da0ca;
 
-  --david_color_1: #0095e0;
-  --david_color_2: #ff45af;
-  --davod_color_3: rgba(0, 0, 0, 0.397);
-  --david_color_4: #1f1f1f;
+    --david_color_1: #0095e0;
+    --david_color_2: #052659;
+    --davod_color_3: rgba(0, 0, 0, 0.397);
+    --david_color_4: #1f1f1f;
 }
 
 #aside {
@@ -21,16 +21,16 @@
 }
 
 #aside-container {
-  position: sticky;
-  z-index: 2;
-  top: 0;
-  left: 0;
-  width: 35px;
-  padding: 10px;
-  overflow-y: hidden;
-  min-height: 100vh;
-  background-color: var(--david_color_4);
-  transition: ease 0.4s;
+    position: sticky;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    width: 60px;
+    padding: 10px;
+    overflow-y: hidden;
+    min-height: 100vh;
+    background-color: var(--david_color_4);
+    transition: ease 0.4s;
 
   display: flex;
   flex-direction: column;
