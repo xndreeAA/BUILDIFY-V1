@@ -10,10 +10,7 @@
   --davod_color_3: rgba(0, 0, 0, 0.397);
 }
 
-* {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-}
+
 
 body {
   width: 100%;
@@ -79,7 +76,7 @@ button {
 .footer-logo {
   font-size: 1.5rem;
   font-weight: bold;
-  color: var(--david_color_1);
+  color: var(--color_complementario_2);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -96,7 +93,7 @@ button {
 .footer-title {
   font-size: 1.1rem;
   font-weight: bold;
-  color: var(--david_color_1);
+  color: var(--color_complementario_2);
   margin-bottom: 10px;
 }
 

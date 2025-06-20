@@ -1,0 +1,83 @@
+{% extends "./layouts/layout-user.html" %} {% block content %}
+
+
+<div class="categorias">
+    <div class="volver">
+        <p id="home_link">
+            ← Regresar al home <a href="{{ url_for('main.home') }}">Volver</a>
+        </p>
+    </div>
+    <h1 id="title_categorias">CHASIS</h1>
+    <div class="filtros">
+        <p>Mostrar filtros</p>
+    </div>
+    <div class="cards_container">
+        <div class="container_imagen">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCBP1QQB1--jCcZEdxZAnbQLpbmWQM304hCg&s"
+                alt="" />
+            <div class="propiedades">
+                <h3>Chasis v1</h3>
+                <p>Lorem ipsum dolor sit amet consectetur</p>
+            </div>
+        </div>
+        <div class="container_description">
+            <div class="precio">
+                <p id="precio">Precio: $100.00</p>
+            </div>
+            <div class="cantidad">
+                <input type="number" name="cantidad" id="cantidad" placeholder="Cantidad" min="1" max="10" />
+            </div>
+            <div class="boton_agregar_categoria">
+                <button id="agregar" class="btn-styled">Añadir al carrito</button>
+            </div>
+        </div>
+    </div>
+    <!-- --------------------------------------------------------------------------- -->
+
+    <div class="cards_container">
+        <div class="container_imagen">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCBP1QQB1--jCcZEdxZAnbQLpbmWQM304hCg&s"
+                alt="" />
+            <div class="propiedades">
+                <h3>Chasis v1</h3>
+                <p>Lorem ipsum dolor sit amet consectetur</p>
+            </div>
+        </div>
+        <div class="container_description">
+            <div class="precio">
+                <p id="precio">Precio: $100.00</p>
+            </div>
+            <div class="cantidad">
+                <input type="number" name="cantidad" id="cantidad" placeholder="Cantidad" min="1" max="10" />
+            </div>
+            <div class="boton_agregar_categoria">
+                <button id="agregar" class="btn-styled">Añadir al carrito</button>
+            </div>
+        </div>
+    </div>
+    <!-- ------------------------------------------------------------------------------------------- -->
+    <div class="cards_container">
+        <div class="container_imagen">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCBP1QQB1--jCcZEdxZAnbQLpbmWQM304hCg&s"
+                alt="" />
+            <div class="propiedades">
+                <h3>Chasis v1</h3>
+                <p>Lorem ipsum dolor sit amet consectetur</p>
+            </div>
+        </div>
+        <div class="container_description">
+            <div class="precio">
+                <p id="precio">Precio: $100.00</p>
+            </div>
+            <div class="cantidad">
+                <input type="number" name="cantidad" id="cantidad" placeholder="Cantidad" min="1" max="10" />
+            </div>
+            <div class="boton_agregar_categoria">
+                <button id="agregar" class="btn-styled">Añadir al carrito</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

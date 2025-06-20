@@ -8,3 +8,8 @@ user_bp = Blueprint('user', __name__, url_prefix='/user')
 
 def home():
     return render_template('user/home.html')
+# ----------------------------------------------------------------
+# ruta a las secciones de la pagina 
+@user_bp.route('/section')
+def section():
+    return render_template('user/section.html')

@@ -12,6 +12,7 @@
 }
 
 #aside {
+  margin-top: 80px;
   position: relative;
   width: 60px;
   background-color: var(--david_color_4);
