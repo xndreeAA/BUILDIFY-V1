@@ -6,8 +6,6 @@ from dotenv import load_dotenv
 
 import os
 
-# ----- INICIALIZACIÓN GLOBAL DE EXTENSIONES -----
-# Estas instancias serán utilizadas dentro de la factory 'create_app'
 db = SQLAlchemy()
 migrate = Migrate()
 login_manager = LoginManager()
@@ -37,6 +35,10 @@ def create_app():
     from app.routes.main_routes import main_bp
     from app.routes.admin_routes import admin_bp
     from app.routes.colaborador_routes import colaborador_bp
+    
+    from app.api.api_productos import productos_bp
+    from app.api.api_marcas import marcas_bp
+    from app.api.api_categorias import categorias_bp
 
     from app.routes.user_routes import user_bp
 
@@ -45,7 +47,11 @@ def create_app():
     app.register_blueprint(admin_bp)
     app.register_blueprint(colaborador_bp)
     app.register_blueprint(user_bp)
-    
+
+    app.register_blueprint(productos_bp)
+    app.register_blueprint(marcas_bp)
+    app.register_blueprint(categorias_bp)
+
     return app
 
 __all__ = ['db']

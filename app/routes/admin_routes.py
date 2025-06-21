@@ -10,17 +10,17 @@ from app import db
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 
 @admin_bp.route('/')
-@login_required  
+# @login_required  
 def dashboard():
     return render_template('admin/home.html', nombre=current_user.nombre)
 
 @admin_bp.route('/productos')
-@login_required
+# @login_required
 def crud_productos():
     return render_template('admin/crud-productos.html')
 
 @admin_bp.route('/api/productos')
-@login_required
+# @login_required
 def api_productos():
     productos = Producto.query.options(
         db.joinedload(Producto.categoria),
@@ -98,7 +98,7 @@ def get_detalles_por_categoria(id_producto: int, nombre_categoria: str):
             abort(400, description=f"Categoría '{nombre_categoria}' no soportada para detalles.")
 
 @admin_bp.route('/api/productos/detalles')
-@login_required
+# @login_required
 def api_producto_con_detalles():
     id_producto = request.args.get('id_producto', type=int)
     nombre_cat = request.args.get('categoria', type=str)
@@ -147,7 +147,7 @@ def api_producto_con_detalles():
     return jsonify(resultado), 200
 
 @admin_bp.route('/api/productos/<int:id_producto>', methods=['PUT'])
-@login_required
+# @login_required
 def api_producto_actualizar(id_producto):
     # 1) Leer y validar el JSON entrante
     payload = request.get_json(silent=True)
@@ -228,3 +228,5 @@ def api_producto_actualizar(id_producto):
         }
     }
     return jsonify(salida), 200
+
+
