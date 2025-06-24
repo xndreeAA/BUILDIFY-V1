@@ -1,1 +1,11 @@
-__pycache__
+# Entorno virtual de Python
+venv/
+.venv/
+ENV/
+env/
+
+# Archivos de Python cache/compilados
+_pycache_/
+*.py[cod]
+*$py.class
+*.pyc
