@@ -1,0 +1,47 @@
+    <!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles/login.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles/form.css') }}">
+
+</head>
+
+<body>
+    {% extends "auth/base.html" %}
+    {% block title %}Iniciar Sesión{% endblock %}
+    {% block content %}
+            <p id="home_link">← Regresar al home <a href="{{ url_for('main.home') }}">Volver</a></p>
+            
+            <form class="form_style" method="POST">
+            <h2 class="title2">Iniciar Sesión</h2>
+
+                {{ form.hidden_tag() }}
+
+                <div class="input_style">
+                    {{ form.email.label(class="label_field", size=32) }}<br>
+                    {{ form.email(class="input_field", size=32) }}
+                </div>
+
+                <div class="input_style">
+                    {{ form.password.label(class="label_field", size=32) }}<br>
+                    {{ form.password(class="input_field", size=32)  }}
+                </div>
+
+                <div class="submit_style">
+                    {{ form.submit(class="input_submit", size=32) }}
+                </div>
+            </form>
+            <div class="register">
+                <p>¿Eres nuevo en Buildify? <a href="{{ url_for('auth.register') }}">Regístrate aquí</a></p>
+                <p>¿Olvidaste tu contraseña?<a href="{{ url_for('auth.forgot_password') }}">Recuperala aquí</a></p>
+            </div>
+            
+        
+    {% endblock %}
+    
+</body>
+
+</html>

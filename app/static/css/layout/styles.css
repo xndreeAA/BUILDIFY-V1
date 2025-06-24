@@ -1,9 +1,9 @@
 :root {
-    --color_titulo: #021024;
-    --color_fondo_1: #C1E8FF;
-    --color_subtitulo: #052659;
-    --color_complementario_1: #5683B3;
-    --color_complementario_2: #7DA0CA;
+  --color_titulo: #021024;
+  --color_fondo_1: #c1e8ff;
+  --color_subtitulo: #052659;
+  --color_complementario_1: #5683b3;
+  --color_complementario_2: #7da0ca;
 
     --david_color_1: #0095e0;
     --david_color_2: #052659;
@@ -11,43 +11,40 @@
 }
 
 
-* {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-}
 
 body {
-    width: 100%;
-    min-height: 100vh;
-    margin: 0;
-    color: black;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    /* Fix the grid-template-rows to use proper units */
-    grid-template-rows: auto 1fr auto auto;
-    grid-template-areas: 
-        "header header header"
-        "main main main"
-        "footer footer footer";
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  color: black;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  /* Fix the grid-template-rows to use proper units */
+  grid-template-rows: auto 1fr auto auto;
+  grid-template-areas:
+    "header header header"
+    "main main main"
+    "footer footer footer";
 }
 
 #main {
-    grid-area: main;
-    display: flex;
+  grid-area: main;
+  display: flex;
 }
 
 svg {
-    fill:  white;
+  fill: white;
 }
 
 button {
-    border-radius: 10px;
-    border-style: none;
-    color: #1f1f1f;
-    cursor: pointer;
+  border-radius: 10px;
+  border-style: none;
+  color: #1f1f1f;
+  cursor: pointer;
 
-    & svg {
-        fill: #1f1f1f;
-    }
+  & svg {
+    fill: #1f1f1f;
+  }
 }
 
 #content {
@@ -57,11 +54,11 @@ button {
 }
 
 #footer {
-    grid-area: footer;
-    background-color: #2a2a2a;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
+  grid-area: footer;
+  background-color: #2a2a2a;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .footer-container {
@@ -79,7 +76,7 @@ button {
 .footer-logo {
   font-size: 1.5rem;
   font-weight: bold;
-  color: var(--david_color_1);
+  color: var(--color_complementario_2);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -96,7 +93,7 @@ button {
 .footer-title {
   font-size: 1.1rem;
   font-weight: bold;
-  color: var(--david_color_1);
+  color: var(--color_complementario_2);
   margin-bottom: 10px;
 }
 

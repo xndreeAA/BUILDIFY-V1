@@ -1,10 +1,9 @@
-from flask import Blueprint, redirect, url_for
-from flask import render_template
+# app/routes/main_routes.py
 
-# Crea un blueprint principal para la raíz del sitio
-main_bp = Blueprint('main', __name__)
+from flask import Blueprint, render_template
+
+main_bp = Blueprint('main', __name__)  # NO uses url_prefix si quieres que sea raíz
 
 @main_bp.route('/')
-def index():
-    # Redirige automáticamente a /login
-    return redirect(url_for('user.home'))
+def home():
+    return render_template('user/home.html')

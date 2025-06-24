@@ -11,7 +11,7 @@ admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 
 @admin_bp.route('/')
 @login_required  
-def dashboard():
+def dashboard(): #cambiar
     return render_template('admin/home.html', nombre=current_user.nombre)
 
 @admin_bp.route('/productos')

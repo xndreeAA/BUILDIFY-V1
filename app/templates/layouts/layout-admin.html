@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/layout/sideBar.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/layout/styles.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/layout/header.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
     {% block styles %}{% endblock %}
 
@@ -15,7 +16,7 @@
     <title>BUILDIFY</title>
 </head>
 <body>
-    <header id="header">
+    <!-- <header id="header">
         <section id="news-row">
             Echa un vistazo a nuestros descuentos!
         </section>
@@ -36,6 +37,7 @@
                         <li>Refrigeraciones</li>
                         <li>Procesadores</li>
                         <li>Boards</li>
+                        <li><a href="{{ url_for('auth.logout') }}">Cerrar sesión</a></li>
                     </ul>
                 </nav>
             </article>
@@ -59,7 +61,61 @@
                 </div>  
             </article>
         </section>
-    </header>
+    </header> -->
+    <header class="header">
+        <div class="news-row">
+            <p>ECHA UN VISTAZO A NUESTROS DESCUENTOS</p>
+        </div>
+
+        <div class="logo">
+            <span class="brand">BUILDIFY</span><span class="highlight"> X</span>
+        </div>
+
+        <nav class="nav">
+            <button class="menu-toggle" id="menu-toggle">☰</button>
+            <ul class="menu" id="menu">
+                <li><a href="#">CHASIS</a></li>
+                <li><a href="#">RAM</a></li>
+                <li><a href="#">REFRIGERACIONES</a></li>
+                <li><a href="#">PROCESADORES</a></li>
+                <li><a href="#">BOARDS</a></li>
+                <a href="{{ url_for('auth.login') }}">
+                <li id="cuenta">Cuenta <i class="bi bi-person-fill" id="usuario"></i></li>
+                </a>
+                <li><a href="{{ url_for('auth.logout') }}">Cerrar sesión</a></li>
+            </ul>
+            <script>
+                const toggle = document.getElementById('menu-toggle');
+                const menu = document.getElementById('menu');
+
+                toggle.addEventListener('click', () => {
+                    menu.classList.toggle('active');
+                });
+            </script>
+        </nav>
+
+        <div class="select">
+            buscar
+            <span class="icon" title="buscar">
+                <input type="search" name="search" id="search" placeholder="Buscar...">
+                <i class="bi bi-search"></i>
+            </span>
+            <!-- user -->
+            <a href="{{ url_for('auth.login') }}">
+                <span class="icon" title="Ingresar" id="user-icon">
+                    <i class="bi bi-person-fill" id="usuario"></i>
+                </span>
+            </a>
+            
+            <!-- carrito -->
+            <a href="#">
+                <span class="icon" title="Cesta">
+                    <i class="bi bi-bag-plus-fill"></i>
+                </span>
+            </a>
+
+        </div>
+    </header> 
 
     <main id="main">
         <aside id="aside">

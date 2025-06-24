@@ -1,0 +1,111 @@
+/* ESTILO GENERAL */
+:root {
+    --primary-color: #4F46E5;
+    --secondary-color: #6366F1;
+    --background-color: #F9FAFB;
+    --card-color: #FFFFFF;
+    --text-color: #111827;
+    --shadow-color: rgba(0, 0, 0, 0.08);
+    --radius: 12px;
+    --gap: 20px;
+    --transition: 0.3s ease;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 0;
+    color: var(--text-color);
+}
+
+/* CONTENEDOR PRINCIPAL */
+.container_dashboard_admin {
+    margin: 80px 40px 40px 40px;
+    height: 100dvh;
+    display: grid;
+    gap: var(--gap);
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto 1fr 1fr 1fr;
+    grid-template-areas:
+        "header_dashboard header_dashboard header_dashboard header_dashboard"
+        "cont_1 cont_2 cont_3 cont_4"
+        "cont_5 cont_5 cont_5 cont_6"
+        "cont_7 cont_8 cont_8 cont_8";
+}
+
+/* SECCIONES DEL DASHBOARD */
+.cont_1, .cont_2, .cont_3, .cont_4,
+.cont_5, .cont_6, .cont_7, .cont_8 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+/* ÁREAS DE GRID */
+.cont_1 { grid-area: cont_1; }
+.cont_2 { grid-area: cont_2; }
+.cont_3 { grid-area: cont_3; }
+.cont_4 { grid-area: cont_4; }
+.cont_5 { grid-area: cont_5; }
+.cont_6 { grid-area: cont_6; }
+.cont_7 { grid-area: cont_7; }
+.cont_8 { grid-area: cont_8; }
+
+/* TARJETAS (CONT_M_X) */
+#cont_m_1, #cont_m_2, #cont_m_3, #cont_m_4,
+#cont_m_5, #cont_m_6, #cont_m_7, #cont_m_8 {
+    background-color: var(--card-color);
+    border-radius: var(--radius);
+    box-shadow: 0 4px 10px var(--shadow-color);
+    border: 1px solid #e5e7eb;
+    width: 100%;
+    height: 90%;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: var(--transition);
+}
+
+#cont_m_1:hover, #cont_m_2:hover, #cont_m_3:hover,
+#cont_m_4:hover, #cont_m_5:hover, #cont_m_6:hover,
+#cont_m_7:hover, #cont_m_8:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px var(--shadow-color);
+}
+
+/* ENCABEZADOS DENTRO DE TARJETAS */
+h3 {
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+    color: var(--primary-color);
+    text-align: center;
+}
+
+/* IMÁGENES */
+#cont_m_5 img, #cont_m_6 img, #cont_m_7 img {
+    width: 90%;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1200px) {
+    .container_dashboard_admin {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(9, auto);
+        grid-template-areas:
+            "header_dashboard"
+            "cont_1"
+            "cont_2"
+            "cont_3"
+            "cont_4"
+            "cont_5"
+            "cont_6"
+            "cont_7"
+            "cont_8";
+    }
+}

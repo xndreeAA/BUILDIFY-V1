@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles/form.css') }}">
+    <title>Document</title>
+</head>
+<body>
+        <div class="container">
+            <div class="left-column">
+                <div class="title">
+                    
+                    <h2>Bienvenido a Buildify</h2>
+                    <div class="parrafo">
+                        <p>Conecta, diseña y construye desde un solo lugar</p>
+                    </div>
+                </div>
+                
+                <div class="imagen">
+                    <img src="../static/images/loo.png" alt="login">
+                </div>
+            </div>
+            <!-- columna derecha---------------------------------------------------- -->
+            
+            <div class="right-column">
+                {% block content %} {% endblock %}
+            </div>
+        </div>
+    <!-- -----------------------------------mensaje-------------------------------------- -->
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="flash-container">
+
+        {% for category, message in messages %}
+        <div class="flash-message {{ category }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+{% endwith %}
+</body>
+</html>
