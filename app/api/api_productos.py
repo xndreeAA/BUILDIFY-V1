@@ -99,3 +99,24 @@ def producto_id_operaciones(id_producto):
 
     else:
         abort(405, description="Método no permitido.")
+
+
+@productos_bp.route('/all', methods=['GET'])
+def api_productos_all():
+    productos = Producto.query.options(
+        db.joinedload(Producto.categoria),
+        db.joinedload(Producto.marca)
+    ).all()
+    
+    productos_data = []
+    for producto in productos:
+        productos_data.append({
+            "id_producto": producto.id_producto,
+            "nombre": producto.nombre,
+            "precio": float(producto.precio),
+            "stock": producto.stock,
+            "categoria": producto.categoria.nombre,  
+            "marca": producto.marca.nombre
+        })
+    
+    return jsonify(productos_data)

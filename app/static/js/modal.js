@@ -1,16 +1,10 @@
-// ========================================================
-// VARIABLES DE DOM
-// ========================================================
-const modalDetalles     = document.querySelector('.modal-detalles');
-const modalTitle        = document.getElementById('modal-title');
-const closeModalBtn     = document.getElementById('close-modal-btn');
+const modalDetalles = document.querySelector('.modal-detalles');
+const modalTitle = document.getElementById('modal-title');
+const closeModalBtn = document.getElementById('close-modal-btn');
 const detallesContainer = document.querySelector('.detalles-container');
 
 let productoGlobal = null;
 
-// ========================================================
-// CERRAR MODAL
-// ========================================================
 const closeModal = () => modalDetalles.style.display = 'none';
 
 closeModalBtn?.addEventListener('click', e => {
@@ -22,58 +16,37 @@ window.addEventListener('click', e => {
   if (e.target === modalDetalles) closeModal();
 });
 
-// ========================================================
-// FETCH GET PRODUCTO
-// ========================================================
-const fetchData = async ({ id_producto, categoria }) => {
-  const url = `/admin/api/productos/detalles?id_producto=${id_producto}&categoria=${categoria}`;
+const fetchMarcas = async () => {
+  const url = '/api/marcas';
   const res = await fetch(url, { credentials:'include' });
+  const json = await res.json();
+  
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return await res.json();
+  return json.data;
+}
+
+const fetchData = async ({ id_producto }) => {
+  const url = `/api/detalles/${id_producto}`
+  const res = await fetch(url, { credentials:'include' });
+  const json = await res.json();
+  
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return json.data;
 };
 
-// ========================================================
-// FETCH PUT ACTUALIZAR PRODUCTO
-// ========================================================
-const handleSubmit = async data => {
-  try {
-    const res = await fetch(`/admin/api/productos/${data.id_producto}`, {
-      method: 'PUT',
-      credentials: 'include',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify(data)
-    });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    console.log('Producto actualizado:', await res.json());
-    closeModal();
-    // aquí refrescas UI…
-  } catch (err) {
-    console.error('Error actualizando producto:', err);
-  }
-};
+const viewProduct = async ({ id_producto }) => {
+  const producto = await fetchData({ id_producto });
+  const marcas = await fetchMarcas();
 
-// ========================================================
-// RENDERIZA EL MODAL CON CAMPOS DISABLED
-// ========================================================
-const viewProduct = async ({ id_producto, categoria }) => {
-  const producto = await fetchData({ id_producto, categoria });
-  productoGlobal = producto;
+  productoGlobal = producto
   modalDetalles.style.display = 'flex';
   modalTitle.textContent = `Producto #${producto.id_producto}`;
 
-  // Campos estáticos
   let html = `
     <label class="label_field">Precio:
       <div class="input-container">
         <input disabled data-static="true" class="input_field" type="number"
                name="precio" value="${producto.precio}">
-        <button type="button" class="btn-edit">✏️</button>
-      </div>
-    </label>
-    <label class="label_field">Marca:
-      <div class="input-container">
-        <input disabled data-static="true" class="input_field" type="text"
-               name="marca" value="${producto.marca.nombre}">
         <button type="button" class="btn-edit">✏️</button>
       </div>
     </label>
@@ -93,12 +66,31 @@ const viewProduct = async ({ id_producto, categoria }) => {
     </label>
   `;
 
-  // Campos dinámicos, incluyendo booleanos tratados como checkbox
+  
+  const optionsHtml = marcas.map(marca => `
+    <option 
+      ${marca.id_marca === producto.marca.id_marca ? 'selected' : ''} 
+      value="${marca.id_marca}">
+      ${marca.nombre}
+    </option>
+  `).join('');
+
+  html += `
+    <label class="label_field">Marca:
+      <div class="input-container select">
+        <select data-static="true" class="input_field" name="id_marca" disabled>
+          ${optionsHtml}
+        </select>
+        <button type="button" class="btn-edit select">✏️</button>
+      </div>
+    </label>
+  `;
+
   for (const key in producto.detalles) {
     const val = producto.detalles[key];
     let type, extra = '';
     if (typeof val === 'boolean') {
-      type = 'checkbox';
+      type = 'input';
       extra = val ? ' checked' : '';
     } else if (!isNaN(val) && val !== '') {
       type = 'number';
@@ -120,48 +112,77 @@ const viewProduct = async ({ id_producto, categoria }) => {
     `;
   }
 
-  // Botón PUT
   html += `<button type="button" id="submit-btn">Guardar cambios</button>`;
   detallesContainer.innerHTML = html;
 };
 
-// ========================================================
-// DELEGACIÓN DE EVENTOS
-//  - Toggle edit en cada campo
-//  - Captura submit sin volver a asignar listeners
-// ========================================================
 detallesContainer.addEventListener('click', e => {
-  // 1) Edit toggle
+  e.preventDefault();
+
+  if (e.target.classList.contains('btn-edit' && 'select')) {
+    const inp = e.target.closest('.input-container').querySelector('select');
+    inp.disabled = !inp.disabled;
+    e.target.textContent = inp.disabled ? '✏️' : '✔️';
+    return;
+  }
+
   if (e.target.classList.contains('btn-edit')) {
     const inp = e.target.closest('.input-container').querySelector('input');
     inp.disabled = !inp.disabled;
     e.target.textContent = inp.disabled ? '✏️' : '✔️';
     return;
   }
-  // 2) Submit PUT
+
   if (e.target.id === 'submit-btn') {
     e.preventDefault();
-    const formInputs = document.querySelectorAll('#modal-content input');
-    const data = { detalles: {} };
+
+    const formInputs = document.querySelectorAll('.input_field');
+    const data = {
+      id_marca: productoGlobal.marca.id_marca,
+      precio: productoGlobal.precio,
+      stock: productoGlobal.stock,
+      imagen: productoGlobal.imagen,
+      detalles: {}
+    };
 
     formInputs.forEach(input => {
+      const name = input.name;
       let val;
+
       if (input.type === 'checkbox') {
         val = input.checked;
+      } else if (input.type === 'number') {
+        val = Number(input.value);
       } else {
-        val = input.type === 'number' ? Number(input.value) : input.value;
+        val = input.value;
       }
+
       if (input.dataset.static) {
-        data[input.name] = val;
+        data[name] = val;
       } else {
-        data.detalles[input.name] = val;
+        data.detalles[name] = val;
       }
     });
 
-    data.id_producto = productoGlobal.id_producto;
-    data.categoria   = { nombre: productoGlobal.categoria.nombre };
-    data.marca       = { nombre: productoGlobal.marca.nombre };
-
-    handleSubmit(data);
+    fetch(`/api/detalles/${productoGlobal.id_producto}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include',
+      body: JSON.stringify(data)
+    })
+    .then(res => {
+      if (!res.ok) throw new Error(`Error HTTP ${res.status}`);
+      return res.json();
+    })
+    .then(json => {
+      alert('Producto actualizado correctamente');
+      closeModal();
+    })
+    .catch(err => {
+      console.error('Error al actualizar producto:', err);
+      alert('Hubo un error al guardar los cambios');
+    });
   }
 });

@@ -35,12 +35,13 @@ def create_app():
     from app.routes.main_routes import main_bp
     from app.routes.admin_routes import admin_bp
     from app.routes.colaborador_routes import colaborador_bp
+    from app.routes.user_routes import user_bp
     
     from app.api.api_productos import productos_bp
     from app.api.api_marcas import marcas_bp
     from app.api.api_categorias import categorias_bp
+    from app.api.api_detalles import detalles_bp
 
-    from app.routes.user_routes import user_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(main_bp)
@@ -51,6 +52,7 @@ def create_app():
     app.register_blueprint(productos_bp)
     app.register_blueprint(marcas_bp)
     app.register_blueprint(categorias_bp)
+    app.register_blueprint(detalles_bp)
 
     return app
 
