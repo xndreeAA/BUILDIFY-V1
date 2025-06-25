@@ -3,21 +3,18 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_mail import Mail 
+from itsdangerous import URLSafeTimedSerializer 
 from dotenv import load_dotenv
 
 import os
 
-# ✅ Importación agregada para el manejo de tokens seguros de recuperación
-from itsdangerous import URLSafeTimedSerializer  
 
-# ----- INICIALIZACIÓN GLOBAL DE EXTENSIONES -----
-# Estas instancias serán utilizadas dentro de la factory 'create_app'
 db = SQLAlchemy()
 migrate = Migrate()
 login_manager = LoginManager()
-mail = Mail()  # Para enviar correos electrónicos, si es necesario
-# ✅ Variable global del serializador para generar y verificar tokens de recuperación
-serializer = None  # Se asigna luego dentro de create_app
+mail = Mail()
+
+serializer = None
 
 
 def create_app():
@@ -50,18 +47,23 @@ def create_app():
     from app.routes.colaborador_routes import colaborador_bp
     from app.routes.user_routes import user_bp
     
-    
+    from app.api.api_productos import productos_bp
+    from app.api.api_marcas import marcas_bp
+    from app.api.api_categorias import categorias_bp
+    from app.api.api_detalles import detalles_bp
+
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(main_bp)
     app.register_blueprint(admin_bp)
     app.register_blueprint(colaborador_bp)
     app.register_blueprint(user_bp)
-    
-    # app.register_blueprint(user_bp)
-    
+
+    app.register_blueprint(productos_bp)
+    app.register_blueprint(marcas_bp)
+    app.register_blueprint(categorias_bp)
+    app.register_blueprint(detalles_bp)
+
     return app
 
-# ----- EXPORTACIÓN PARA USO EXTERNO -----
-# Permite importar 'db' desde otros módulos con: from app import db
-__all__ = ['db', 'serializer']  # ✅ Exportar también el serializador para uso en funciones de email
+__all__ = ['db', 'serializer']
