@@ -5,11 +5,9 @@ from flask import render_template
 user_bp = Blueprint('user', __name__, url_prefix='/user')
 
 @user_bp.route('/')
-
 def home():
     return render_template('user/home.html')
-# ----------------------------------------------------------------
-# ruta a las secciones de la pagina 
+
 @user_bp.route('/section')
 def section():
     return render_template('user/section.html')
