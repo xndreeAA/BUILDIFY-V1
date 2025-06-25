@@ -1,5 +1,3 @@
-console.log('te amo js')
-
 $(document).ready(function() {
     $('#tabla-productos').DataTable({
         ajax: {
