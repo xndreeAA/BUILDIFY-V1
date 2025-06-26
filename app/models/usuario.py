@@ -6,13 +6,9 @@ from flask import current_app
 from app.models.rol import Rol  # usa el modelo Rol
 
 class Usuario(db.Model, UserMixin):
-    """
-    Modelo de usuario para autenticación y gestión de roles.
-    Utiliza SQLAlchemy para el mapeo de la base de datos y Flask-Login para la sesión.
-    """
+
     __tablename__ = 'usuarios'
-    # Modelo de datos en python, para poder interactuar con la base de datos usando SQLAlchemy.
-    # Propósito: mapear la tabla usuarios de la base de datos.
+
     id_usuario = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(100), nullable=False)
     apellido = db.Column(db.String(100), nullable=False)
@@ -21,9 +17,8 @@ class Usuario(db.Model, UserMixin):
     telefono = db.Column(db.String(15))
     password = db.Column(db.String(256), nullable=False)
     id_rol = db.Column(db.Integer, db.ForeignKey('roles.id_rol'))
-    
-    # Relación con la tabla roles
     rol_rel = db.relationship('Rol', backref='usuarios')
+    
 
     # ----- CONSTRUCTOR PARA EVITAR ADVERTENCIAS en el editor por pylance (análisis estático) -----
     def __init__(self, nombre, apellido, email, direccion, telefono, id_rol):
