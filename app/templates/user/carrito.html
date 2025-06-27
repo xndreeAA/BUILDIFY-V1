@@ -1,0 +1,62 @@
+{% extends "./layouts/layout-user.html" %} {% block content %} {% block styles
+%} {{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/layout/carrito.css')}}" />
+{% endblock %}
+
+<div class="volver">
+    <p id="home_link">
+        ← Regresar al home <a href="{{ url_for('main.home') }}">Volver</a>
+    </p>
+</div>
+
+<main class="grid-carrito">
+    <!-- Detalles del carrito -->
+    <section class="carrito-detalles">
+        <h2>Tu Carrito</h2>
+        <p>Total: $456.965</p>
+
+        <div class="producto-carrito">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCBP1QQB1--jCcZEdxZAnbQLpbmWQM304hCg&s"
+                alt="Tenis Forum Puffed" />
+
+            <div class="info-producto">
+                <h3>Chasis v1</h3>
+                <p>Color: black</p>
+                <p class="precio-original">$649.990</p>
+                <p class="precio-descuento">$456.965</p>
+
+                <label for="cantidad">Cantidad:</label>
+                <select id="cantidad">
+                    <option value="1" selected>1</option>
+                    <option value="2">2</option>
+                </select>
+
+                <button class="eliminar">Eliminar</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resumen del pedido -->
+    <aside class="resumen-pedido">
+        <h2>Resumen del pedido</h2>
+        <ul>
+            <li><span>1 producto</span><span>$456.965</span></li>
+            <li><span>Precio original</span><span>$649.990</span></li>
+            <li><span>Envío</span><span>Gratis</span></li>
+            <li><span>Descuento</span><span>-$193.025</span></li>
+            <li class="total"><strong>Total</strong><strong>$456.965</strong></li>
+        </ul>
+
+        <input type="text" placeholder="Usa un código promocional" />
+        <button class="pagar"><a href="{{ url_for('user.checkout') }}">Ir a pagar</a></button>
+
+        <div class="metodos-pago">
+            <p>Formas de pago aceptadas:</p>
+            <img src="https://logodownload.org/wp-content/uploads/2022/04/visa-logo-1.png" alt="Visa" />
+            <img src="https://logodownload.org/wp-content/uploads/2019/09/mastercard-logo.png" alt="MasterCard" />
+            <img src="https://logodownload.org/wp-content/uploads/2020/07/american-express-logo.png" alt="Amex" />
+        </div>
+    </aside>
+
+    {% endblock %}
+</main>

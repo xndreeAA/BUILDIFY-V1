@@ -12,7 +12,7 @@
 }
 
 #aside {
-  margin-top: 80px;
+  margin-top: 10px;
   position: relative;
   width: 60px;
   background-color: var(--david_color_4);
@@ -29,7 +29,7 @@
     padding: 10px;
     overflow-y: hidden;
     min-height: 100vh;
-    background-color: var(--david_color_4);
+    background-color: #2a2a2a;
     transition: ease 0.4s;
 
   display: flex;
@@ -59,8 +59,12 @@
 
 #aside-container:hover #logo-container h2 {
   opacity: 1;
+  
 }
-
+#aside-container:hover #logo-container h2 a{
+  text-decoration: none;
+  color: #0095e0;
+}
 #the-finals-logo {
   width: 35px;
   fill: var(--david_color_1);

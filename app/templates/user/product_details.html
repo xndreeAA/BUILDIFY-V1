@@ -1,0 +1,39 @@
+{% extends "./layouts/layout-user.html" %} {% block content %} {% block styles
+%} {{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/layout/brand_view.css')}}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/layout/categorias.css')}}" />
+{% endblock %}
+
+<div class="details_product">
+    <div class="img_product">
+        <img src="https://reset.net.co/wp-content/uploads/2020/10/Procesador_AMD_Ryzen_5_5600X_3.7GHz.webp"
+            alt="producto">
+    </div>
+
+    <div class="description_product">
+        <div class="volver">
+            <p id="home_link">
+                ← Regresar al home <a href="{{ url_for('main.home') }}">Volver</a>
+            </p>
+        </div>
+        <h1>NVIDA RTX 5090ti 607</h1>
+        <h3>$ 1'220.000</h3>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi labore obcaecati vero earum</p>
+        <div class="boton_agregar_categoria">
+            <button id="agregar" class="btn-styled"><a href="{{ url_for('user.carrito') }}">Añadir al carrito</a></button>
+        </div>
+        
+        <div class="cantidad">
+            <input type="number" name="cantidad" id="cantidad" placeholder="Cantidad" min="1" max="10" />
+        </div>
+        <div class="boton_agregar_categoria">
+            <button id="agregar" class="btn-styled">Comprar ahora</button>
+        </div>
+        
+    </div>
+
+</div>
+
+
+
+{% endblock %}

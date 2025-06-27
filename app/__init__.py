@@ -4,6 +4,7 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_mail import Mail 
 from dotenv import load_dotenv
+from flask_wtf.csrf import CSRFProtect
 
 import os
 
@@ -23,6 +24,7 @@ serializer = None  # Se asigna luego dentro de create_app
 def create_app():
 
     load_dotenv()  
+    csrf = CSRFProtect()
 
     app = Flask(__name__, template_folder='templates', static_folder='static')
     app.config.from_object('app.config.DevelopmentConfig')
@@ -31,6 +33,7 @@ def create_app():
     migrate.init_app(app, db)
     login_manager.init_app(app)
     mail.init_app(app)
+    csrf.init_app(app)
 
     login_manager.login_view = 'auth.login'
 
@@ -49,6 +52,7 @@ def create_app():
     from app.routes.admin_routes import admin_bp
     from app.routes.colaborador_routes import colaborador_bp
     from app.routes.user_routes import user_bp
+    from app.routes.checkout import checkout_bp
     
     
 
@@ -57,6 +61,7 @@ def create_app():
     app.register_blueprint(admin_bp)
     app.register_blueprint(colaborador_bp)
     app.register_blueprint(user_bp)
+    app.register_blueprint(checkout_bp)
     
     # app.register_blueprint(user_bp)
     

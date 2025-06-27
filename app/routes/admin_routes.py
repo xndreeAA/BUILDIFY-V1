@@ -48,51 +48,51 @@ def get_detalles_por_categoria(id_producto: int, nombre_categoria: str):
         case "chasises":
             return (
                 db.session
-                  .query(DetalleChasis)
-                  .filter(DetalleChasis.id_producto == id_producto)
-                  .first_or_404(description="No se hallaron detalles de chasis.")
+                    .query(DetalleChasis)
+                    .filter(DetalleChasis.id_producto == id_producto)
+                    .first_or_404(description="No se hallaron detalles de chasis.")
             )
         case "fuentes de poder":
             return (
                 db.session
-                  .query(DetalleFuentePoder)
-                  .filter(DetalleFuentePoder.id_producto == id_producto)
-                  .first_or_404(description="No se hallaron detalles de fuente de poder.")
+                    .query(DetalleFuentePoder)
+                    .filter(DetalleFuentePoder.id_producto == id_producto)
+                    .first_or_404(description="No se hallaron detalles de fuente de poder.")
             )
         case "memorias ram":
             return (
                 db.session
-                  .query(DetalleMemoriaRAM)
-                  .filter(DetalleMemoriaRAM.id_producto == id_producto)
-                  .first_or_404(description="No se hallaron detalles de memoria RAM.")
+                    .query(DetalleMemoriaRAM)
+                    .filter(DetalleMemoriaRAM.id_producto == id_producto)
+                    .first_or_404(description="No se hallaron detalles de memoria RAM.")
             )
         case "placas base":
             return (
                 db.session
-                  .query(DetallePlacaBase)
-                  .filter(DetallePlacaBase.id_producto == id_producto)
-                  .first_or_404(description="No se hallaron detalles de placa base.")
+                    .query(DetallePlacaBase)
+                    .filter(DetallePlacaBase.id_producto == id_producto)
+                    .first_or_404(description="No se hallaron detalles de placa base.")
             )
         case "procesadores":
             return (
                 db.session
-                  .query(DetalleProcesador)
-                  .filter(DetalleProcesador.id_producto == id_producto)
-                  .first_or_404(description="No se hallaron detalles de procesador.")
+                    .query(DetalleProcesador)
+                    .filter(DetalleProcesador.id_producto == id_producto)
+                    .first_or_404(description="No se hallaron detalles de procesador.")
             )
         case "refrigeraciones":
             return (
                 db.session
-                  .query(DetalleRefrigeracion)
-                  .filter(DetalleRefrigeracion.id_producto == id_producto)
-                  .first_or_404(description="No se hallaron detalles de refrigeración.")
+                    .query(DetalleRefrigeracion)
+                    .filter(DetalleRefrigeracion.id_producto == id_producto)
+                    .first_or_404(description="No se hallaron detalles de refrigeración.")
             )
         case "tarjetas graficas":
             return (
                 db.session
-                  .query(DetalleTarjetaGrafica)
-                  .filter(DetalleTarjetaGrafica.id_producto == id_producto)
-                  .first_or_404(description="No se hallaron detalles de tarjeta gráfica.")
+                    .query(DetalleTarjetaGrafica)
+                    .filter(DetalleTarjetaGrafica.id_producto == id_producto)
+                    .first_or_404(description="No se hallaron detalles de tarjeta gráfica.")
             )
         case _:
             abort(400, description=f"Categoría '{nombre_categoria}' no soportada para detalles.")
