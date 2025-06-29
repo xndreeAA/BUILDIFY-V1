@@ -32,7 +32,7 @@
                 <input type="number" name="cantidad" id="cantidad" placeholder="Cantidad" min="1" max="10" />
             </div>
             <div class="boton_agregar_categoria">
-                <button id="agregar" class="btn-styled">Añadir al carrito</button>
+                    <button id="agregar" class="btn-styled"><a href="{{ url_for('user.carrito') }}">Añadir al carrito</a></button>
             </div>
         </div>
     </div>

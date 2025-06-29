@@ -5,7 +5,28 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/layout/home.css')}}">
 
 {% endblock %}
+
 {% block content %}
+<!-- -----------------------Mensaje personalizado para usuarios autenticados----------------------- -->
+
+<h1>Bienvenido a la tienda</h1>
+
+    {% if current_user.is_authenticated %}
+    <div class="user_cliente">
+        <p>"¡Hola de nuevo, {{ current_user.nombre }}  Qué gusto verte por aquí 😊" <a href="{{ url_for('auth.logout') }}">Cerrar sesión</a> </p>
+        <!-- <p>Hola, {{ current_user.apellido }} 👋</p>
+        <p>Tu correo: {{ current_user.email }}</p> -->
+    </div>
+    {% else %}
+    <div class="user_visit">
+        <p>Explora nuestros productos. <a href="{{ url_for('auth.login') }}">Iniciar sesión</a> o
+        <a href="{{ url_for('auth.register') }}">Registrarse</a></p>
+    </div>
+    {% endif %}
+
+<!-- ------------------------------------------------------------------------------ -->
+
+
 <article class="carrusel">
     <img src="../../static/images/ella-don-l8MbHpjxg3A-unsplash.jpg" alt="">
     <div class="carrusel-texto">
@@ -18,8 +39,9 @@
 
 <section class="seccion-fila-productos">
     <h2 class="sub-heading-h2">MAS VENDIDOS</h2>
+    <!-- --------------------------------------------------- -->
     <section class="fila-productos">
-        <a href="/producto/[id-del-producto]" class="tarjeta-producto">
+        <a href="{{ url_for('user.product_details') }}" class="tarjeta-producto">
             <article>
                 <picture>
                     <button class="btn-ampliar">
@@ -47,7 +69,7 @@
                 </div>
                 <p class="categoria-marca-info">envio gratis</p>
             </article>
-        </a><a href="/producto/[id-del-producto]" class="tarjeta-producto">
+        </a><a href="{{ url_for('user.product_details') }}" class="tarjeta-producto">
             <article>
                 <picture>
                     <button class="btn-ampliar">
@@ -75,7 +97,7 @@
                 </div>
                 <p class="categoria-marca-info">envio gratis</p>
             </article>
-        </a><a href="/producto/[id-del-producto]" class="tarjeta-producto">
+        </a><a href="{{ url_for('user.product_details') }}" class="tarjeta-producto">
             <article>
                 <picture>
                     <button class="btn-ampliar">
@@ -103,7 +125,7 @@
                 </div>
                 <p class="categoria-marca-info">envio gratis</p>
             </article>
-        </a><a href="/producto/[id-del-producto]" class="tarjeta-producto">
+        </a><a href="{{ url_for('user.product_details') }}" class="tarjeta-producto">
             <article>
                 <picture>
                     <button class="btn-ampliar">
@@ -131,7 +153,7 @@
                 </div>
                 <p class="categoria-marca-info">envio gratis</p>
             </article>
-        </a><a href="/producto/[id-del-producto]" class="tarjeta-producto">
+        </a><a href="{{ url_for('user.product_details') }}" class="tarjeta-producto">
             <article>
                 <picture>
                     <button class="btn-ampliar">
@@ -195,6 +217,8 @@
     <section class="esenciales-seccion">
         <h2 class="sub-heading-h2">ALIADOS</h2>
         <br>
+
+        
         <div class="accordion-container">
             <article class="dynamic-hover-container"
                 style="--brand-bg: url(https://cloudfront-us-east-1.images.arcpublishing.com/elespectador/QACHQUT4WBAIXEDYZVGCBO2XB4.jpg);">
@@ -207,7 +231,7 @@
                         Procesadores AMD Ryzen™ Serie 7000 con tecnología "Zen 4" ofrecen un rendimiento excepcional
                         para juegos y creación de contenido.
                     </p>
-                    <button class="btn-styled"> Conoce mas</button>
+                    <button class="btn-styled"> <a href="{{ url_for('user.brand_view') }}">Conoce mas</a></button>
                 </div>
             </article>
 

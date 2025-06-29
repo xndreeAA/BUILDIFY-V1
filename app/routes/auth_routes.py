@@ -8,7 +8,7 @@ from app.controllers.auth_controller import (
 auth_bp = Blueprint('auth', __name__)
 
 # ------------------ RUTAS DE AUTENTICACIÓN ------------------ #
-
+# Importa las funciones del controlador de autenticación
 # Login
 auth_bp.add_url_rule('/login', view_func=login, methods=['GET', 'POST'])
 

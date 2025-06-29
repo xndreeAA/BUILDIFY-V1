@@ -1,0 +1,80 @@
+/* bloque */
+#content_info_perfil{
+    position: absolute;
+    top: 100px;
+    left: 100px;
+    right: 15px;
+}
+/* -------------------------mi_perfil------------------------- */
+.content_mi_perfil {
+    display: grid;
+    height: 100vh;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "foto_perfil perfil_info";
+}
+.foto_perfil {
+    grid-area: foto_perfil;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+.foto_perfil img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+.perfil_info {
+    grid-area: perfil_info;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+
+/* ------------------------------------------------------------- */
+.content_mis_compras{
+    height: 100vh;
+}
+
+
+.card_compras {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    width: 250px;
+    height: 380px;
+    border-radius: 10px;
+    padding: 10px;
+}
+.card_compras_header {
+    padding: 5px;
+    border-radius: 10px;
+    text-align: center;
+    background-color: rgb(226, 226, 226);
+}
+.card_compras_img{
+    display: flex;
+    width: 100%;
+    height: 150px;
+    justify-content: center;
+    align-items: center;
+}
+.card_compras_img img{
+    height: 100px;
+}
+.card_compras_descripcion {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+}
+.card_compras_descripcion p{
+    font-size: 13px;
+}
+.card_compras_descripcion button{
+    width: 100%;
+    padding: 10px;
+}

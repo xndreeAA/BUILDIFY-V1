@@ -11,7 +11,21 @@
     --david_color_2: #052659;
     --davod_color_3: rgba(0, 0, 0, 0.397);
 }
+ /* -----------------------Mensaje personalizado para usuarios autenticados----------------------- */
+.user_cliente,
+.user_visit{
+    position: absolute;
+    top:90px;
+    left: 20px;
+    color: white;
+}
+.user_cliente a,
+.user_visit a {
+    color: rgb(171, 167, 167);
+    font-weight: bold;
+}
 
+/* --------------------------------------------------------- */
 .seccion-fila-productos {
     display: flex;
     flex-direction: column;
