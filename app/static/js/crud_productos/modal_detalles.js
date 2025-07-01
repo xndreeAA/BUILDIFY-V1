@@ -1,7 +1,7 @@
-const modalDetalles = document.querySelector('.modal-detalles');
-const modalTitle = document.getElementById('modal-title');
+const modalDetalles = document.getElementById('modal-detalles');
+const modalTitle = document.getElementById('modal-detalles-title');
 const closeModalBtn = document.getElementById('close-modal-btn');
-const detallesContainer = document.querySelector('.detalles-container');
+const detallesContainer = document.getElementById('detalles-container');
 
 let productoGlobal = null;
 
@@ -34,7 +34,7 @@ const fetchData = async ({ id_producto }) => {
   return json.data;
 };
 
-const viewProduct = async ({ id_producto }) => {
+const viewDetailsProduct = async ({ id_producto }) => {
   const producto = await fetchData({ id_producto });
   const marcas = await fetchMarcas();
 
@@ -43,6 +43,13 @@ const viewProduct = async ({ id_producto }) => {
   modalTitle.textContent = `Producto #${producto.id_producto}`;
 
   let html = `
+    <label class="label_field">Nombre:
+      <div class="input-container">
+        <input disabled data-static="true" class="input_field" type="text"
+               name="nombre" value="${producto.nombre}">
+        <button type="button" class="btn-edit">✏️</button>
+      </div>
+    </label>
     <label class="label_field">Precio:
       <div class="input-container">
         <input disabled data-static="true" class="input_field" type="number"

@@ -23,8 +23,8 @@ $(document).ready(function() {
                 orderable: false,
                 render: function(data, type, row) {
                     return `<div class="btn-group">
-                        <a href="/admin/eliminar-producto/${row.id_producto}" class="btn btn-sm btn-danger">🗑️</a>
-                        <button class="btn btn-sm btn-info view-product" data-id="${row.id_producto}" onClick="viewProduct({ id_producto: ${row.id_producto} })">✏️</button>
+                        <button class="btn btn-sm btn-danger" data-id="${row.id_producto}" onClick="viewDeleteProduct({ id_producto: ${row.id_producto} })">🗑️</button>
+                        <button class="btn btn-sm btn-info view-product" data-id="${row.id_producto}" onClick="viewDetailsProduct({ id_producto: ${row.id_producto} })">✏️</button>
                     </div>`;
                 }
             }
