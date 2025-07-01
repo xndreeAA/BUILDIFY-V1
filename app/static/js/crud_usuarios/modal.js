@@ -1,7 +1,8 @@
-const modalDetalles = document.querySelector('.modal-detalles');
+const modalDetalles = document.getElementById('modal-usuario');
 const modalTitle = document.getElementById('modal-title');
 const closeModalBtn = document.getElementById('close-modal-btn');
 const detallesContainer = document.querySelector('.detalles-container');
+const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
 let usuarioGlobal = null;
 
@@ -135,7 +136,8 @@ detallesContainer.addEventListener('click', e => {
     fetch(`/api/usuarios/${usuarioGlobal.id_usuario}`, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken
       },
       credentials: 'include',
       body: JSON.stringify(data)
