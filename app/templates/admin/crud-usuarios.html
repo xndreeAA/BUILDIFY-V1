@@ -2,6 +2,7 @@
 
 {% block styles %}
     {{ super() }}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/DataTables/datatables.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/cruds/stock-styles.css') }}">
 {% endblock %}
