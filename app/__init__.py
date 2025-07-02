@@ -7,16 +7,12 @@ from itsdangerous import URLSafeTimedSerializer
 from dotenv import load_dotenv
 from flask_wtf.csrf import CSRFProtect
 
-import os
-
-
 db = SQLAlchemy()
 migrate = Migrate()
 login_manager = LoginManager()
 mail = Mail()
 
 serializer = None
-
 
 def create_app():
 
