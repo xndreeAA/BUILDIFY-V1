@@ -1,10 +1,25 @@
 from flask import Blueprint, jsonify, request, abort
 from flask_login import login_required
 
-from app.models.producto import Producto
+from app.models.producto import Producto, ImagenesProducto
+from app.models.detalles_producto import (
+    DetalleChasis, DetalleFuentePoder, DetalleMemoriaRAM,
+    DetallePlacaBase, DetalleProcesador, DetalleRefrigeracion,
+    DetalleTarjetaGrafica
+)
 from app import db
 
 productos_bp = Blueprint('api_productos', __name__, url_prefix='/api/productos')
+
+MAPA_DETALLES = {
+    1: DetalleProcesador,
+    2: DetalleMemoriaRAM,
+    3: DetalleTarjetaGrafica,
+    4: DetalleChasis,
+    5: DetalleRefrigeracion,
+    6: DetalleFuentePoder,
+    7: DetallePlacaBase,
+}
 
 @productos_bp.route('/', methods=['GET', 'POST'])
 # @login_required
@@ -43,24 +58,40 @@ def api_productos():
         if not payload:
             abort(400, description="Request body debe ser JSON válido.")
 
-        campos = ["nombre", "precio", "stock", "id_categoria", "id_marca"]
-        for campo in campos:
+        campos_requeridos = ["nombre", "precio", "stock", "id_marca", "id_categoria", "detalles"]
+        for campo in campos_requeridos:
             if campo not in payload:
-                abort(400, description=f"Falta el campo requerido: {campo}")
+                abort(400, description=f"Falta el campo obligatorio: {campo}")
 
         nuevo_producto = Producto(
             nombre=payload["nombre"],
             precio=payload["precio"],
             stock=payload["stock"],
-            id_categoria=payload["id_categoria"],
-            id_marca=payload["id_marca"]
+            id_marca=payload["id_marca"],
+            id_categoria=payload["id_categoria"]
         )
 
         db.session.add(nuevo_producto)
+        db.session.flush()
+
+        modelo_detalle = MAPA_DETALLES.get(payload["id_categoria"])
+        if modelo_detalle:
+            detalles_payload = payload["detalles"]
+            detalle = modelo_detalle(id_producto=nuevo_producto.id_producto, **detalles_payload)
+            db.session.add(detalle)
+
+    # arreglar
+        for imagen in payload.get("imagenes", []):
+            nueva_imagen = ImagenesProducto(
+                id_producto=nuevo_producto.id_producto,
+                nombre_archivo=imagen["ruta"],
+                es_principal=imagen["es_principal"]
+            )
+            db.session.add(nueva_imagen)
+
         db.session.commit()
 
-        return jsonify({ "success": True, "id_producto": nuevo_producto.id_producto }), 201
-
+        return jsonify({ "success": True, "data": { "id_producto": nuevo_producto.id_producto } }), 201
     else:
         abort(405, description="Método no permitido.")
 

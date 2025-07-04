@@ -27,7 +27,8 @@ def detalles_producto(id_producto):
         Producto.query
         .options(
             joinedload(Producto.marca),
-            joinedload(Producto.categoria)
+            joinedload(Producto.categoria),
+            joinedload(Producto.imagenes)
         )
         .filter_by(id_producto=id_producto)
         .first_or_404(description="Producto no encontrado.")

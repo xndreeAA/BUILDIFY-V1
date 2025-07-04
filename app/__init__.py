@@ -51,6 +51,7 @@ def create_app():
     from app.api.productos.api_marcas import marcas_bp
     from app.api.productos.api_categorias import categorias_bp
     from app.api.productos.api_detalles import detalles_bp
+    from app.api.productos.api_upload import upload_bp
 
     from app.api.usuarios.api_usuarios import user_api_bp
 
@@ -65,6 +66,7 @@ def create_app():
     app.register_blueprint(marcas_bp)
     app.register_blueprint(categorias_bp)
     app.register_blueprint(detalles_bp)
+    app.register_blueprint(upload_bp)
 
     app.register_blueprint(user_api_bp)
 
