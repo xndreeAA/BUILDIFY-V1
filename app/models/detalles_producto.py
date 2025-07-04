@@ -2,6 +2,7 @@ from app import db
 
 class DetalleChasis(db.Model):
     __tablename__ = 'detalles_chasises'
+    __table_args__ = {'extend_existing': True}
     
     id_producto = db.Column(db.Integer, db.ForeignKey('productos.id_producto'), primary_key=True)
     formato_soportado = db.Column(db.String(50))
@@ -24,6 +25,7 @@ class DetalleChasis(db.Model):
 
 class DetalleFuentePoder(db.Model):
     __tablename__ = 'detalles_fuentes_poder'
+    __table_args__ = {'extend_existing': True}
     
     id_producto = db.Column(db.Integer, db.ForeignKey('productos.id_producto'), primary_key=True)
     potencia_w = db.Column(db.Integer, nullable=False)
@@ -44,6 +46,7 @@ class DetalleFuentePoder(db.Model):
 
 class DetalleMemoriaRAM(db.Model):
     __tablename__ = 'detalles_memorias_ram'
+    __table_args__ = {'extend_existing': True}
     
     id_producto = db.Column(db.Integer, db.ForeignKey('productos.id_producto'), primary_key=True)
     capacidad_gb = db.Column(db.Integer, nullable=False)
@@ -60,6 +63,7 @@ class DetalleMemoriaRAM(db.Model):
 
 class DetallePlacaBase(db.Model):
     __tablename__ = 'detalles_placas_base'
+    __table_args__ = {'extend_existing': True}
     
     id_producto = db.Column(db.Integer, db.ForeignKey('productos.id_producto'), primary_key=True)
     socket = db.Column(db.String(20), nullable=False)
@@ -86,6 +90,7 @@ class DetallePlacaBase(db.Model):
 
 class DetalleProcesador(db.Model):
     __tablename__ = 'detalles_procesadores'
+    __table_args__ = {'extend_existing': True}
     
     id_producto = db.Column(db.Integer, db.ForeignKey('productos.id_producto'), primary_key=True)
     reloj_base_ghz = db.Column(db.Numeric(4, 2), nullable=False)
@@ -104,6 +109,7 @@ class DetalleProcesador(db.Model):
 
 class DetalleRefrigeracion(db.Model):
     __tablename__ = 'detalles_refrigeraciones'
+    __table_args__ = {'extend_existing': True}
     
     id_producto = db.Column(db.Integer, db.ForeignKey('productos.id_producto'), primary_key=True)
     tipo_refrigeracion = db.Column(db.Enum('Aire', 'Líquida', name='tipo_refrigeracion_enum'), nullable=False)
@@ -122,6 +128,7 @@ class DetalleRefrigeracion(db.Model):
 
 class DetalleTarjetaGrafica(db.Model):
     __tablename__ = 'detalles_tarjetas_graficas'
+    __table_args__ = {'extend_existing': True}
     
     id_producto = db.Column(db.Integer, db.ForeignKey('productos.id_producto'), primary_key=True)
     chipset = db.Column(db.String(50), nullable=False)

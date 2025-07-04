@@ -88,7 +88,24 @@ def detalles_producto(id_producto):
             if detalle:
                 for field, value in payload['detalles'].items():
                     if hasattr(detalle, field):
+                        # 👇 CAMBIO AGREGADO: detectar si el campo es booleano
+                        column_type = modelo_detalle.__table__.columns[field].type
+                        if isinstance(column_type, db.Boolean):
+                            # 👇 CAMBIO AGREGADO: convertir string 'false'/'true' a booleano real
+                            if isinstance(value, str):
+                                value = value.lower() == 'true'
                         setattr(detalle, field, value)
 
+        db.session.commit()
+        return jsonify({ "success": True })
+
+    elif request.method == 'DELETE':
+        # 👇 CAMBIO AGREGADO: eliminar también los detalles si existen
+        if modelo_detalle:
+            detalle = modelo_detalle.query.filter_by(id_producto=id_producto).first()
+            if detalle:
+                db.session.delete(detalle)
+
+        db.session.delete(producto)
         db.session.commit()
         return jsonify({ "success": True })

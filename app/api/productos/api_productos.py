@@ -1,8 +1,8 @@
 from flask import Blueprint, jsonify, request, abort
 from flask_login import login_required
-
 from app.models.producto import Producto
 from app import db
+import traceback
 
 productos_bp = Blueprint('api_productos', __name__, url_prefix='/api/productos')
 
@@ -53,12 +53,10 @@ def api_productos():
     else:
         abort(405, description="Método no permitido.")
 
-
 @productos_bp.route('/<int:id_producto>', methods=['GET', 'DELETE', 'PUT'])
 def producto_id_operaciones(id_producto):
-    producto = Producto.query.get_or_404(id_producto, description="Producto no encontrado.")
-
     if request.method == 'GET':
+        producto = Producto.query.get_or_404(id_producto, description="Producto no encontrado.")
         return jsonify({
             "success": True,
             "data": {
@@ -73,11 +71,26 @@ def producto_id_operaciones(id_producto):
         })
 
     elif request.method == 'DELETE':
-        db.session.delete(producto)
-        db.session.commit()
-        return jsonify({ "success": True })
+        try:
+            producto = Producto.query.get_or_404(id_producto, description="Producto no encontrado.")
+            print(f"🟠 Intentando eliminar el producto ID {id_producto}")
+
+            db.session.delete(producto)
+            db.session.commit()
+            print("✅ Producto eliminado correctamente")
+            return jsonify({ "success": True })
+        except Exception as e:
+            db.session.rollback()
+            print("🔥 ERROR AL ELIMINAR PRODUCTO:")
+            traceback.print_exc()
+            return jsonify({ 
+                "success": False, 
+                "error": str(e), 
+                "tipo": type(e).__name__ 
+            }), 400
 
     elif request.method == 'PUT':
+        producto = Producto.query.get_or_404(id_producto, description="Producto no encontrado.")
         payload = request.get_json(silent=True)
         if not payload:
             abort(400, description="Request body debe ser JSON válido.")
@@ -99,7 +112,8 @@ def producto_id_operaciones(id_producto):
 
     else:
         abort(405, description="Método no permitido.")
-
+        
+        
 
 @productos_bp.route('/all', methods=['GET'])
 def api_productos_all():

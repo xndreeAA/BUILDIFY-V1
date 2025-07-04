@@ -12,7 +12,7 @@ with app.app_context():
     nuevo_usuario = Usuario(
         nombre="Admin2",
         apellido="De Prueba",
-        email="jose@example.com",
+        email="admin2@example.com",
         direccion="Calle Falsa 123",
         telefono="123456789",
         id_rol=3# Asegúrate de que el rol con id_rol=1 exista en la tabla `roles`

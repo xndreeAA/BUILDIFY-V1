@@ -13,7 +13,7 @@
 
     {% if current_user.is_authenticated %}
     <div class="user_cliente">
-        <p>"¡Hola de nuevo, {{ current_user.nombre }}  Qué gusto verte por aquí 😊" <a href="{{ url_for('auth.logout') }}">Cerrar sesión</a> </p>
+        <p>"¡Hola de nuevo, {{ current_user.nombre }}!  Qué gusto verte por aquí 😊" <a href="{{ url_for('auth.logout') }}">Cerrar sesión</a> </p>
         <!-- <p>Hola, {{ current_user.apellido }} 👋</p>
         <p>Tu correo: {{ current_user.email }}</p> -->
     </div>

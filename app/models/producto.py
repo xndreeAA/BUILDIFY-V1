@@ -40,7 +40,7 @@ class MarcaCategoria(db.Model):
 
 class Producto(db.Model):
     __tablename__ = 'productos'
-    
+
     id_producto = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(100), nullable=False)
     precio = db.Column(db.Numeric(10, 2), nullable=False)
@@ -48,6 +48,15 @@ class Producto(db.Model):
     id_categoria = db.Column(db.Integer, db.ForeignKey('categorias.id_categoria'), nullable=False)
     id_marca = db.Column(db.Integer, db.ForeignKey('marcas.id_marca'), nullable=False)
     imagen = db.Column(db.String(100))
-    
+
+    # Relaciones con tablas de detalles (NO IMPORTAR MODELOS AQUÍ, solo usar strings)
+    detalle_procesador = db.relationship('DetalleProcesador', backref='producto', cascade='all, delete-orphan', uselist=False)
+    detalle_tarjeta_grafica = db.relationship('DetalleTarjetaGrafica', backref='producto', cascade='all, delete-orphan', uselist=False)
+    detalle_memoria_ram = db.relationship('DetalleMemoriaRAM', backref='producto', cascade='all, delete-orphan', uselist=False)
+    detalle_placa_base = db.relationship('DetallePlacaBase', backref='producto', cascade='all, delete-orphan', uselist=False)
+    detalle_refrigeracion = db.relationship('DetalleRefrigeracion', backref='producto', cascade='all, delete-orphan', uselist=False)
+    detalle_chasis = db.relationship('DetalleChasis', backref='producto', cascade='all, delete-orphan', uselist=False)
+    detalle_fuente_poder = db.relationship('DetalleFuentePoder', backref='producto', cascade='all, delete-orphan', uselist=False)
+
     def __repr__(self):
         return f'<Producto {self.nombre}>'
