@@ -20,6 +20,35 @@ MAPA_DETALLES = {
     7: DetallePlacaBase,
 }
 
+TIPOS_DEFAULT = {
+    db.String: "text",
+    db.Integer: "number",
+    db.Boolean: "checkbox",
+    db.Numeric: "number",
+    db.Float: "number",
+}
+
+@detalles_bp.route("/campos/<int:id_categoria>", methods=["GET"])
+def obtener_campos_detalle(id_categoria):
+    modelo = MAPA_DETALLES.get(id_categoria)
+    if not modelo:
+        return jsonify({"success": False, "error": "Categoría sin modelo de detalles asociado."}), 400
+
+    campos = []
+    for col in modelo.__table__.columns:
+        if col.name == "id_producto":
+            continue
+
+        tipo_sqlalchemy = type(col.type)
+        tipo_html = TIPOS_DEFAULT.get(tipo_sqlalchemy, "text")
+
+        campos.append({
+            "nombre": col.name,
+            "tipo": tipo_html
+        })
+
+    return jsonify({ "success": True, "campos": campos })
+
 @detalles_bp.route('/<int:id_producto>', methods=['GET', 'PUT', 'DELETE'])
 def detalles_producto(id_producto):
 

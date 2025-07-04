@@ -66,16 +66,9 @@ const viewDetailsProduct = async ({ id_producto }) => {
         <button type="button" class="btn-edit">✏️</button>
       </div>
     </label>
-    <label class="label_field">Imagen:
-      <div class="input-container">
-        <input disabled data-static="true" class="input_field" type="text"
-               name="imagen" value="${producto.imagen}">
-        <button type="button" class="btn-edit">✏️</button>
-      </div>
-    </label>
   `;
-
   
+
   const optionsHtml = marcas.map(marca => `
     <option 
       ${marca.id_marca === producto.marca.id_marca ? 'selected' : ''} 
@@ -94,6 +87,20 @@ const viewDetailsProduct = async ({ id_producto }) => {
       </div>
     </label>
   `;
+
+  producto.imagenes.forEach((e, i) => {
+    const ruta = e.ruta;
+
+    html += `
+      <label class="label_field">Imagen numero: ${ i + 1 }:
+        <div class="input-container">
+          <input disabled data-static="true" class="input_field" type="text"
+                 name="${ruta}" value="${ruta}">
+          <button type="button" class="btn-edit">✏️</button>
+        </div>
+      </label>
+    `;
+  });
 
   for (const key in producto.detalles) {
     const val = producto.detalles[key];

@@ -1,5 +1,6 @@
-from flask import Blueprint, jsonify, request, abort
+from flask import Blueprint, jsonify, request, abort, current_app
 from flask_login import login_required
+from werkzeug.utils import secure_filename
 
 from app.models.producto import Producto, ImagenesProducto
 from app.models.detalles_producto import (
@@ -8,6 +9,7 @@ from app.models.detalles_producto import (
     DetalleTarjetaGrafica
 )
 from app import db
+import os
 
 productos_bp = Blueprint('api_productos', __name__, url_prefix='/api/productos')
 
@@ -80,7 +82,6 @@ def api_productos():
             detalle = modelo_detalle(id_producto=nuevo_producto.id_producto, **detalles_payload)
             db.session.add(detalle)
 
-    # arreglar
         for imagen in payload.get("imagenes", []):
             nueva_imagen = ImagenesProducto(
                 id_producto=nuevo_producto.id_producto,
@@ -146,3 +147,52 @@ def producto_id_operaciones(id_producto):
 
     else:
         abort(405, description="Método no permitido.")
+
+
+
+ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'webp'}
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@productos_bp.route('/subir-imagen', methods=['POST'])
+def subir_imagen():
+    imagenes = request.files.getlist('imagenes')
+    id_producto = request.form.get('id_producto')
+    categoria = request.form.get('categoria')
+    principales = request.form.getlist('es_principal')
+
+    if not imagenes or not id_producto or not categoria:
+        abort(400, description="Faltan datos requeridos.")
+
+    # Ruta: static/img/<categoria>/producto_<id_producto>/
+    base_path = os.path.join(current_app.root_path, 'static', 'img', categoria, f'producto_{id_producto}')
+    os.makedirs(base_path, exist_ok=True)
+
+    rutas = []
+    from app.models.producto import ImagenesProducto
+    from app import db
+
+    for idx, imagen in enumerate(imagenes):
+        if imagen and allowed_file(imagen.filename):
+            filename = secure_filename(imagen.filename)
+            ruta_relativa = f'img/{categoria}/producto_{id_producto}/{filename}'
+            ruta_absoluta = os.path.join(base_path, filename)
+            imagen.save(ruta_absoluta)
+
+            imagen_db = ImagenesProducto(
+                nombre_archivo=ruta_relativa,
+                es_principal=(principales[idx].lower() == 'true'),
+                id_producto=int(id_producto)
+            )
+            db.session.add(imagen_db)
+            rutas.append(ruta_relativa)
+        else:
+            abort(400, description="Archivo no válido.")
+
+    db.session.commit()
+
+    return jsonify({
+        "success": True,
+        "imagenes_guardadas": rutas
+    })

@@ -13,6 +13,11 @@ def dashboard():
 def crud_productos():
     return render_template('admin/crud-productos.html')
 
+@admin_bp.route('/crear-productos')
+@login_required
+def crear_productos():
+    return render_template('admin/crear-productos.html')
+
 @admin_bp.route('/usuarios')
 @login_required
 def crud_usuarios():

@@ -10,6 +10,8 @@
 {% block content %}
     <section id="stock-container-section">
         <article class="stock-container-article">
+                <a id="btn-crear-producto" href="{{ url_for('admin.crear_productos')}}">crear productos</a>
+                <br>
                 <table id="tabla-productos" class="display table table-striped">
                     <thead>
                         <tr>
@@ -72,12 +74,6 @@
                 <picture class="modal-img-container">
                     <img src="https://reset.net.co/wp-content/uploads/2020/10/Procesador_AMD_Ryzen_5_5600X_3.7GHz.webp" alt="imagen de producto">
                 </picture>
-                <label for="nombre-producto" class="label_field">Nombre:
-                    <div class="input-container">
-                        <input disabled class="input_field" type="text" name="nombre-producto" value="Nvidia RTX 3090" id="nombre-producto">
-                        <button class="btn-edit">✏️</button>
-                    </div>
-                </label>
             </article>
             <article class="modal-article">
                 <div id="detalles-container">

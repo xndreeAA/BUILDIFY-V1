@@ -1,8 +1,8 @@
 $(document).ready(function() {
     $('#tabla-productos').DataTable({
         ajax: {
-            url: "/api/productos/all",
-            dataSrc: "",
+            url: "/api/productos",
+            dataSrc: "data",
             error: function(xhr) { console.error('AJAX Error:', xhr); }
         },
         columns: [

@@ -44,12 +44,6 @@ const viewDeleteProduct = async ({ id_producto }) => {
                name="stock" value="${producto.stock}">
       </div>
     </label>
-    <label class="label_field">Imagen:
-      <div class="input-container">
-        <input disabled data-static="true" class="input_field" type="text"
-               name="imagen" value="${producto.imagen}">
-      </div>
-    </label>
     `;
 
     html += `
