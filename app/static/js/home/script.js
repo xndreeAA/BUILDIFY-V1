@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 
                 const contenedor = document.getElementById('fila-productos-mas-vendidos');
 
-                for (let i = 0; i <= 4 && i < productos.length; i++) {
+                for (let i = 0; i < productos.length; i++) {
                     const elemento = document.createElement('a');
                     elemento.href = `/producto/${productos[i].id_producto}`; // Puedes ajustar esto
                     elemento.className = 'tarjeta-producto';
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     </svg>
                                 </button>
                                
-                                <img src="/static/images/productos/${productos[i].imagen}" alt="${productos[i].nombre}">
+                                <img src="/static/${productos[i].imagenes[0].ruta}" alt="${productos[i].nombre}">
                             </picture>
                             <div class="tarjeta-producto-info">
                                 <h4>${productos[i].nombre}</h4>
