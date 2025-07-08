@@ -28,6 +28,18 @@ TIPOS_DEFAULT = {
     db.Float: "number",
 }
 
+def convertir_tipo_seguro(modelo, field, value):
+    column_type = getattr(modelo.__table__.columns, field).type
+    if isinstance(column_type, db.Boolean):
+        if isinstance(value, bool):
+            return value
+        if isinstance(value, str):
+            return value.lower() in ['true', '1']
+        if isinstance(value, int):
+            return value == 1
+        raise TypeError(f"Valor no válido para booleano: {value}")
+    return value
+
 @detalles_bp.route("/campos/<int:id_categoria>", methods=["GET"])
 def obtener_campos_detalle(id_categoria):
     modelo = MAPA_DETALLES.get(id_categoria)
@@ -135,7 +147,10 @@ def detalles_producto(id_producto):
             if detalle:
                 for field, value in payload['detalles'].items():
                     if hasattr(detalle, field):
-                        setattr(detalle, field, value)
+                        try:
+                            setattr(detalle, field, convertir_tipo_seguro(modelo_detalle, field, value))
+                        except TypeError as e:
+                            abort(400, description=str(e))
 
         db.session.commit()
         return jsonify({ "success": True })
