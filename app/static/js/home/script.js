@@ -9,6 +9,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 const contenedor = document.getElementById('fila-productos-mas-vendidos');
 
                 for (let i = 0; i < productos.length; i++) {
+                    console.log(productos[i]);
+                    
                     const elemento = document.createElement('a');
                     elemento.href = `/producto/${productos[i].id_producto}`; // Puedes ajustar esto
                     elemento.className = 'tarjeta-producto';
