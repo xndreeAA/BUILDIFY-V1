@@ -2,31 +2,22 @@ from app import db
 
 class Categoria(db.Model):
     __tablename__ = 'categorias'
-    
+
     id_categoria = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(100), nullable=False, unique=True)
-    
-    productos = db.relationship('Producto', backref='categoria', lazy=True)
-    
-    def __repr__(self):
-        return f'<Categoria {self.nombre}>'
+    nombre = db.Column(db.String(100), unique=True, nullable=False)
+    productos = db.relationship('Producto', backref='categoria', cascade='all, delete-orphan', lazy=True)
 
 class Marca(db.Model):
     __tablename__ = 'marcas'
     
     id_marca = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(100), nullable=False, unique=True)
-    
     productos = db.relationship('Producto', backref='marca', lazy=True)
-    
     categorias = db.relationship(
         'Categoria',
         secondary='marcas_categorias',
         backref=db.backref('marcas', lazy='dynamic')
     )
-    
-    def __repr__(self):
-        return f'<Marca {self.nombre}>'
 
 class MarcaCategoria(db.Model):
     __tablename__ = 'marcas_categorias'
@@ -49,7 +40,6 @@ class ImagenesProducto(db.Model):
     def __repr__(self):
         return f'<ImagenesProducto archivo={self.nombre_archivo}>'
 
-
 class Producto(db.Model):
     __tablename__ = 'productos'
 
@@ -59,12 +49,17 @@ class Producto(db.Model):
     stock = db.Column(db.Integer, nullable=False)
     id_categoria = db.Column(db.Integer, db.ForeignKey('categorias.id_categoria'), nullable=False)
     id_marca = db.Column(db.Integer, db.ForeignKey('marcas.id_marca'), nullable=False)
+    descripcion = db.Column(db.Text)
 
-    imagenes = db.relationship('ImagenesProducto', backref='producto', lazy=True)
+    detalles_chasis = db.relationship('DetalleChasis', backref='producto', uselist=False, cascade='all, delete')
+    detalles_fuente_poder = db.relationship('DetalleFuentePoder', backref='producto', uselist=False, cascade='all, delete')
+    detalles_memoria_ram = db.relationship('DetalleMemoriaRAM', backref='producto', uselist=False, cascade='all, delete')
+    detalles_placa_base = db.relationship('DetallePlacaBase', backref='producto', uselist=False, cascade='all, delete')
+    detalles_procesador = db.relationship('DetalleProcesador', backref='producto', uselist=False, cascade='all, delete')
+    detalles_refrigeracion = db.relationship('DetalleRefrigeracion', backref='producto', uselist=False, cascade='all, delete')
+    detalles_tarjeta_grafica = db.relationship('DetalleTarjetaGrafica', backref='producto', uselist=False, cascade='all, delete')
+    imagenes = db.relationship('ImagenesProducto', backref='producto', cascade='all, delete', lazy=True)
 
     @property
     def imagen_principal(self):
         return next((img for img in self.imagenes if img.es_principal), None)
-
-    def __repr__(self):
-        return f'<Producto {self.nombre}>'
