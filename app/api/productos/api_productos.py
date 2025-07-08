@@ -1,8 +1,9 @@
 from flask import Blueprint, jsonify, request, abort, current_app
 from flask_login import login_required
 from werkzeug.utils import secure_filename
+from sqlalchemy import or_
 
-from app.models.producto import Producto, ImagenesProducto
+from app.models.producto import Producto, Categoria, Marca, ImagenesProducto
 from app.models.detalles_producto import (
     DetalleChasis, DetalleFuentePoder, DetalleMemoriaRAM,
     DetallePlacaBase, DetalleProcesador, DetalleRefrigeracion,
@@ -23,27 +24,45 @@ MAPA_DETALLES = {
     6: DetalleFuentePoder,
     7: DetallePlacaBase,
 }
-
 @productos_bp.route('/', methods=['GET', 'POST'])
-# @login_required
 def api_productos():
     if request.method == 'GET':
-        
-        productos = Producto.query.options(
+        busqueda = request.args.get('busqueda')
+        categoria_nombre = request.args.get('categoria')
+        if categoria_nombre:
+            categoria_nombre = categoria_nombre.lower()
+        marca_nombre = request.args.get('marca')
+        if marca_nombre:
+            marca_nombre = marca_nombre.lower()
+
+        query = Producto.query.options(
             db.joinedload(Producto.categoria),
             db.joinedload(Producto.marca),
             db.joinedload(Producto.imagenes)
-        ).all()
-        
-        productos_data = []
+        )
+        if busqueda:
+            query = query.join(Producto.categoria).filter(
+                or_(
+                    Producto.nombre.ilike(f"%{busqueda}%"),
+                    Categoria.nombre.ilike(f"%{busqueda}%"),
+                    Marca.nombre.ilike(f"%{busqueda}%")
+                )
+            )
+        if marca_nombre:
+            query = query.join(Producto.marca).filter(Marca.nombre == marca_nombre)
+        if categoria_nombre:
+            query = query.join(Producto.categoria).filter(Categoria.nombre == categoria_nombre)
 
+        productos = query.all()
+
+        productos_data = []
         for producto in productos:
             productos_data.append({
                 "id_producto": producto.id_producto,
                 "nombre": producto.nombre,
                 "precio": float(producto.precio),
                 "stock": producto.stock,
-                "categoria": producto.categoria.nombre,  
+                "categoria": producto.categoria.nombre,
                 "marca": producto.marca.nombre,
                 "imagenes": [
                     {
@@ -53,9 +72,9 @@ def api_productos():
                     for imagen in producto.imagenes
                 ]
             })
-        
+
         return jsonify({ "success": True, "data": productos_data })
- 
+
     elif request.method == 'POST':
         payload = request.get_json(silent=True)
         if not payload:
