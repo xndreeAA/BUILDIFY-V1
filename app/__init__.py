@@ -32,30 +32,42 @@ def create_app():
 
     global serializer
     serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
-        
+
+    # MODELOS
     from app.models.usuario import Usuario
     from app.models.rol import Rol
+    from app.models.producto import Producto, Categoria, Marca, MarcaCategoria
+    from app.models.detalles_producto import (
+        DetalleProcesador,
+        DetalleTarjetaGrafica,
+        DetalleMemoriaRAM,
+        DetallePlacaBase,
+        DetalleRefrigeracion,
+        DetalleChasis,
+        DetalleFuentePoder
+    )
 
     @login_manager.user_loader
     def load_user(user_id):
         return Usuario.query.get(int(user_id))
 
+    # RUTAS
     from app.routes.auth_routes import auth_bp
     from app.routes.main_routes import main_bp
     from app.routes.admin_routes import admin_bp
     from app.routes.colaborador_routes import colaborador_bp
     from app.routes.user_routes import user_bp
     from app.routes.checkout import checkout_bp
-    
+
+    # APIS
     from app.api.productos.api_productos import productos_bp
     from app.api.productos.api_marcas import marcas_bp
     from app.api.productos.api_categorias import categorias_bp
     from app.api.productos.api_detalles import detalles_bp
-    from app.api.productos.api_upload import upload_bp
 
     from app.api.usuarios.api_usuarios import user_api_bp
 
-
+    # REGISTRO BLUEPRINTS
     app.register_blueprint(auth_bp)
     app.register_blueprint(main_bp)
     app.register_blueprint(admin_bp)
@@ -66,10 +78,8 @@ def create_app():
     app.register_blueprint(marcas_bp)
     app.register_blueprint(categorias_bp)
     app.register_blueprint(detalles_bp)
-    app.register_blueprint(upload_bp)
 
     app.register_blueprint(user_api_bp)
-
     app.register_blueprint(checkout_bp)
     
     return app

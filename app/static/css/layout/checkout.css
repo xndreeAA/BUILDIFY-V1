@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
+.container_checkout{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+}
 
 
 
@@ -9,12 +15,20 @@
     grid-template-columns: 1fr 0.6fr;
     gap: 2rem;
     padding: 2rem;
-    max-width: 1200px;
+    /* max-width: 1500px; */
+    width: 100%;
     /* margin: auto; */
     background-color: white;
 
 }
-
+.product{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.product img{
+    width: 140px;
+}
 .checkout-info {
     padding: 1rem;
     background: #fff;

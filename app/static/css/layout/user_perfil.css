@@ -19,6 +19,7 @@
     flex-direction: column;
     justify-content: start;
     align-items: center;
+    width: 50%;
 }
 .foto_perfil img {
     width: 200px;
@@ -38,16 +39,25 @@
 
 /* ------------------------------------------------------------- */
 .content_mis_compras{
-    height: 100vh;
+    height: 100%;
+    padding: 40px;
+    background-color: rgb(255, 255, 255);
+    border: 5px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
 }
-
+.contenedor_cards{
+    display: flex;
+    gap: 20px   ;
+}
 
 .card_compras {
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     width: 250px;
     height: 380px;
     border-radius: 10px;
-    padding: 10px;
+    padding: 20px;
 }
 .card_compras_header {
     padding: 5px;

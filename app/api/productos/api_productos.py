@@ -10,6 +10,7 @@ from app.models.detalles_producto import (
 )
 from app import db
 import os
+import traceback
 
 productos_bp = Blueprint('api_productos', __name__, url_prefix='/api/productos')
 
@@ -96,12 +97,10 @@ def api_productos():
     else:
         abort(405, description="Método no permitido.")
 
-
 @productos_bp.route('/<int:id_producto>', methods=['GET', 'DELETE', 'PUT'])
 def producto_id_operaciones(id_producto):
-    producto = Producto.query.get_or_404(id_producto, description="Producto no encontrado.")
-
     if request.method == 'GET':
+        producto = Producto.query.get_or_404(id_producto, description="Producto no encontrado.")
         return jsonify({
             "success": True,
             "data": {
@@ -122,11 +121,26 @@ def producto_id_operaciones(id_producto):
         })
 
     elif request.method == 'DELETE':
-        db.session.delete(producto)
-        db.session.commit()
-        return jsonify({ "success": True })
+        try:
+            producto = Producto.query.get_or_404(id_producto, description="Producto no encontrado.")
+            print(f"🟠 Intentando eliminar el producto ID {id_producto}")
+
+            db.session.delete(producto)
+            db.session.commit()
+            print("✅ Producto eliminado correctamente")
+            return jsonify({ "success": True })
+        except Exception as e:
+            db.session.rollback()
+            print("🔥 ERROR AL ELIMINAR PRODUCTO:")
+            traceback.print_exc()
+            return jsonify({ 
+                "success": False, 
+                "error": str(e), 
+                "tipo": type(e).__name__ 
+            }), 400
 
     elif request.method == 'PUT':
+        producto = Producto.query.get_or_404(id_producto, description="Producto no encontrado.")
         payload = request.get_json(silent=True)
         if not payload:
             abort(400, description="Request body debe ser JSON válido.")
@@ -147,7 +161,8 @@ def producto_id_operaciones(id_producto):
 
     else:
         abort(405, description="Método no permitido.")
-
+        
+        
 
 
 ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'webp'}
@@ -165,7 +180,7 @@ def subir_imagen():
     if not imagenes or not id_producto or not categoria:
         abort(400, description="Faltan datos requeridos.")
 
-    base_path = os.path.join(current_app.root_path, 'static', 'img', categoria, f'producto_{id_producto}')
+    base_path = os.path.join(current_app.root_path, 'static', 'images', categoria, f'producto_{id_producto}')
     os.makedirs(base_path, exist_ok=True)
 
     rutas = []
@@ -174,7 +189,7 @@ def subir_imagen():
     for idx, imagen in enumerate(imagenes):
         if imagen and allowed_file(imagen.filename):
             filename = secure_filename(imagen.filename)
-            ruta_relativa = f'img/{categoria}/producto_{id_producto}/{filename}'
+            ruta_relativa = f'images/{categoria}/producto_{id_producto}/{filename}'
             ruta_absoluta = os.path.join(base_path, filename)
             imagen.save(ruta_absoluta)
 

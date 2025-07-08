@@ -16,20 +16,17 @@
         <p>Total: $456.965</p>
 
         <div class="producto-carrito">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCBP1QQB1--jCcZEdxZAnbQLpbmWQM304hCg&s"
+            <img src="https://reset.net.co/wp-content/uploads/2020/10/Procesador_AMD_Ryzen_5_5600X_3.7GHz.webp"
                 alt="Tenis Forum Puffed" />
 
             <div class="info-producto">
-                <h3>Chasis v1</h3>
+                <h3>NVIDA RTX 5090ti 6GB</h3>
                 <p>Color: black</p>
                 <p class="precio-original">$649.990</p>
                 <p class="precio-descuento">$456.965</p>
 
                 <label for="cantidad">Cantidad:</label>
-                <select id="cantidad">
-                    <option value="1" selected>1</option>
-                    <option value="2">2</option>
-                </select>
+                <input type="number" name="cantidad" id="catidad">
 
                 <button class="eliminar">Eliminar</button>
             </div>
@@ -48,7 +45,7 @@
         </ul>
 
         <input type="text" placeholder="Usa un código promocional" />
-        <button class="pagar"><a href="{{ url_for('user.checkout') }}">Ir a pagar</a></button>
+        <a href="{{ url_for('user.checkout') }}"><button class="pagar">Ir a pagar</button></a>
 
         <div class="metodos-pago">
             <p>Formas de pago aceptadas:</p>

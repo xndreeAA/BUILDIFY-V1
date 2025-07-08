@@ -7,6 +7,7 @@ from app import db
 user_api_bp = Blueprint('api_usuarios', __name__, url_prefix='/api/usuarios')
 
 @user_api_bp.route('/', methods=['GET', 'POST'])
+# Trae todos los usuarios de la tabla usuarios 
 def api_usuarios():
     if request.method == 'GET':
         usuarios = Usuario.query.all()
@@ -23,7 +24,7 @@ def api_usuarios():
             } for u in usuarios
         ]
         return jsonify({"success": True, "data": usuarios_data})
-
+# Crea un nuevo usuario 
     elif request.method == 'POST':
         payload = request.get_json(silent=True)
         if not payload:
@@ -37,6 +38,7 @@ def api_usuarios():
 
 
 @user_api_bp.route('/<int:id_usuario>', methods=['GET', 'PUT', 'DELETE'])
+# trae usuario por id, elimina y actualiza usuario
 def api_usuario_individual(id_usuario):
     usuario = Usuario.query.get_or_404(id_usuario, description="Usuario no encontrado.")
 

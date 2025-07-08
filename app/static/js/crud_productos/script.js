@@ -1,3 +1,4 @@
+// data table 
 $(document).ready(function() {
     $('#tabla-productos').DataTable({
         ajax: {

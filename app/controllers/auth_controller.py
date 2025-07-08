@@ -22,7 +22,7 @@ def login():
 
     if intentos >= MAX_INTENTOS and time.time() - ultimo_intento < TIEMPO_BLOQUEO:
         flash('Demasiados intentos fallidos. Intenta nuevamente en 1 minuto.', 'danger')
-        return render_template('login.html', form=form)
+        return render_template('auth/login.html', form=form) #Cambio 
 
     if form.validate_on_submit():
         email = form.email.data

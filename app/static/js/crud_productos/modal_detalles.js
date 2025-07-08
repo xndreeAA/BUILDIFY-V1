@@ -48,21 +48,21 @@ const viewDetailsProduct = async ({ id_producto }) => {
     <label class="label_field">Nombre:
       <div class="input-container">
         <input disabled data-static="true" class="input_field" type="text"
-               name="nombre" value="${producto.nombre}">
+              name="nombre" value="${producto.nombre}">
         <button type="button" class="btn-edit">✏️</button>
       </div>
     </label>
     <label class="label_field">Precio:
       <div class="input-container">
         <input disabled data-static="true" class="input_field" type="number"
-               name="precio" value="${producto.precio}">
+              name="precio" value="${producto.precio}">
         <button type="button" class="btn-edit">✏️</button>
       </div>
     </label>
     <label class="label_field">Stock:
       <div class="input-container">
         <input disabled data-static="true" class="input_field" type="number"
-               name="stock" value="${producto.stock}">
+              name="stock" value="${producto.stock}">
         <button type="button" class="btn-edit">✏️</button>
       </div>
     </label>

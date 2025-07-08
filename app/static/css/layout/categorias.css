@@ -83,13 +83,15 @@
     border: none;
 }
 .boton_agregar_categoria {
-    background-color: white;
+    background-color:white;
     padding: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
+a{
+    text-decoration: none;
+}
 #agregar{
     width: 48%;
 }

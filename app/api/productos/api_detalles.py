@@ -154,3 +154,14 @@ def detalles_producto(id_producto):
 
         db.session.commit()
         return jsonify({ "success": True })
+
+    elif request.method == 'DELETE':
+        # 👇 CAMBIO AGREGADO: eliminar también los detalles si existen
+        if modelo_detalle:
+            detalle = modelo_detalle.query.filter_by(id_producto=id_producto).first()
+            if detalle:
+                db.session.delete(detalle)
+
+        db.session.delete(producto)
+        db.session.commit()
+        return jsonify({ "success": True })
