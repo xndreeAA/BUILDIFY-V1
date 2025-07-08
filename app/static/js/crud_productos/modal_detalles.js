@@ -88,40 +88,26 @@ const viewDetailsProduct = async ({ id_producto }) => {
     </label>
   `;
 
-  producto.imagenes.forEach((e, i) => {
-    const ruta = e.ruta;
-
-    html += `
-      <label class="label_field">Imagen numero: ${ i + 1 }:
-        <div class="input-container">
-          <input disabled data-static="true" class="input_field" type="text"
-                 name="${ruta}" value="${ruta}">
-          <button type="button" class="btn-edit">✏️</button>
-        </div>
-      </label>
-    `;
-  });
-
   for (const key in producto.detalles) {
     const val = producto.detalles[key];
     let type, extra = '';
+  
     if (typeof val === 'boolean') {
-      type = 'input';
+      type = 'checkbox';
       extra = val ? ' checked' : '';
     } else if (!isNaN(val) && val !== '') {
       type = 'number';
     } else {
       type = 'text';
     }
-
     html += `
       <label class="label_field">${key.charAt(0).toUpperCase()+key.slice(1)}:
         <div class="input-container">
           <input disabled class="input_field"
-                 type="${type}"
-                 name="${key}"
-                 value="${type !== 'checkbox' ? val : ''}"
-                 ${extra}>
+            type="${type}"
+            name="${key}"
+            ${type !== 'checkbox' ? `value="${val}"` : ''}
+            ${extra}>
           <button type="button" class="btn-edit">✏️</button>
         </div>
       </label>
@@ -135,7 +121,7 @@ const viewDetailsProduct = async ({ id_producto }) => {
 detallesContainer.addEventListener('click', e => {
   e.preventDefault();
 
-  if (e.target.classList.contains('btn-edit' && 'select')) {
+  if (e.target.classList.contains('btn-edit') && e.target.classList.contains('select')) {
     const inp = e.target.closest('.input-container').querySelector('select');
     inp.disabled = !inp.disabled;
     e.target.textContent = inp.disabled ? '✏️' : '✔️';
@@ -145,9 +131,15 @@ detallesContainer.addEventListener('click', e => {
   if (e.target.classList.contains('btn-edit')) {
     const inp = e.target.closest('.input-container').querySelector('input');
     inp.disabled = !inp.disabled;
+
+    if (inp.type === 'checkbox') {
+      if (inp.checked) inp.checked = false;
+      else inp.checked = true;
+    }
     e.target.textContent = inp.disabled ? '✏️' : '✔️';
     return;
   }
+
 
   if (e.target.id === 'submit-btn') {
     e.preventDefault();
@@ -190,7 +182,7 @@ detallesContainer.addEventListener('click', e => {
       body: JSON.stringify(data)
     })
     .then(res => {
-      if (!res.ok) throw new Error(`Error HTTP ${res.status}`);
+      if (!res.ok) throw new Error(`Error HTTP ${res.status}`, res);
       return res.json();
     })
     .then(json => {

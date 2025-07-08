@@ -6,8 +6,6 @@ const inputImagenes = document.getElementById('input-imagenes');
 const imagenPrincipalSelect = document.getElementById('imagen-principal-select');
 const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-let archivosSeleccionados = [];
-
 async function cargarCategorias() {
     const res = await fetch('/api/categorias');
     const json = await res.json();
@@ -36,6 +34,7 @@ async function cargarMarcas() {
     });
 }
 
+let archivosSeleccionados = [];
 inputImagenes.addEventListener('change', () => {
     const nuevosArchivos = Array.from(inputImagenes.files);
 
@@ -44,6 +43,7 @@ inputImagenes.addEventListener('change', () => {
             archivosSeleccionados.push(nuevo);
         }
     });
+    
     imagenPrincipalSelect.innerHTML = `<option value="">Seleccione una imagen</option>`;
     archivosSeleccionados.forEach(file => {
         const option = document.createElement('option');
@@ -54,6 +54,7 @@ inputImagenes.addEventListener('change', () => {
 
     inputImagenes.value = '';
 });
+
 categoriaSelect.addEventListener('change', async (e) => {
     const id_categoria = e.target.value;
 
