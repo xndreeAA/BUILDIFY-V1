@@ -165,13 +165,11 @@ def subir_imagen():
     if not imagenes or not id_producto or not categoria:
         abort(400, description="Faltan datos requeridos.")
 
-    # Ruta: static/img/<categoria>/producto_<id_producto>/
     base_path = os.path.join(current_app.root_path, 'static', 'img', categoria, f'producto_{id_producto}')
     os.makedirs(base_path, exist_ok=True)
 
     rutas = []
     from app.models.producto import ImagenesProducto
-    from app import db
 
     for idx, imagen in enumerate(imagenes):
         if imagen and allowed_file(imagen.filename):
