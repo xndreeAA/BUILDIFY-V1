@@ -82,7 +82,7 @@ categoriaSelect.addEventListener('change', async (e) => {
         } else {
             input = `
                 <label>${campo.nombre}:
-                <input type="${campo.tipo}" name="${campo.nombre}">
+                <input type="${campo.tipo}" name="${campo.nombre}" step="0.01">
                 </label>`;
         }
         return input;
@@ -129,6 +129,8 @@ formNuevoProducto.addEventListener('submit', async (e) => {
         }
     });
 
+    console.log(payload);
+    
     try {
         const res = await fetch('/api/productos', {
             method: 'POST',
