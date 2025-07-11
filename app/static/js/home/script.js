@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 for (let i = 0; i < productos.length; i++) {
                     
                     const elemento = document.createElement('a');
-                    elemento.href = `/producto/${productos[i].id_producto}`; // Puedes ajustar esto
+                    elemento.href = `/user/product_details/${productos[i].id_producto}`;//Se ajusta a la ruta 
                     elemento.className = 'tarjeta-producto';
                     
                     elemento.innerHTML = `
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                         <path d="m243-240-51-51 405-405H240v-72h480v480h-72v-357L243-240Z" />
                                     </svg>
                                 </button>
-                               
+                                
                                 <img src="/static/${productos[i].imagenes[0].ruta}" alt="${productos[i].nombre}">
                             </picture>
                             <div class="tarjeta-producto-info">

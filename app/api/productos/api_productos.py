@@ -55,7 +55,6 @@ def api_productos():
             })
         
         return jsonify({ "success": True, "data": productos_data })
- 
     elif request.method == 'POST':
         payload = request.get_json(silent=True)
         if not payload:
@@ -209,3 +208,4 @@ def subir_imagen():
         "success": True,
         "imagenes_guardadas": rutas
     })
+# ------------------------------------------------------------------------------------------------

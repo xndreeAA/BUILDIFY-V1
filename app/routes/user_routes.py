@@ -18,10 +18,11 @@ def section():
 def brand_view():
     return render_template('user/brand_view.html')
 # ----------------------------------------------------------------
-
-@user_bp.route('/product_details')
-def product_details():
-    return render_template('user/product_details.html')
+#Se modifica la ruta para poder recibir el id del producto desde el home 
+@user_bp.route('/product_details/<int:id>')
+def product_details(id):
+    
+    return render_template('user/product_details.html', product_id=id)
 
 # ----------------------------------------------------------------
 
