@@ -1,14 +1,104 @@
 {% extends "user/user_perfil/user_info.html" %}
 
 {% block content_userInfo %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/config_user.css')}}" />
+
 <div class="content_configuracion_perfil">
     <div class="volver">
-    <p id="home_link">
-        ← Regresar al home <a href="{{ url_for('main.home') }}">Volver</a>
-    </p>
-</div>
-    <h1>Configuracion de mi perfil</h1>
-    <p>Este es el contenido dinámico dentro del contenedor de `user_info.html`.</p>
+        <p id="home_link">
+            ← Regresar al home <a href="{{ url_for('main.home') }}">Volver</a>
+        </p>
+    </div>
+
+    <h2 class="titulo">Datos de tu cuenta Buildify</h2>
+    <div class="perfil_info">
+        <h3><strong>Configuración datos del usuario</strong></h3>
+        <table>
+            <tbody>
+                {% for campo, valor in {
+                    'nombre': current_user.nombre,
+                    'apellido': current_user.apellido,
+                    'email': current_user.email,
+                    'direccion': current_user.direccion,
+                    'telefono': current_user.telefono
+                }.items() %}
+                <tr data-campo="{{ campo }}">
+                    <td><label class="label_field">{{ campo.capitalize() }}</label></td>
+                    <td><input type="text" class="input_field" value="{{ valor }}" readonly></td>
+                    <td>
+                        <button class="btn-editar">Editar</button>
+                        <button class="btn-guardar" style="display:none;">Guardar</button>
+                        <button class="btn-cancelar" style="display:none;">Cancelar</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const filas = document.querySelectorAll("tbody tr");
+
+    filas.forEach(fila => {
+        const input = fila.querySelector("input");
+        const btnEditar = fila.querySelector(".btn-editar");
+        const btnGuardar = fila.querySelector(".btn-guardar");
+        const btnCancelar = fila.querySelector(".btn-cancelar");
+        const campoNombre = fila.dataset.campo;
+        let valorOriginal = input.value;
+
+        btnEditar.addEventListener("click", () => {
+            input.removeAttribute("readonly");
+            btnEditar.style.display = "none";
+            btnGuardar.style.display = "inline";
+            btnCancelar.style.display = "inline";
+            input.focus();
+        });
+
+        btnCancelar.addEventListener("click", () => {
+            input.value = valorOriginal;
+            input.setAttribute("readonly", true);
+            btnEditar.style.display = "inline";
+            btnGuardar.style.display = "none";
+            btnCancelar.style.display = "none";
+        });
+
+        btnGuardar.addEventListener("click", () => {
+            const nuevoValor = input.value;
+
+            fetch("/actualizar_campo", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Requested-With": "XMLHttpRequest"
+                },
+                body: JSON.stringify({
+                    campo: campoNombre,
+                    valor: nuevoValor
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.exito) {
+                    valorOriginal = nuevoValor;
+                    input.setAttribute("readonly", true);
+                    btnEditar.style.display = "inline";
+                    btnGuardar.style.display = "none";
+                    btnCancelar.style.display = "none";
+                    alert("Guardado exitosamente");
+                } else {
+                    alert("Error al guardar");
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Error en la solicitud");
+            });
+        });
+    });
+});
+</script>
 {% endblock %}
+}

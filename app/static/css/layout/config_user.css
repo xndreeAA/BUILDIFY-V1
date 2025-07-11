@@ -1,0 +1,116 @@
+:root {
+  --color_titulo: #021024;
+  --color_fondo_1: #c1e8ff;
+  --color_subtitulo: #052659;
+  --color_complementario_1: #5683b3;
+  --color_complementario_2: #7da0ca;
+
+    --david_color_1: #0095e0;
+    --david_color_2: #052659;
+    --davod_color_3: rgba(0, 0, 0, 0.397);
+    --david_color_4: #1f1f1f;
+}
+/* Contenedor principal */
+.content_configuracion_perfil {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-radius: 16px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Enlace de volver */
+#home_link {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #555;
+}
+#home_link a {
+    color: #007BFF;
+    text-decoration: none;
+}
+#home_link a:hover {
+    text-decoration: underline;
+}
+
+/* Títulos */
+.titulo {
+    font-size: 24px;
+    margin-bottom: 30px;
+    text-align: center;
+    color: #333;
+}
+
+.perfil_info h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #444;
+}
+
+/* Tabla de campos */
+.perfil_info table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.perfil_info td {
+    padding: 12px 10px;
+    vertical-align: middle;
+}
+
+.label_field {
+    font-weight: bold;
+    color: #333;
+}
+
+.input_field {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.input_field:focus {
+    background-color: #fff;
+    border-color: #007BFF;
+    outline: none;
+}
+
+/* Botones */
+button {
+    padding: 6px 14px;
+    margin-right: 6px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-editar {
+    background-color: #f0ad4e;
+    color: white;
+}
+.btn-editar:hover {
+    background-color: #ec971f;
+}
+
+.btn-guardar {
+    background-color: #5cb85c;
+    color: white;
+}
+.btn-guardar:hover {
+    background-color: #4cae4c;
+}
+
+.btn-cancelar {
+    background-color: #d9534f;
+    color: white;
+}
+.btn-cancelar:hover {
+    background-color: #c9302c;
+}
