@@ -12,6 +12,7 @@ from app.models.detalles_producto import (
 from app import db
 import os
 import traceback
+import shutil
 
 productos_bp = Blueprint('api_productos', __name__, url_prefix='/api/productos')
 
@@ -143,6 +144,15 @@ def producto_id_operaciones(id_producto):
         try:
             producto = Producto.query.get_or_404(id_producto, description="Producto no encontrado.")
             print(f"🟠 Intentando eliminar el producto ID {id_producto}")
+
+            categoria = producto.categoria.nombre
+            folder_path =  os.path.join(current_app.root_path, 'static', 'images', categoria, f'producto_{id_producto}')
+
+            if os.path.exists(folder_path):
+                shutil.rmtree(folder_path)
+                print(f"🧹 Carpeta de imágenes eliminada: {folder_path}")
+            else:
+                print(f"⚠️ Carpeta de imágenes no encontrada: {folder_path}. Omitiendo...")
 
             db.session.delete(producto)
             db.session.commit()
