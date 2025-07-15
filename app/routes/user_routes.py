@@ -3,8 +3,6 @@ from flask import render_template, Blueprint
 from flask_login import login_required, current_user 
 import requests
 
-
-# Crea un blueprint principal para la raíz del sitio
 user_bp = Blueprint('user', __name__, url_prefix='/user')
 
 @user_bp.route('/')

@@ -64,7 +64,7 @@ def create_app():
     from app.api.productos.api_marcas import marcas_bp
     from app.api.productos.api_categorias import categorias_bp
     from app.api.productos.api_detalles import detalles_bp
-
+    from app.api.productos.api_carrito import carrito_bp
     from app.api.usuarios.api_usuarios import user_api_bp
 
     # REGISTRO BLUEPRINTS
@@ -78,6 +78,7 @@ def create_app():
     app.register_blueprint(marcas_bp)
     app.register_blueprint(categorias_bp)
     app.register_blueprint(detalles_bp)
+    app.register_blueprint(carrito_bp)
 
     app.register_blueprint(user_api_bp)
     app.register_blueprint(checkout_bp)
