@@ -24,6 +24,7 @@ Una solucion e-commerce de venta de componentes de ordenadores a tu alcance
 | **5.1** | Vaciado de productos                              |
 | **5.2** | Añadido de nuevos productos                       |
 | **5.3** | Eliminación de usuarios dummy                     |
+| **5.4** | Creacion de tablas "carritos" e "items_carrito"   |
 
 
 <!-- SECRET_KEY en Flask
