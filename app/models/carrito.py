@@ -17,3 +17,9 @@ class ItemCarrito(db.Model):
     cantidad = db.Column(db.Integer, nullable=False)
 
     producto = db.relationship('Producto', backref='items_carrito')
+
+    def to_dict(self):
+        producto = self.producto.to_dict()
+        producto['cantidad'] = self.cantidad
+        producto["subtotal"] = float(self.producto.precio * self.cantidad)
+        return producto

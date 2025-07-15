@@ -63,3 +63,20 @@ class Producto(db.Model):
     @property
     def imagen_principal(self):
         return next((img for img in self.imagenes if img.es_principal), None)
+    
+    def to_dict(self):
+        return {
+            "id_producto": self.id_producto,
+            "nombre": self.nombre,
+            "precio": float(self.precio),
+            "stock": self.stock,
+            "categoria": self.categoria.nombre,
+            "marca": self.marca.nombre,
+            "imagenes": [
+                {
+                    "ruta": imagen.nombre_archivo,
+                    "es_principal": imagen.es_principal
+                }
+                for imagen in self.imagenes
+            ]
+        }
