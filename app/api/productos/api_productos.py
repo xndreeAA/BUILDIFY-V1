@@ -55,24 +55,7 @@ def api_productos():
             query = query.join(Producto.categoria).filter(Categoria.nombre == categoria_nombre)
 
         productos = query.all()
-
-        productos_data = []
-        for producto in productos:
-            productos_data.append({
-                "id_producto": producto.id_producto,
-                "nombre": producto.nombre,
-                "precio": float(producto.precio),
-                "stock": producto.stock,
-                "categoria": producto.categoria.nombre,
-                "marca": producto.marca.nombre,
-                "imagenes": [
-                    {
-                        "ruta": imagen.nombre_archivo,
-                        "es_principal": imagen.es_principal
-                    }
-                    for imagen in producto.imagenes
-                ]
-            })
+        productos_data = [producto.to_dict() for producto in productos]
 
         return jsonify({ "success": True, "data": productos_data })
 
