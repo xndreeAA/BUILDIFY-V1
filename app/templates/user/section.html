@@ -2,29 +2,28 @@
 
 {% block styles %}
     {{ super() }}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/layout/categorias.css')}}">
 {% endblock %}
 
 {% block content %}
-
-<div class="categorias">
-    <div class="volver">
-        <p id="home_link">
-            ← Regresar al home <a href="{{ url_for('main.home') }}">Volver</a>
-        </p>
-    </div>
-    <h1 id="title_categorias">Productos de {{ category | upper }}</h1>
-    <div class="filtros">
-        <p>Mostrar filtros</p>
-    </div>
-    {% if products %}
-        <div class="products-container">
-            {% for product in products %}
-                <div class="product-card">
-                    <h3>{{ product['nombre'] }}</h3>
-                    <p>Precio: ${{ product['precio'] }}</p>
-                    <!-- Add more fields if necessary -->
-                </div>
+    <div class="categorias">
+        <div class="volver">
+            <p id="home_link">
+                ← Regresar al home <a href="{{ url_for('main.home') }}">Volver</a>
+            </p>
+        </div>
+        <h1 id="title_categorias">Productos de {{ category | upper }}</h1>
+        <div class="filtros">
+            <p>Mostrar filtros</p>
+        </div>
+        {% if products %}
+            <div class="products-container">
+                {% for product in products %}
+                    <div class="product-card">
+                        <h3>{{ product['nombre'] }}</h3>
+                        <p>Precio: ${{ product['precio'] }}</p>
+                    </div>
 
                     <div class="cards_container">
                         <div class="container_imagen">
@@ -43,21 +42,28 @@
                                 <p id="precio">Precio: ${{ product['precio'] }}</p>
                             </div>
                             <div class="cantidad">
-                                <input type="number" name="cantidad" id="cantidad" placeholder="Cantidad" min="1" max="10" />
+                                <input type="number" name="cantidad" id="cantidad" placeholder="Cantidad" min="1" max="{{ product['stock'] }}" />
                             </div>
-                            <a href="{{ url_for('user.carrito') }}">
+                            <a href="">
                                 <div class="boton_agregar_categoria">
-                                    <button id="agregar" class="btn-styled">Añadir al carrito</button>
+                                    <button 
+                                        class="btn-styled btn-agregar" 
+                                        data-id="{{ product['id_producto'] }}">
+                                        Añadir al carrito
+                                    </button>    
                                 </div>
                             </a>
                         </div>
                     </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <p>No hay productos en esta categoría.</p>
-    {% endif %}
-</div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No hay productos en esta categoría.</p>
+        {% endif %}
+    </div>
+{% endblock %}
 
-
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/carrito/añadir_producto.js') }}"></script>
 {% endblock %}

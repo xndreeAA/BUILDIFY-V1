@@ -1,59 +1,50 @@
-{% extends "./layouts/layout-user.html" %} {% block content %} {% block styles
-%} {{ super() }}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/layout/carrito.css')}}" />
+{% extends "./layouts/layout-user.html" %} 
+{% block styles %} 
+{{ super() }}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout/carrito.css')}}" />
 {% endblock %}
 
-<div class="volver">
-    <p id="home_link">
-        ← Regresar al home <a href="{{ url_for('main.home') }}">Volver</a>
-    </p>
-</div>
+{% block content %} 
+    <div class="volver">
+        <p id="home_link">
+            ← Regresar al home <a href="{{ url_for('main.home') }}">Volver</a>
+        </p>
+    </div>
 
-<main class="grid-carrito">
-    <!-- Detalles del carrito -->
-    <section class="carrito-detalles">
-        <h2>Tu Carrito</h2>
-        <p>Total: $456.965</p>
+    <main class="grid-carrito">
+        <!-- Detalles del carrito -->
+        <section class="carrito-detalles">
+            <h2>Tu Carrito</h2>
+            <div id="carrito-container"></div>
+        </section>
 
-        <div class="producto-carrito">
-            <img src="https://reset.net.co/wp-content/uploads/2020/10/Procesador_AMD_Ryzen_5_5600X_3.7GHz.webp"
-                alt="Tenis Forum Puffed" />
+        <!-- Resumen del pedido -->
+        <aside class="resumen-pedido">
+            <h2>Resumen del pedido</h2>
+            <ul>
+                <li><span>1 producto</span><span>$456.965</span></li>
+                <li><span>Precio original</span><span>$649.990</span></li>
+                <li><span>Envío</span><span>Gratis</span></li>
+                <li><span>Descuento</span><span>-$193.025</span></li>
+                <li class="total" id="total"><strong>Total</strong><strong>$456.965</strong></li>
+            </ul>
 
-            <div class="info-producto">
-                <h3>NVIDA RTX 5090ti 6GB</h3>
-                <p>Color: black</p>
-                <p class="precio-original">$649.990</p>
-                <p class="precio-descuento">$456.965</p>
+            <input type="text" placeholder="Usa un código promocional" />
+            <a href="{{ url_for('user.checkout') }}"><button class="pagar">Ir a pagar</button></a>
 
-                <label for="cantidad">Cantidad:</label>
-                <input type="number" name="cantidad" id="catidad">
-
-                <button class="eliminar">Eliminar</button>
+            <div class="metodos-pago">
+                <p>Formas de pago aceptadas:</p>
+                <img src="https://logodownload.org/wp-content/uploads/2022/04/visa-logo-1.png" alt="Visa" />
+                <img src="https://logodownload.org/wp-content/uploads/2019/09/mastercard-logo.png" alt="MasterCard" />
+                <img src="https://logodownload.org/wp-content/uploads/2020/07/american-express-logo.png" alt="Amex" />
             </div>
-        </div>
-    </section>
+        </aside>
 
-    <!-- Resumen del pedido -->
-    <aside class="resumen-pedido">
-        <h2>Resumen del pedido</h2>
-        <ul>
-            <li><span>1 producto</span><span>$456.965</span></li>
-            <li><span>Precio original</span><span>$649.990</span></li>
-            <li><span>Envío</span><span>Gratis</span></li>
-            <li><span>Descuento</span><span>-$193.025</span></li>
-            <li class="total"><strong>Total</strong><strong>$456.965</strong></li>
-        </ul>
+    </main>
+{% endblock %}
 
-        <input type="text" placeholder="Usa un código promocional" />
-        <a href="{{ url_for('user.checkout') }}"><button class="pagar">Ir a pagar</button></a>
-
-        <div class="metodos-pago">
-            <p>Formas de pago aceptadas:</p>
-            <img src="https://logodownload.org/wp-content/uploads/2022/04/visa-logo-1.png" alt="Visa" />
-            <img src="https://logodownload.org/wp-content/uploads/2019/09/mastercard-logo.png" alt="MasterCard" />
-            <img src="https://logodownload.org/wp-content/uploads/2020/07/american-express-logo.png" alt="Amex" />
-        </div>
-    </aside>
-
-    {% endblock %}
-</main>
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/carrito/carrito.js') }}"></script>
+{% endblock %}
