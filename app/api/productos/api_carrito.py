@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, request, abort
+from flask_login import login_required, current_user
 from app import db
 from app.models.carrito import Carrito, ItemCarrito
 from app.models.usuario import Usuario
@@ -7,8 +8,13 @@ from sqlalchemy.orm import joinedload
 
 carrito_bp = Blueprint('api_carrito', __name__, url_prefix='/api/carrito')
 
-@carrito_bp.route('/<int:id_usuario>', methods=['GET'])
-def obtener_carrito(id_usuario):
+@carrito_bp.route('/', methods=['GET'])
+def obtener_carrito():
+        
+        id_usuario = current_user.get_id() if current_user.is_authenticated else None
+        if not id_usuario:
+            abort(401, description="No autenticado.")
+
         usuario = Usuario.query.get_or_404(id_usuario, description="Usuario no encontrado.")
         carrito = Carrito.query.filter_by(id_usuario=id_usuario).first()
         if not carrito:
@@ -36,17 +42,25 @@ def obtener_carrito(id_usuario):
 @carrito_bp.route('/', methods=['POST'])
 def actualizar_carrito():
     payload = request.get_json(silent=True)
+
+    id_usuario = current_user.get_id() if current_user.is_authenticated else None
+    if not id_usuario:
+        abort(401, description="No autenticado.")
+
     if not payload:
         abort(400, description="Request body debe ser JSON válido")
 
-    campos_requeridos = ["id_usuario", "id_producto", "cantidad"]
+    if not payload:
+        abort(400, description="Request body debe ser JSON válido")
+
+    campos_requeridos = ["id_producto", "cantidad"]
     for campo in campos_requeridos:
         if campo not in payload:
             abort(400, description=f"Falta el campo requerido: {campo}")
 
-    carrito = Carrito.query.filter_by(id_usuario=payload["id_usuario"]).first()
+    carrito = Carrito.query.filter_by(id_usuario=id_usuario).first()
     if not carrito:
-        carrito = Carrito(id_usuario=payload["id_usuario"])
+        carrito = Carrito(id_usuario=id_usuario)
         db.session.add(carrito)
         db.session.commit()
 
@@ -86,16 +100,21 @@ def actualizar_carrito():
 
 @carrito_bp.route('/', methods=['PUT'])
 def modificar_cantidad_producto_carrito():
+    id_usuario = current_user.get_id() if current_user.is_authenticated else None
+    if not id_usuario:
+        abort(401, description="No autenticado.")
+
     payload = request.get_json(silent=True)
+
     if not payload:
         abort(400, description="Request body debe ser JSON válido")
 
-    campos_requeridos = ["id_usuario", "id_producto", "cantidad"]
+    campos_requeridos = ["id_producto", "cantidad"]
     for campo in campos_requeridos:
         if campo not in payload:
             abort(400, description=f"Falta el campo requerido: {campo}")
 
-    carrito = Carrito.query.filter_by(id_usuario=payload["id_usuario"]).first()
+    carrito = Carrito.query.filter_by(id_usuario=id_usuario).first()
     if not carrito:
         return jsonify({
             "success": False,
@@ -135,16 +154,22 @@ def modificar_cantidad_producto_carrito():
 
 @carrito_bp.route('/', methods=['DELETE'])
 def eliminar_producto_carrito():
+
+    id_usuario = current_user.get_id() if current_user.is_authenticated else None
+    if not id_usuario:
+        abort(401, description="No autenticado.")
+
     payload = request.get_json(silent=True)
     if not payload:
         abort(400, description="Request body debe ser JSON válido")
 
-    campos_requeridos = ["id_usuario", "id_producto"]
+    campos_requeridos = ["id_producto"]
     for campo in campos_requeridos:
         if campo not in payload:
             abort(400, description=f"Falta el campo requerido: {campo}")
 
-    carrito = Carrito.query.filter_by(id_usuario=payload["id_usuario"]).first()
+    carrito = Carrito.query.filter_by(id_usuario=id_usuario).first()
+
     if not carrito:
         return jsonify({
             "success": False,
