@@ -1,20 +1,23 @@
-from flask import Blueprint, jsonify, request, abort, current_app
+from flask import Blueprint, json, jsonify, request, abort, current_app
 from flask_login import login_required, current_user
 from app.models.usuario import Usuario
 from app.models.carrito import Carrito, ItemCarrito
 from app.models.producto import Producto
 from sqlalchemy.orm import joinedload
+import datetime
 import stripe
-
-from app.config import DevelopmentConfig
-
-stripe.api_key = DevelopmentConfig.STRIPE_SECRET_KEY
-STRIPE_WEBHOOK_KEY = DevelopmentConfig.STRIPE_WEBHOOK_KEY
 
 checkout_api_bp = Blueprint('checkout_api', __name__, url_prefix='/api/checkout')
 
 @checkout_api_bp.route('/create-checkout-session', methods=['POST'])
 def create_checkout_session():
+
+    STRIPE_WEBHOOK_KEY = current_app.config.get('STRIPE_WEBHOOK_KEY')
+    STRIPE_SECRET_KEY = current_app.config.get('STRIPE_SECRET_KEY')
+    STRIPE_SUCCESS_URL = current_app.config.get('STRIPE_SUCCESS_URL')
+    STRIPE_CANCEL_URL = current_app.config.get('STRIPE_CANCEL_URL')
+
+    stripe.api_key = STRIPE_SECRET_KEY
 
     id_usuario = current_user.get_id() if current_user.is_authenticated else None
     if not id_usuario:
@@ -60,10 +63,15 @@ def create_checkout_session():
             mode='payment',
             metadata={
                 'id_usuario': usuario.id_usuario,
-                'id_carrito': carrito.id_carrito
+                "productos_pedidos": json.dumps([
+                    {"id_producto": item["id_producto"], "cantidad": item["cantidad"]} 
+                    for item in items_serializados
+                ]),
+                "fecha": datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
+                "total": sum(item["precio"] * item["cantidad"] for item in items_serializados)
             },
-            success_url= DevelopmentConfig.STRIPE_SUCCESS_URL or "http://localhost:5000/success",
-            cancel_url= DevelopmentConfig.STRIPE_CANCEL_URL or "http://localhost:5000/cancel",
+            success_url= STRIPE_SUCCESS_URL or "http://localhost:5000/success",
+            cancel_url=  STRIPE_CANCEL_URL or "http://localhost:5000/cancel",
         )
         return jsonify({'url': checkout_session.url}), 200
     
