@@ -31,7 +31,34 @@
             </ul>
 
             <input type="text" placeholder="Usa un código promocional" />
-            <a href="{{ url_for('user.checkout') }}"><button class="pagar">Ir a pagar</button></a>
+
+            <button id="btn_checkout" class="pagar">Ir a pagar</button>
+            <script>
+                document.getElementById("btn_checkout").addEventListener("click", async function () {
+                    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                    try {
+                        const response = await fetch("/api/checkout/create-checkout-session", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "X-CSRFToken": csrfToken
+                            }
+                        });
+
+                        if (!response.ok) {
+                            const errorData = await response.json();
+                            alert("Error: " + errorData.error);
+                            return;
+                        }
+
+                        const data = await response.json();
+                        window.location.href = data.url;  // Redirect to Stripe Checkout
+                    } catch (error) {
+                        console.error("Checkout error:", error);
+                        alert("Hubo un error al procesar el pago.");
+                    }
+                });
+            </script>
 
             <div class="metodos-pago">
                 <p>Formas de pago aceptadas:</p>

@@ -66,6 +66,7 @@ def create_app():
     from app.api.productos.api_detalles import detalles_bp
     from app.api.productos.api_carrito import carrito_bp
     from app.api.usuarios.api_usuarios import user_api_bp
+    from app.api.payment_gateaway.api_checkout import checkout_api_bp
 
     # REGISTRO BLUEPRINTS
     app.register_blueprint(auth_bp)
@@ -82,6 +83,9 @@ def create_app():
 
     app.register_blueprint(user_api_bp)
     app.register_blueprint(checkout_bp)
+
+    # PAYMENT GATEAWAY THAT ACTUALLY WORKS
+    app.register_blueprint(checkout_api_bp)
     
     return app
 

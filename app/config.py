@@ -14,7 +14,7 @@ class DevelopmentConfig:
     DB_HOST = os.getenv('DB_HOST')
     DB_PORT = os.getenv('DB_PORT', 3405)
     DB_NAME = os.getenv('DB_NAME')
-
+    STATIC_URL = os.getenv('BASE_STATIC_URL', '/static')
     # ----- URI DE CONEXIÓN -----
     # Construye la URI para conectar con MySQL utilizando PyMySQL
     SQLALCHEMY_DATABASE_URI = (
@@ -38,6 +38,11 @@ class DevelopmentConfig:
     REMEMBER_COOKIE_SECURE = False    # Igual para cookies de "recordar sesión"
     SESSION_COOKIE_HTTPONLY = True   # Protección contra XSS
     REMEMBER_COOKIE_HTTPONLY = True
+
+    STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
+    STRIPE_WEBHOOK_KEY = os.getenv('STRIPE_WEBHOOK_KEY')
+    STRIPE_SUCCESS_URL = os.getenv('STRIPE_SUCCESS_URL')
+    STRIPE_CANCEL_URL = os.getenv('STRIPE_CANCEL_URL')
 
 '''Cuando se cambia a modo produccion se desactiva el modo de depuración 
 y se asegura que la clave secreta sea obligatoria.
