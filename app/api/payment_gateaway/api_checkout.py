@@ -4,7 +4,7 @@ from app.models.usuario import Usuario
 from app.models.carrito import Carrito, ItemCarrito
 from app.models.producto import Producto
 from sqlalchemy.orm import joinedload
-import datetime
+from datetime import datetime
 import stripe
 
 checkout_api_bp = Blueprint('checkout_api', __name__, url_prefix='/api/checkout')
@@ -12,7 +12,6 @@ checkout_api_bp = Blueprint('checkout_api', __name__, url_prefix='/api/checkout'
 @checkout_api_bp.route('/create-checkout-session', methods=['POST'])
 def create_checkout_session():
 
-    STRIPE_WEBHOOK_KEY = current_app.config.get('STRIPE_WEBHOOK_KEY')
     STRIPE_SECRET_KEY = current_app.config.get('STRIPE_SECRET_KEY')
     STRIPE_SUCCESS_URL = current_app.config.get('STRIPE_SUCCESS_URL')
     STRIPE_CANCEL_URL = current_app.config.get('STRIPE_CANCEL_URL')
@@ -68,11 +67,12 @@ def create_checkout_session():
                     for item in items_serializados
                 ]),
                 "fecha": datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
-                "total": sum(item["precio"] * item["cantidad"] for item in items_serializados)
+                "total": str(sum(item["precio"] * item["cantidad"] for item in items_serializados))
             },
             success_url= STRIPE_SUCCESS_URL or "http://localhost:5000/success",
             cancel_url=  STRIPE_CANCEL_URL or "http://localhost:5000/cancel",
         )
+
         return jsonify({'url': checkout_session.url}), 200
     
     except stripe.error.StripeError as e:
