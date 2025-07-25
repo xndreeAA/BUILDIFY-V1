@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, json, request, abort, current_app
 from app.models.pedidos import Pedido, ProductoPedido, Estado
 from app.models.producto import Producto
+from app.models.carrito import Carrito
 from app import db
 from datetime import datetime
 import stripe
@@ -55,6 +56,11 @@ def handle_checkout_completed(session):
         print('[ERROR] Could not parse productos JSON', e)
         return
     
+    carrito = Carrito.query.filter_by(id_usuario=id_usuario).first()
+    if carrito:
+        carrito.items.clear()
+        db.session.commit()
+
     crear_pedido(id_usuario, productos_pedidos, fecha, total)
 
 
