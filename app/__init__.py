@@ -68,6 +68,8 @@ def create_app():
     from app.api.payment_gateaway.api_checkout import checkout_api_bp
     from app.api.payment_gateaway.api_webhook import webhook_api_bp
 
+    from app.api.pedidos.api_pedidos import pedidos_bp
+
     # REGISTRO BLUEPRINTS
     app.register_blueprint(auth_bp)
     app.register_blueprint(main_bp)
@@ -87,6 +89,7 @@ def create_app():
     # PAYMENT GATEAWAY THAT ACTUALLY WORKS
     app.register_blueprint(checkout_api_bp)
     app.register_blueprint(webhook_api_bp)
+    app.register_blueprint(pedidos_bp)
     
     csrf.exempt(checkout_api_bp)
     csrf.exempt(webhook_api_bp)
