@@ -6,8 +6,6 @@ class Estado(db.Model):
     id_estado = db.Column(db.Integer, primary_key=True, autoincrement=True)
     estado = db.Column(db.String(100), unique=True, nullable=False)
 
-    pedidos = db.relationship('Pedido', backref='estado', lazy=True)
-
 class Pedido(db.Model):
     __tablename__ = 'pedidos'
 
@@ -17,6 +15,9 @@ class Pedido(db.Model):
     fecha_entrega = db.Column(db.Date, nullable=False)
     valor_total = db.Column(db.Numeric(10, 2), nullable=False)
     id_estado = db.Column(db.Integer, db.ForeignKey('estados.id_estado'), nullable=False)
+
+    usuario = db.relationship('Usuario', backref='pedidos', lazy=True)
+    estado = db.relationship('Estado', backref='pedidos', lazy=True)
 
     productos_pedidos = db.relationship('ProductoPedido', backref='pedido', cascade='all, delete-orphan', lazy=True)
 
