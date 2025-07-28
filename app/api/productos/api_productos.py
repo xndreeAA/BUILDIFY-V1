@@ -129,7 +129,7 @@ def producto_id_operaciones(id_producto):
             print(f"🟠 Intentando eliminar el producto ID {id_producto}")
 
             for imagen in producto.imagenes:
-                url = imagen.nombre_archivo  # Esto contiene el secure_url completo
+                url = imagen.nombre_archivo
                 print(f"🔗 Intentando eliminar imagen: {url}")
                 public_id = url.split('/upload/')[-1].rsplit('.', 1)[0]
                 

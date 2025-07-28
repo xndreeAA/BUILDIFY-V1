@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     </svg>
                                 </button>
                                
-                                <img src="/static/${productos[i].imagenes[0].ruta}" alt="${productos[i].nombre}">
+                                <img src="${productos[i].imagenes[0].ruta}" alt="${productos[i].nombre}">
                             </picture>
                             <div class="tarjeta-producto-info">
                                 <h4>${productos[i].nombre}</h4>

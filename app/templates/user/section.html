@@ -28,7 +28,7 @@
                     <div class="cards_container">
                         <div class="container_imagen">
                             {% if product['imagenes'] and product['imagenes'][0]['ruta'] %}
-                                <img src="{{ url_for('static', filename=product['imagenes'][0]['ruta']) }}" alt="{{ product['nombre'] }}" />
+                                <img src="{{ product['imagenes'][0]['ruta'] }}" alt="{{ product['nombre'] }}" />
                             {% else %}
                                 <img src="{{ url_for('static', filename='img/default-product.png') }}" alt="Sin imagen" />
                             {% endif %}
