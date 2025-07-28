@@ -2,7 +2,9 @@ from flask import Blueprint, jsonify, request, abort, current_app
 from flask_login import login_required
 from werkzeug.utils import secure_filename
 from sqlalchemy import or_
-
+import traceback
+import cloudinary
+import cloudinary.uploader
 from app.models.producto import Producto, Categoria, Marca, ImagenesProducto
 from app.models.detalles_producto import (
     DetalleChasis, DetalleFuentePoder, DetalleMemoriaRAM,
@@ -11,8 +13,6 @@ from app.models.detalles_producto import (
 )
 from app import db
 import os
-import traceback
-import shutil
 
 productos_bp = Blueprint('api_productos', __name__, url_prefix='/api/productos')
 
@@ -128,27 +128,30 @@ def producto_id_operaciones(id_producto):
             producto = Producto.query.get_or_404(id_producto, description="Producto no encontrado.")
             print(f"🟠 Intentando eliminar el producto ID {id_producto}")
 
-            categoria = producto.categoria.nombre
-            folder_path =  os.path.join(current_app.root_path, 'static', 'images', categoria, f'producto_{id_producto}')
-
-            if os.path.exists(folder_path):
-                shutil.rmtree(folder_path)
-                print(f"🧹 Carpeta de imágenes eliminada: {folder_path}")
-            else:
-                print(f"⚠️ Carpeta de imágenes no encontrada: {folder_path}. Omitiendo...")
+            for imagen in producto.imagenes:
+                url = imagen.nombre_archivo  # Esto contiene el secure_url completo
+                print(f"🔗 Intentando eliminar imagen: {url}")
+                public_id = url.split('/upload/')[-1].rsplit('.', 1)[0]
+                
+                try:
+                    result = cloudinary.uploader.destroy(public_id)
+                    print(f"🧹 Imagen eliminada de Cloudinary: {public_id} | Result: {result}")
+                except Exception as img_err:
+                    print(f"⚠️ No se pudo eliminar imagen {public_id}: {img_err}")
 
             db.session.delete(producto)
             db.session.commit()
             print("✅ Producto eliminado correctamente")
             return jsonify({ "success": True })
+
         except Exception as e:
             db.session.rollback()
             print("🔥 ERROR AL ELIMINAR PRODUCTO:")
             traceback.print_exc()
-            return jsonify({ 
-                "success": False, 
-                "error": str(e), 
-                "tipo": type(e).__name__ 
+            return jsonify({
+                "success": False,
+                "error": str(e),
+                "tipo": type(e).__name__
             }), 400
 
     elif request.method == 'PUT':
@@ -174,8 +177,6 @@ def producto_id_operaciones(id_producto):
     else:
         abort(405, description="Método no permitido.")
         
-        
-
 
 ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'webp'}
 
@@ -184,6 +185,13 @@ def allowed_file(filename):
 
 @productos_bp.route('/subir-imagen', methods=['POST'])
 def subir_imagen():
+    
+    cloudinary.config(
+        cloud_name=current_app.config.get("CLOUDINARY_CLOUD_NAME"),
+        api_key=current_app.config.get("CLOUDINARY_API_KEY"),
+        api_secret=current_app.config.get("CLOUDINARY_API_SECRET")
+    )
+
     imagenes = request.files.getlist('imagenes')
     id_producto = request.form.get('id_producto')
     categoria = request.form.get('categoria')
@@ -201,17 +209,35 @@ def subir_imagen():
     for idx, imagen in enumerate(imagenes):
         if imagen and allowed_file(imagen.filename):
             filename = secure_filename(imagen.filename)
-            ruta_relativa = f'images/{categoria}/producto_{id_producto}/{filename}'
-            ruta_absoluta = os.path.join(base_path, filename)
-            imagen.save(ruta_absoluta)
+            
+            if not filename:
+                abort(400, description="Nombre de archivo no valido.")
+
+            carpeta = f"buildify/productos/{categoria}/producto_{id_producto}"
+
+            try:
+                upload_result = cloudinary.uploader.upload(
+                    imagen,
+                    folder=carpeta,
+                    use_filename=True,
+                    unique_filename=False
+                )
+            except Exception as e:
+                current_app.logger.error(f"Error al subir imagen: {e}")
+                abort(500, description="Error al subir imagen a Cloudinary.")
+
+            url = upload_result.get("secure_url")
+            if not url:
+                abort(500, description="No se pudo obtener la URL de Cloudinary.")
 
             imagen_db = ImagenesProducto(
-                nombre_archivo=ruta_relativa,
+                nombre_archivo=url,
                 es_principal=(principales[idx].lower() == 'true'),
                 id_producto=int(id_producto)
             )
+
             db.session.add(imagen_db)
-            rutas.append(ruta_relativa)
+            rutas.append(url)
         else:
             abort(400, description="Archivo no válido.")
 
