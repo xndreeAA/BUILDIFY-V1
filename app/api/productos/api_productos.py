@@ -2,9 +2,9 @@ from flask import Blueprint, jsonify, request, abort, current_app
 from flask_login import login_required
 from werkzeug.utils import secure_filename
 from sqlalchemy import or_
-import traceback
 import cloudinary
 import cloudinary.uploader
+
 from app.models.producto import Producto, Categoria, Marca, ImagenesProducto
 from app.models.detalles_producto import (
     DetalleChasis, DetalleFuentePoder, DetalleMemoriaRAM,
@@ -13,6 +13,8 @@ from app.models.detalles_producto import (
 )
 from app import db
 import os
+import traceback
+import shutil
 
 productos_bp = Blueprint('api_productos', __name__, url_prefix='/api/productos')
 
@@ -128,30 +130,27 @@ def producto_id_operaciones(id_producto):
             producto = Producto.query.get_or_404(id_producto, description="Producto no encontrado.")
             print(f"🟠 Intentando eliminar el producto ID {id_producto}")
 
-            for imagen in producto.imagenes:
-                url = imagen.nombre_archivo
-                print(f"🔗 Intentando eliminar imagen: {url}")
-                public_id = url.split('/upload/')[-1].rsplit('.', 1)[0]
-                
-                try:
-                    result = cloudinary.uploader.destroy(public_id)
-                    print(f"🧹 Imagen eliminada de Cloudinary: {public_id} | Result: {result}")
-                except Exception as img_err:
-                    print(f"⚠️ No se pudo eliminar imagen {public_id}: {img_err}")
+            categoria = producto.categoria.nombre
+            folder_path =  os.path.join(current_app.root_path, 'static', 'images', categoria, f'producto_{id_producto}')
+
+            if os.path.exists(folder_path):
+                shutil.rmtree(folder_path)
+                print(f"🧹 Carpeta de imágenes eliminada: {folder_path}")
+            else:
+                print(f"⚠️ Carpeta de imágenes no encontrada: {folder_path}. Omitiendo...")
 
             db.session.delete(producto)
             db.session.commit()
             print("✅ Producto eliminado correctamente")
             return jsonify({ "success": True })
-
         except Exception as e:
             db.session.rollback()
             print("🔥 ERROR AL ELIMINAR PRODUCTO:")
             traceback.print_exc()
-            return jsonify({
-                "success": False,
-                "error": str(e),
-                "tipo": type(e).__name__
+            return jsonify({ 
+                "success": False, 
+                "error": str(e), 
+                "tipo": type(e).__name__ 
             }), 400
 
     elif request.method == 'PUT':
@@ -177,6 +176,8 @@ def producto_id_operaciones(id_producto):
     else:
         abort(405, description="Método no permitido.")
         
+        
+
 
 ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'webp'}
 
