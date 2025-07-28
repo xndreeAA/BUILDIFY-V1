@@ -13,10 +13,10 @@ class ItemCarrito(db.Model):
     __tablename__ = 'items_carrito'
 
     id_carrito = db.Column(db.Integer, db.ForeignKey('carritos.id_carrito'), primary_key=True)
-    id_producto = db.Column(db.Integer, db.ForeignKey('productos.id_producto'), primary_key=True)
+    id_producto = db.Column(db.Integer, db.ForeignKey('productos.id_producto', ondelete='CASCADE'), primary_key=True)
     cantidad = db.Column(db.Integer, nullable=False)
 
-    producto = db.relationship('Producto', backref='items_carrito')
+    producto = db.relationship('Producto', backref=db.backref('items_carrito', passive_deletes=True))
 
     def to_dict(self):
         producto = self.producto.to_dict()
