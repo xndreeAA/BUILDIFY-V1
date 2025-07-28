@@ -1,6 +1,7 @@
 from flask import Blueprint
 from flask import render_template, Blueprint
 from flask_login import login_required, current_user 
+from app.models.producto import Producto
 import requests
 
 user_bp = Blueprint('user', __name__, url_prefix='/user')
@@ -9,15 +10,12 @@ user_bp = Blueprint('user', __name__, url_prefix='/user')
 def home():
     return render_template('user/home.html')
 
+
 @user_bp.route('/section/<category>')
 def section(category):
-    response = requests.get(f'https://buildify-test-deploy-1.onrender.com/api/productos?categoria={category}')
-    
-    if response.ok:
-        products = response.json().get("data", [])
-    else:
-        products = []
-    return render_template('user/section.html', products=products, category=category)
+    productos = Producto.query.join(Producto.categoria).filter_by(nombre=category).all()
+    return render_template('user/section.html', products=productos, category=category)
+
 # ----------------------------------------------------------------
 @user_bp.route('/brand_view')
 def brand_view():
