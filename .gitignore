@@ -9,3 +9,7 @@ _pycache_/
 *.py[cod]
 *$py.class
 *.pyc
+
+.env
+instance/
+migrations/versions/
