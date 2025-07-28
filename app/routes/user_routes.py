@@ -11,7 +11,7 @@ def home():
 
 @user_bp.route('/section/<category>')
 def section(category):
-    response = requests.get(f'http://127.0.0.1:5000/api/productos?categoria={category}')
+    response = requests.get(f'https://buildify-test-deploy-1.onrender.com/api/productos?categoria={category}')
     
     if response.ok:
         products = response.json().get("data", [])
