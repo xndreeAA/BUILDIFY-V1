@@ -6,6 +6,7 @@ from app.models.pedidos import Pedido, ProductoPedido, Estado
 from app.models.usuario import Usuario
 from app.models.producto import Producto, Categoria, Marca
 from datetime import datetime
+from collections import defaultdict
 from app import db
 
 pedidos_bp = Blueprint('api_pedidos', __name__, url_prefix='/api/pedidos')
@@ -184,3 +185,32 @@ def obtener_pedidos_usuario(id_usuario):
         }), 404
 
     return jsonify({"success": True, "data": pedidos})
+
+@pedidos_bp.route('/categoria')
+def obtener_pedidos_categoria():
+
+    query = Pedido.query.options(
+        joinedload(Pedido.productos_pedidos).joinedload(ProductoPedido.producto)
+    ).join(Pedido.productos_pedidos).join(ProductoPedido.producto).join(Producto.categoria)
+
+    try:
+        pedidos = query.all()
+        categorias_en_pedidos = defaultdict(set)
+
+        for pedido in pedidos:
+            for prod_pedido in pedido.productos_pedidos:
+                categoria = prod_pedido.producto.categoria.nombre
+                categorias_en_pedidos[categoria].add(pedido.id_pedido)
+
+        resultado = {categoria: len(ids) for categoria, ids in categorias_en_pedidos.items()}
+
+        print(categorias_en_pedidos)
+        
+        return jsonify(resultado)
+    
+    except ValueError:
+        return jsonify({
+            "success": False, 
+            "data": {"message": "Formato de fecha incorrecto. Utiliza YYYY-MM-DD."}
+        }), 400
+
