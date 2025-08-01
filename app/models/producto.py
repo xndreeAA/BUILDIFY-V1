@@ -59,7 +59,24 @@ class Producto(db.Model):
     detalles_refrigeracion = db.relationship('DetalleRefrigeracion', backref='producto', uselist=False, cascade='all, delete')
     detalles_tarjeta_grafica = db.relationship('DetalleTarjetaGrafica', backref='producto', uselist=False, cascade='all, delete')
     imagenes = db.relationship('ImagenesProducto', backref='producto', cascade='all, delete', lazy=True)
-
+    
     @property
     def imagen_principal(self):
         return next((img for img in self.imagenes if img.es_principal), None)
+    
+    def to_dict(self):
+        return {
+            "id_producto": self.id_producto,
+            "nombre": self.nombre,
+            "precio": float(self.precio),
+            "stock": self.stock,
+            "categoria": self.categoria.nombre,
+            "marca": self.marca.nombre,
+            "imagenes": [
+                {
+                    "ruta": imagen.nombre_archivo,
+                    "es_principal": imagen.es_principal
+                }
+                for imagen in self.imagenes
+            ]
+        }

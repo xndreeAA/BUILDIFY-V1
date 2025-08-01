@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 
                 const contenedor = document.getElementById('fila-productos-mas-vendidos');
 
-                for (let i = 0; i < productos.length; i++) {
+                for (let i = 0; i < 5 && i < productos.length; i++) {
                     
                     const elemento = document.createElement('a');
                     elemento.href = `/user/product_details/${productos[i].id_producto}`;//Se ajusta a la ruta 
@@ -23,8 +23,8 @@ document.addEventListener("DOMContentLoaded", () => {
                                         <path d="m243-240-51-51 405-405H240v-72h480v480h-72v-357L243-240Z" />
                                     </svg>
                                 </button>
-                                
-                                <img src="/static/${productos[i].imagenes[0].ruta}" alt="${productos[i].nombre}">
+                            
+                                <img src="${productos[i].imagenes[0].ruta}" alt="${productos[i].nombre}">
                             </picture>
                             <div class="tarjeta-producto-info">
                                 <h4>${productos[i].nombre}</h4>

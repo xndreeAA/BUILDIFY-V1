@@ -11,3 +11,11 @@ def checkout():
         flash("Pago realizado con éxito", "success")
         return redirect(url_for('checkout.checkout'))
     return render_template('user/checkout.html', form=form)
+
+@checkout_bp.route('/success')
+def success():
+    return render_template('user/payment-gateaway/success.html')
+
+@checkout_bp.route('/cancel')
+def cancel():
+    return render_template('user/payment-gateaway/cancel.html')

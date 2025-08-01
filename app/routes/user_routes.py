@@ -1,18 +1,23 @@
 from flask import Blueprint
-from flask import render_template
-from flask_login import login_required, current_user
+from flask import render_template, Blueprint
+from flask_login import login_required, current_user 
+import requests
 
-
-# Crea un blueprint principal para la raíz del sitio
 user_bp = Blueprint('user', __name__, url_prefix='/user')
 
 @user_bp.route('/')
 def home():
     return render_template('user/home.html')
 
-@user_bp.route('/section')
-def section():
-    return render_template('user/section.html')
+@user_bp.route('/section/<category>')
+def section(category):
+    response = requests.get(f'http://127.0.0.1:5000/api/productos?categoria={category}')
+    
+    if response.ok:
+        products = response.json().get("data", [])
+    else:
+        products = []
+    return render_template('user/section.html', products=products, category=category)
 # ----------------------------------------------------------------
 @user_bp.route('/brand_view')
 def brand_view():

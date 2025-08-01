@@ -2,22 +2,14 @@
 
 {% block styles %}
 {{ super() }}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/layout/brand_view.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/layout/categorias.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout/detalles_producto.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout/categorias.css') }}">
 {% endblock %}
 
 {% block content %}
 <main>
     <section id="detalle-producto"></section>
-
-    <div id="modal-detalles" class="modal hidden">
-        <div class="modal-contenido">
-            <span class="cerrar" id="cerrar-modal">&times;</span>
-            <div id="contenido-detalles"></div>
-        </div>
-    </div>
-
-</div>
 </main>
 
 
@@ -25,4 +17,5 @@
 
 {% block scripts %}
 <script src="{{ url_for('static', filename='js/home/product_details.js') }}"></script>
+<script src="{{ url_for('static', filename='js/carrito/añadir_producto.js') }}"></script>
 {% endblock %}

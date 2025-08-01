@@ -1,89 +1,69 @@
-{% extends "./layouts/layout-user.html" %} {% block content %}
-{% block styles %}
-{{ super() }}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/layout/categorias.css')}}">
+{% extends "./layouts/layout-user.html" %} 
 
+{% block styles %}
+    {{ super() }}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout/categorias.css')}}">
 {% endblock %}
 
-<div class="categorias">
-    <div class="volver">
-        <p id="home_link">
-            ← Regresar al home <a href="{{ url_for('main.home') }}">Volver</a>
-        </p>
-    </div>
-    <h1 id="title_categorias">CHASIS</h1>
-    <div class="filtros">
-        <p>Mostrar filtros</p>
-    </div>
-    <div class="cards_container">
-        <div class="container_imagen">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCBP1QQB1--jCcZEdxZAnbQLpbmWQM304hCg&s"
-                alt="" />
-            <div class="propiedades">
-                <h3>Chasis v1</h3>
-                <p>Lorem ipsum dolor sit amet consectetur</p>
-            </div>
+{% block content %}
+    <div class="categorias">
+        <div class="volver">
+            <p id="home_link">
+                ← Regresar al home <a href="{{ url_for('main.home') }}">Volver</a>
+            </p>
         </div>
-        <div class="container_description">
-            <div class="precio">
-                <p id="precio">Precio: $100.00</p>
-            </div>
-            <div class="cantidad">
-                <input type="number" name="cantidad" id="cantidad" placeholder="Cantidad" min="1" max="10" />
-            </div>
-            <a href="{{ url_for('user.carrito') }}">
-                <div class="boton_agregar_categoria">
-                    <button id="agregar" class="btn-styled">Añadir al carrito</button>
-                </div>
-            </a>
+        <h1 id="title_categorias">Productos de {{ category | upper }}</h1>
+        <div class="filtros">
+            <p>Mostrar filtros</p>
         </div>
-    </div>
-    <!-- --------------------------------------------------------------------------- -->
+        {% if products %}
+            <div class="products-container">
+                {% for product in products %}
+                    <div class="product-card">
+                        <h3>{{ product['nombre'] }}</h3>
+                        <p>Precio: ${{ product['precio'] }}</p>
+                    </div>
 
-    <div class="cards_container">
-        <div class="container_imagen">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCBP1QQB1--jCcZEdxZAnbQLpbmWQM304hCg&s"
-                alt="" />
-            <div class="propiedades">
-                <h3>Chasis v1</h3>
-                <p>Lorem ipsum dolor sit amet consectetur</p>
+                    <div class="cards_container">
+                        <div class="container_imagen">
+                            {% if product['imagenes'] and product['imagenes'][0]['ruta'] %}
+                                <img src="{{ product['imagenes'][0]['ruta'] }}" alt="{{ product['nombre'] }}" />
+                            {% else %}
+                                <img src="{{ url_for('static', filename='img/default-product.png') }}" alt="Sin imagen" />
+                            {% endif %}
+                            <div class="propiedades">
+                                <h3>{{ product['nombre'] }}</h3>
+                                <p>Lorem ipsum dolor sit amet consectetur</p>
+                            </div>
+                        </div>
+                        <div class="container_description">
+                            <div class="precio">
+                                <p id="precio">Precio: ${{ product['precio'] }}</p>
+                            </div>
+                            <div class="cantidad">
+                                <input type="number" name="cantidad" id="cantidad" placeholder="Cantidad" min="1" max="{{ product['stock'] }}" />
+                            </div>
+                            <a href="">
+                                <div class="boton_agregar_categoria">
+                                    <button 
+                                        class="btn-styled btn-agregar" 
+                                        data-id="{{ product['id_producto'] }}">
+                                        Añadir al carrito
+                                    </button>    
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
-        </div>
-        <div class="container_description">
-            <div class="precio">
-                <p id="precio">Precio: $100.00</p>
-            </div>
-            <div class="cantidad">
-                <input type="number" name="cantidad" id="cantidad" placeholder="Cantidad" min="1" max="10" />
-            </div>
-            <div class="boton_agregar_categoria">
-                <button id="agregar" class="btn-styled">Añadir al carrito</button>
-            </div>
-        </div>
+        {% else %}
+            <p>No hay productos en esta categoría.</p>
+        {% endif %}
     </div>
-    <!-- ------------------------------------------------------------------------------------------- -->
-    <div class="cards_container">
-        <div class="container_imagen">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCBP1QQB1--jCcZEdxZAnbQLpbmWQM304hCg&s"
-                alt="" />
-            <div class="propiedades">
-                <h3>Chasis v1</h3>
-                <p>Lorem ipsum dolor sit amet consectetur</p>
-            </div>
-        </div>
-        <div class="container_description">
-            <div class="precio">
-                <p id="precio">Precio: $100.00</p>
-            </div>
-            <div class="cantidad">
-                <input type="number" name="cantidad" id="cantidad" placeholder="Cantidad" min="1" max="10" />
-            </div>
-            <div class="boton_agregar_categoria">
-                <button id="agregar" class="btn-styled">Añadir al carrito</button>
-            </div>
-        </div>
-    </div>
-</div>
+{% endblock %}
 
-
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/carrito/añadir_producto.js') }}"></script>
 {% endblock %}

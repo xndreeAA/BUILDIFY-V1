@@ -33,11 +33,13 @@
         <nav class="nav">
             <button class="menu-toggle" id="menu-toggle">☰</button>
             <ul class="menu" id="menu">
-                <li><a href="{{ url_for('user.section') }}">CHASIS</a></li>
-                <li><a href="#">RAM</a></li>
-                <li><a href="#">REFRIGERACIONES</a></li>
-                <li><a href="#">PROCESADORES</a></li>
-                <li><a href="#">BOARDS</a></li>
+                <li><a href="{{ url_for('user.section', category='chasises') }}">CHASIS</a></li>
+                <li><a href="{{ url_for('user.section', category='memorias ram') }}">RAM</a></li>
+                <li><a href="{{ url_for('user.section', category='refrigeraciones') }}">REFRIGERACIONES</a></li>
+                <li><a href="{{ url_for('user.section', category='procesadores') }}">PROCESADORES</a></li>
+                <li><a href="{{ url_for('user.section', category='placas base') }}">BOARDS</a></li>
+                <li><a href="{{ url_for('user.section', category='fuente de poder') }}">FUENTES</a></li>
+                <li><a href="{{ url_for('user.section', category='tarjetas graficas') }}">TARJETAS GRAFICAS</a></li>
 
                 <a href="{{ url_for('auth.login') }}">
                     <li id="cuenta">Cuenta <i class="bi bi-person-fill" id="usuario"></i></li>

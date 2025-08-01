@@ -19,7 +19,7 @@ class Usuario(db.Model, UserMixin):
     id_rol = db.Column(db.Integer, db.ForeignKey('roles.id_rol'))
     rol_rel = db.relationship('Rol', backref='usuarios')
     
-
+    
     # ----- CONSTRUCTOR PARA EVITAR ADVERTENCIAS en el editor por pylance (análisis estático) -----
     def __init__(self, nombre, apellido, email, direccion, telefono, id_rol):
         self.nombre = nombre
@@ -29,8 +29,18 @@ class Usuario(db.Model, UserMixin):
         self.telefono = telefono
         self.id_rol = id_rol
 
-    # ----- MÉTODOS DE SEGURIDAD -----
+    def to_dict(self):
+        return {
+            'id_usuario': self.id_usuario,
+            'nombre': self.nombre,
+            'apellido': self.apellido,
+            'email': self.email,
+            'direccion': self.direccion,
+            'telefono': self.telefono,
+            'rol': self.rol  # usa la propiedad .rol para mostrar el nombre del rol
+        }
 
+    # ----- MÉTODOS DE SEGURIDAD -----
     def set_password(self, password):
         # Hashea y guarda la contraseña.
         self.password = generate_password_hash(password)
