@@ -14,11 +14,18 @@ pedidos_bp = Blueprint('api_pedidos', __name__, url_prefix='/api/pedidos')
 @pedidos_bp.route('/', methods=['GET'])
 def obtener_pedidos():
     
+    mas_vendido = request.args.get('mas_vendido')
+    menos_vendido = request.args.get('menos_vendido')
+    mas_vendido_categoria = request.args.get('mas_vendido_categoria')
+    menos_vendido_categoria = request.args.get('menos_vendido_categoria')
+    mas_vendido_marca = request.args.get('mas_vendido_marca')
+    menos_vendido_marca = request.args.get('menos_vendido_marca')
+    mas_vendido_producto = request.args.get('mas_vendido_producto')
+    menos_vendido_producto = request.args.get('menos_vendido_producto')
+
     fecha_desde = request.args.get('fecha_desde')
     fecha_hasta = request.args.get('fecha_hasta')
-    
     formato = "%Y-%m-%d"
-
     param_producto = request.args.get('producto')
     param_categoria = request.args.get('categoria')
     param_marca = request.args.get('marca')
@@ -195,22 +202,23 @@ def obtener_pedidos_categoria():
 
     try:
         pedidos = query.all()
-        categorias_en_pedidos = defaultdict(set)
+        categorias_en_pedidos = defaultdict(list)
 
         for pedido in pedidos:
             for prod_pedido in pedido.productos_pedidos:
                 categoria = prod_pedido.producto.categoria.nombre
-                categorias_en_pedidos[categoria].add(pedido.id_pedido)
+                cantidad = prod_pedido.cantidad
+                categorias_en_pedidos[categoria].append(cantidad)
 
-        resultado = {categoria: len(ids) for categoria, ids in categorias_en_pedidos.items()}
-
+        resultado = [{"categoria": k, "cantidad": sum(v)} for k, v in categorias_en_pedidos.items()]
         print(categorias_en_pedidos)
         
-        return jsonify(resultado)
+        return jsonify({"success": True, "data": resultado}), 200
     
     except ValueError:
         return jsonify({
             "success": False, 
             "data": {"message": "Formato de fecha incorrecto. Utiliza YYYY-MM-DD."}
         }), 400
+
 
