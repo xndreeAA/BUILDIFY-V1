@@ -66,7 +66,7 @@ def handle_checkout_completed(session):
 
 def crear_pedido(id_usuario, productos_pedidos, fecha, total):
     try: 
-        fecha_dt = datetime.strptime(fecha, "%d/%m/%Y %H:%M:%S").date()
+        fecha_dt = datetime.strptime(fecha, "%d/%m/%Y %H:%M:%S")
 
         nuevo_pedido = Pedido(
             id_usuario=id_usuario,
