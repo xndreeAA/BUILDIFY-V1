@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request, abort, current_app
 from flask_login import login_required
 from sqlalchemy.orm import joinedload
+from sqlalchemy import func
 
 from app.models.pedidos import Pedido, ProductoPedido, Estado
 from app.models.usuario import Usuario
@@ -14,15 +15,6 @@ pedidos_bp = Blueprint('api_pedidos', __name__, url_prefix='/api/pedidos')
 @pedidos_bp.route('/', methods=['GET'])
 def obtener_pedidos():
     
-    mas_vendido = request.args.get('mas_vendido')
-    menos_vendido = request.args.get('menos_vendido')
-    mas_vendido_categoria = request.args.get('mas_vendido_categoria')
-    menos_vendido_categoria = request.args.get('menos_vendido_categoria')
-    mas_vendido_marca = request.args.get('mas_vendido_marca')
-    menos_vendido_marca = request.args.get('menos_vendido_marca')
-    mas_vendido_producto = request.args.get('mas_vendido_producto')
-    menos_vendido_producto = request.args.get('menos_vendido_producto')
-
     fecha_desde = request.args.get('fecha_desde')
     fecha_hasta = request.args.get('fecha_hasta')
     formato = "%Y-%m-%d"
@@ -220,5 +212,194 @@ def obtener_pedidos_categoria():
             "success": False, 
             "data": {"message": "Formato de fecha incorrecto. Utiliza YYYY-MM-DD."}
         }), 400
+    
+def crear_query_pedidos(filtro=None, mas_vendido=True):
+    query = (
+        db.session.query(
+            Producto,
+            func.sum(ProductoPedido.cantidad).label('unidades_vendidas')
+        )
+        .options(
+            joinedload(Producto.categoria),
+            joinedload(Producto.marca)
+        )
+        .join(ProductoPedido, Producto.id_producto == ProductoPedido.id_producto)
+        .join(Producto.categoria)
+    )
 
+    if filtro is not None:
+        query = query.filter(filtro)
 
+    query = query.group_by(Producto.id_producto)
+    query = query.order_by(
+        func.sum(ProductoPedido.cantidad).desc() if mas_vendido else func.sum(ProductoPedido.cantidad).asc()
+    )
+    resultado = query.first()
+
+    if resultado:
+        producto, unidades_vendidas = resultado
+        return {
+            'id_producto': producto.id_producto,
+            'nombre': producto.nombre,
+            'precio': float(producto.precio),
+            'categoria': producto.categoria.nombre,
+            'marca': producto.marca.nombre,
+            'unidades_vendidas': unidades_vendidas,
+            'ganancias': unidades_vendidas * producto.precio
+        }
+
+    return None
+
+ 
+@pedidos_bp.route('/mas-menos', methods=['GET'])
+def obtener_pedidos_mas_menos():
+       
+    mas_vendido = request.args.get('mas_vendido')
+    menos_vendido = request.args.get('menos_vendido')
+    mas_vendido_categoria = request.args.get('mas_vendido_categoria')
+    menos_vendido_categoria = request.args.get('menos_vendido_categoria')
+    mas_vendido_marca = request.args.get('mas_vendido_marca')
+    menos_vendido_marca = request.args.get('menos_vendido_marca')
+
+    resultado = {
+        'data': {},
+        'success': False
+    }
+
+    if mas_vendido:
+
+        try:
+
+            mas_vendido_query = crear_query_pedidos(mas_vendido=True)
+
+            if mas_vendido_query:
+                resultado['data']['mas_vendido'] = mas_vendido_query
+
+        except ValueError:
+            return jsonify({
+                "success": False, 
+                "data": {"message": "Formato de fecha incorrecto. Utiliza YYYY-MM-DD."}
+            }), 400
+        
+    if menos_vendido:
+        try:
+
+            menos_vendido_query = crear_query_pedidos(mas_vendido=False)
+
+            if menos_vendido_query:
+                resultado['data']['menos_vendido'] = menos_vendido_query
+
+        except ValueError:
+            return jsonify({
+                "success": False, 
+                "data": {"message": "Formato de fecha incorrecto. Utiliza YYYY-MM-DD."}
+            }), 400
+        
+
+    if mas_vendido_categoria:
+        try:
+            
+            nombre_categorias = db.session.query (
+                Categoria.nombre
+            ).all()
+
+            categorias = [c[0] for c in nombre_categorias]
+
+            if mas_vendido_categoria not in categorias:
+                return jsonify({
+                    "success": False, 
+                    "data": {"message": "Categoria no encontrada."}
+                }), 400
+
+            filtro = Categoria.nombre == mas_vendido_categoria
+
+            resultado_data = crear_query_pedidos(filtro=filtro, mas_vendido=True)
+
+            if resultado_data:
+                resultado['data']['mas_vendido_categoria'] = resultado_data
+                resultado['success'] = True
+            else:
+                return jsonify({
+                    "success": False, 
+                    "data": {"message": "Producto no encontrado en la búsqueda."}
+                }), 400
+            
+        except ValueError as e:
+            return jsonify({
+                "success": False, 
+                "data": {"message": "Formato de fecha incorrecto. Utiliza YYYY-MM-DD."}
+            }), 400
+
+    if menos_vendido_categoria:
+        try:
+            
+            nombre_categorias = db.session.query (
+                Categoria.nombre
+            ).all()
+
+            categorias = [c[0] for c in nombre_categorias]
+
+            if mas_vendido_categoria not in categorias:
+                return jsonify({
+                    "success": False, 
+                    "data": {"message": "Categoria no encontrada."}
+                }), 400
+            
+            filtro = Categoria.nombre == menos_vendido_categoria
+
+            resultado_data = crear_query_pedidos(filtro=filtro, mas_vendido=False)
+
+            if resultado_data:
+                resultado['data']['menos_vendido_categoria'] = resultado_data
+                resultado['success'] = True
+
+            else:
+                return jsonify({
+                    "success": False, 
+                    "data": {"message": "Producto no encontrado en la busqueda."}
+                }), 400
+
+        except ValueError as e:
+            return jsonify({
+                "success": False, 
+                "data": {"message": "Formato de fecha incorrecto. Utiliza YYYY-MM-DD."}
+            }), 400
+
+    if menos_vendido_marca:
+
+        try:
+            nombre_marcas = db.session.query (
+                Marca.nombre
+            ).all()
+
+            marcas = [m[0] for m in nombre_marcas]
+
+            print (marcas)
+
+            if menos_vendido_marca not in marcas:
+                return jsonify({
+                    "success": False, 
+                    "data": {"message": "marca no encontrada."}
+                }), 400
+            
+            filtro = Marca.nombre == menos_vendido_marca
+
+            resultado_data = crear_query_pedidos(filtro=filtro, mas_vendido=False)
+
+            if resultado_data:
+                resultado['data']['menos_vendido_marca'] = resultado_data
+                resultado['success'] = True
+
+            else:
+                return jsonify({
+                    "success": False, 
+                    "data": {"message": "Producto no encontrado en la busqueda."}
+                }), 400
+
+        except ValueError as e:
+            return jsonify({
+                "success": False, 
+                "data": {"message": "Formato de fecha incorrecto. Utiliza YYYY-MM-DD."}
+            }), 400
+
+    return jsonify(resultado)
