@@ -9,6 +9,7 @@ from app.models.producto import Producto, Categoria, Marca
 from datetime import datetime
 from collections import defaultdict
 from app import db
+import calendar
 
 pedidos_bp = Blueprint('api_pedidos', __name__, url_prefix='/api/pedidos')
 
@@ -185,6 +186,59 @@ def obtener_pedidos_usuario(id_usuario):
 
     return jsonify({"success": True, "data": pedidos})
 
+@pedidos_bp.route('/historial-ventas-totales', methods=['GET'])
+def obtener_pedidos_historial_ventas_totales():
+    fecha_desde = request.args.get('fecha_desde')
+    fecha_hasta = request.args.get('fecha_hasta')
+    fill = request.args.get('fill')
+
+    formato = "%Y-%m-%d"
+
+    try:
+        if fecha_desde:
+            fecha_desde = datetime.strptime(fecha_desde, formato).date()
+        if fecha_hasta:
+            fecha_hasta = datetime.strptime(fecha_hasta, formato).date()
+    except ValueError:
+        return jsonify({
+            "success": False,
+            "data": {"message": "Formato de fecha incorrecto. Utiliza YYYY-MM-DD."}
+        }), 400
+
+    query = db.session.query(
+        func.extract('year', Pedido.fecha_pedido).label('year'),
+        func.extract('month', Pedido.fecha_pedido).label('month'),
+        func.sum(Pedido.valor_total).label('total')
+    )
+
+    if fecha_desde:
+        query = query.filter(Pedido.fecha_pedido >= fecha_desde)
+    if fecha_hasta:
+        query = query.filter(Pedido.fecha_pedido <= fecha_hasta)
+
+    query = query.group_by('year', 'month').order_by('year', 'month')
+    resultados = query.all()
+
+    data = {}
+
+    for year, month, total in resultados:
+        year = int(year)
+        month = int(month)
+
+        if year not in data:
+            data[year] = {
+                "meses": { m: 0.0 for m in range(1, 13) } if fill == 'true' else {},
+                "total_ventas": 0.0
+            }
+
+        data[year]["meses"][month] = float(total)
+        data[year]["total_ventas"] += float(total)
+
+    return jsonify({
+        "success": True,
+        "data": data
+    })
+
 @pedidos_bp.route('/categoria')
 def obtener_pedidos_categoria():
 
@@ -213,7 +267,7 @@ def obtener_pedidos_categoria():
             "data": {"message": "Formato de fecha incorrecto. Utiliza YYYY-MM-DD."}
         }), 400
     
-def crear_query_pedidos(filtro=None, mas_vendido=True):
+def crear_query_pedidos(filtro=None, mas_vendido=True, fecha_desde=None, fecha_hasta=None):
     query = (
         db.session.query(
             Producto,
@@ -224,6 +278,7 @@ def crear_query_pedidos(filtro=None, mas_vendido=True):
             joinedload(Producto.marca)
         )
         .join(ProductoPedido, Producto.id_producto == ProductoPedido.id_producto)
+        .join(Pedido, Pedido.id_pedido == ProductoPedido.id_pedido)
         .join(Producto.categoria)
     )
 
@@ -234,7 +289,19 @@ def crear_query_pedidos(filtro=None, mas_vendido=True):
     query = query.order_by(
         func.sum(ProductoPedido.cantidad).desc() if mas_vendido else func.sum(ProductoPedido.cantidad).asc()
     )
+
+    formato = "%Y-%m-%d"
+
+    if fecha_desde:
+        fecha_desde = datetime.strptime(fecha_desde, formato).date()
+        query = query.filter(Pedido.fecha_pedido >= fecha_desde)
+
+    if fecha_hasta:
+        fecha_hasta = datetime.strptime(fecha_hasta, formato).date()
+        query = query.filter(Pedido.fecha_pedido <= fecha_hasta)
+
     resultado = query.first()
+
 
     if resultado:
         producto, unidades_vendidas = resultado
@@ -261,6 +328,9 @@ def obtener_pedidos_mas_menos():
     mas_vendido_marca = request.args.get('mas_vendido_marca')
     menos_vendido_marca = request.args.get('menos_vendido_marca')
 
+    fecha_desde = request.args.get('fecha_desde')
+    fecha_hasta = request.args.get('fecha_hasta')
+
     resultado = {
         'data': {},
         'success': False
@@ -270,10 +340,11 @@ def obtener_pedidos_mas_menos():
 
         try:
 
-            mas_vendido_query = crear_query_pedidos(mas_vendido=True)
+            mas_vendido_query = crear_query_pedidos(mas_vendido=True, fecha_desde=fecha_desde, fecha_hasta=fecha_hasta)
 
             if mas_vendido_query:
                 resultado['data']['mas_vendido'] = mas_vendido_query
+                resultado['success'] = True
 
         except ValueError:
             return jsonify({
@@ -284,10 +355,11 @@ def obtener_pedidos_mas_menos():
     if menos_vendido:
         try:
 
-            menos_vendido_query = crear_query_pedidos(mas_vendido=False)
+            menos_vendido_query = crear_query_pedidos(mas_vendido=False, fecha_desde=fecha_desde, fecha_hasta=fecha_hasta)
 
             if menos_vendido_query:
                 resultado['data']['menos_vendido'] = menos_vendido_query
+                resultado['success'] = True
 
         except ValueError:
             return jsonify({
@@ -313,7 +385,7 @@ def obtener_pedidos_mas_menos():
 
             filtro = Categoria.nombre == mas_vendido_categoria
 
-            resultado_data = crear_query_pedidos(filtro=filtro, mas_vendido=True)
+            resultado_data = crear_query_pedidos(filtro=filtro, mas_vendido=True, fecha_desde=fecha_desde, fecha_hasta=fecha_hasta)
 
             if resultado_data:
                 resultado['data']['mas_vendido_categoria'] = resultado_data
@@ -339,7 +411,7 @@ def obtener_pedidos_mas_menos():
 
             categorias = [c[0] for c in nombre_categorias]
 
-            if mas_vendido_categoria not in categorias:
+            if menos_vendido_categoria not in categorias:
                 return jsonify({
                     "success": False, 
                     "data": {"message": "Categoria no encontrada."}
@@ -347,7 +419,7 @@ def obtener_pedidos_mas_menos():
             
             filtro = Categoria.nombre == menos_vendido_categoria
 
-            resultado_data = crear_query_pedidos(filtro=filtro, mas_vendido=False)
+            resultado_data = crear_query_pedidos(filtro=filtro, mas_vendido=False, fecha_desde=fecha_desde, fecha_hasta=fecha_hasta)
 
             if resultado_data:
                 resultado['data']['menos_vendido_categoria'] = resultado_data
@@ -384,10 +456,45 @@ def obtener_pedidos_mas_menos():
             
             filtro = Marca.nombre == menos_vendido_marca
 
-            resultado_data = crear_query_pedidos(filtro=filtro, mas_vendido=False)
+            resultado_data = crear_query_pedidos(filtro=filtro, mas_vendido=False, fecha_desde=fecha_desde, fecha_hasta=fecha_hasta)
 
             if resultado_data:
                 resultado['data']['menos_vendido_marca'] = resultado_data
+                resultado['success'] = True
+
+            else:
+                return jsonify({
+                    "success": False, 
+                    "data": {"message": "Producto no encontrado en la busqueda."}
+                }), 400
+
+        except ValueError as e:
+            return jsonify({
+                "success": False, 
+                "data": {"message": "Formato de fecha incorrecto. Utiliza YYYY-MM-DD."}
+            }), 400
+    
+    if mas_vendido_marca:
+
+        try:
+            nombre_marcas = db.session.query (
+                Marca.nombre
+            ).all()
+
+            marcas = [m[0] for m in nombre_marcas]
+
+            if mas_vendido_marca not in marcas:
+                return jsonify({
+                    "success": False, 
+                    "data": {"message": "marca no encontrada."}
+                }), 400
+            
+            filtro = Marca.nombre == mas_vendido_marca
+
+            resultado_data = crear_query_pedidos(filtro=filtro, mas_vendido=True, fecha_desde=fecha_desde, fecha_hasta=fecha_hasta)
+
+            if resultado_data:
+                resultado['data']['mas_vendido_marca'] = resultado_data
                 resultado['success'] = True
 
             else:
