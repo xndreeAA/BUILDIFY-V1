@@ -1,19 +1,17 @@
-console.log("Dashboard increíble gracias a David");
-
 const fetchData = async () => {
   const data = await fetch('/api/pedidos/categoria');
   const res = await data.json();
   return res.data;
 };
 
-const ctx = document.getElementById('ctx').getContext('2d');
+const contenedor_pedidos_por_categoria = document.getElementById('numero-pedidos-por-categoria').getContext('2d');
 
-const renderChart = async () => {
+const renderVentasCategoria = async () => {
   const data = await fetchData();
   const keys = data.map((item) => item.categoria);
   const values = data.map((item) => item.cantidad);
 
-  new Chart(ctx, {
+  new Chart(contenedor_pedidos_por_categoria, {
     type: 'doughnut',
     options: {
       animation: true,
@@ -32,7 +30,7 @@ const renderChart = async () => {
         {
           label: 'Pedidos por categoría',
           data: values,
-          borderRadius: 20,
+          borderRadius: 5,
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
@@ -49,4 +47,4 @@ const renderChart = async () => {
   });
 };
 
-renderChart();
+export default renderVentasCategoria;
