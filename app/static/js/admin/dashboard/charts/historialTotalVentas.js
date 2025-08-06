@@ -1,5 +1,4 @@
 
-const contenedor_historial_ventas_totales = document.getElementById('historial-ventas-totales').getContext('2d');
 
 const fetchData = async () => {
     const data = await fetch('/api/pedidos/historial-ventas-totales?fill=true');
@@ -24,7 +23,10 @@ const month_map = {
 }
 
 const renderHistorialVentasTotales = async () => {
-    
+        
+    const canvas = document.getElementById('historial-ventas-totales')
+    if (!canvas) return console.error("Canvas no encontrado");
+    const ctx = canvas.getContext('2d');
     try {
         // const data = await fetchData();
 
@@ -110,7 +112,7 @@ const renderHistorialVentasTotales = async () => {
             }))
         };
 
-        new Chart(contenedor_historial_ventas_totales, {
+        new Chart(ctx, {
             
             type: 'line',
             data: data_chart,

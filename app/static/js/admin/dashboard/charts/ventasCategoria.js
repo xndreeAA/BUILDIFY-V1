@@ -1,17 +1,23 @@
 const fetchData = async () => {
   const data = await fetch('/api/pedidos/categoria');
   const res = await data.json();
+  console.log(res);
+  
   return res.data;
 };
 
-const contenedor_pedidos_por_categoria = document.getElementById('numero-pedidos-por-categoria').getContext('2d');
-
 const renderVentasCategoria = async () => {
+
+  const canvas = document.getElementById('numero-pedidos-por-categoria')
+  if (!canvas) return console.error("Canvas no encontrado");
+  const ctx = canvas.getContext('2d');
+
+
   const data = await fetchData();
   const keys = data.map((item) => item.categoria);
   const values = data.map((item) => item.cantidad);
 
-  new Chart(contenedor_pedidos_por_categoria, {
+  new Chart(ctx, {
     type: 'doughnut',
     options: {
       animation: true,

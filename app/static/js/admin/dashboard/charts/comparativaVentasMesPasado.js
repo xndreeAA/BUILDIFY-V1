@@ -1,5 +1,3 @@
-const contenedor_comparativa_ventas_mes_pasado = document.getElementById('comparativa-ventas-mes-pasado').getContext('2d');
-
 const fetchData = async () => {
     const data = await fetch('/api/pedidos/historial-ventas-totales?fill=true');
     const res = await data.json();
@@ -21,7 +19,14 @@ const month_map = {
     12: 'Diciembre'
 }
 
+
+
 const renderComparativaVentasMesPasado = async () => {
+    
+    const canvas = document.getElementById('comparativa-ventas-mes-pasado');
+    if (!canvas) return console.error("Canvas no encontrado");
+    const ctx = canvas.getContext('2d');
+
     try {
         
         const data = await fetchData()
@@ -50,7 +55,7 @@ const renderComparativaVentasMesPasado = async () => {
         const labels = [mes_pasado_label, mes_actual_label];
         const data_months = [mes_pasado_data, mes_actual_data];
 
-        new Chart(contenedor_comparativa_ventas_mes_pasado, {
+        new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: labels,
