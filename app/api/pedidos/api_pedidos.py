@@ -238,34 +238,47 @@ def obtener_pedidos_historial_ventas_totales():
         "success": True,
         "data": data
     })
+from collections import defaultdict
+from flask import jsonify
 
 @pedidos_bp.route('/categoria')
 def obtener_pedidos_categoria():
-
     query = Pedido.query.options(
         joinedload(Pedido.productos_pedidos).joinedload(ProductoPedido.producto)
     ).join(Pedido.productos_pedidos).join(ProductoPedido.producto).join(Producto.categoria)
 
     try:
         pedidos = query.all()
-        categorias_en_pedidos = defaultdict(list)
+        
+        categorias_en_pedidos = defaultdict(lambda: {"cantidad": 0, "ganancias": 0})
 
         for pedido in pedidos:
             for prod_pedido in pedido.productos_pedidos:
                 categoria = prod_pedido.producto.categoria.nombre
                 cantidad = prod_pedido.cantidad
-                categorias_en_pedidos[categoria].append(cantidad)
+                precio = prod_pedido.producto.precio
+                total_producto = cantidad * precio
 
-        resultado = [{"categoria": k, "cantidad": sum(v)} for k, v in categorias_en_pedidos.items()]
-        print(categorias_en_pedidos)
-        
+                categorias_en_pedidos[categoria]["cantidad"] += cantidad
+                categorias_en_pedidos[categoria]["ganancias"] += total_producto
+
+        resultado = [
+            {
+                "categoria": categoria,
+                "cantidad": datos["cantidad"],
+                "ganancias": round(datos["ganancias"], 2)
+            }
+            for categoria, datos in categorias_en_pedidos.items()
+        ]
+
         return jsonify({"success": True, "data": resultado}), 200
-    
+
     except ValueError:
         return jsonify({
             "success": False, 
             "data": {"message": "Formato de fecha incorrecto. Utiliza YYYY-MM-DD."}
         }), 400
+
     
 def crear_query_pedidos(filtro=None, mas_vendido=True, fecha_desde=None, fecha_hasta=None):
     query = (
