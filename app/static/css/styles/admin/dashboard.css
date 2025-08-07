@@ -1,7 +1,6 @@
 #container_dashboard_admin {
     padding: 40px;
     margin: auto;
-    /* border: 40px solid red; */
 
     display: grid;
     grid-template-columns: minmax(200px, 1fr) repeat(5, 1fr);
@@ -16,6 +15,10 @@
     padding: 10px;
     box-sizing: border-box;
 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
     & span {
         display: flex;
         align-items: center;
@@ -27,17 +30,17 @@
         margin: 0;
     }
 
+    & h5 {
+        margin: 0;
+    }
+
     & svg {
         width: 30px;
         height: 30px;
         fill: #1e1e2f;
     }
-
-    & canvas {
-        width: 100% !important;
-        height: auto !important;
-    }
 }
+
 
 #container_dashboard_admin > article:nth-child(1) {
     grid-column: 1 / 2;
@@ -59,43 +62,49 @@
     grid-row: span 1;
 }
 
+/* #container_dashboard_admin > article:nth-child(5) {
+    grid-column: span 1;
+    grid-row: span 2;
+} */
+
 #container_dashboard_admin > article:nth-child(5) {
-    grid-column: span 2;
+    grid-column: span 4;
     grid-row: span 2;
 }
 
 #container_dashboard_admin > article:nth-child(6) {
-    grid-column: span 3;
+    grid-column: span 2;
     grid-row: span 2;
 }
 
 #container_dashboard_admin > article:nth-child(7) {
-    grid-column: span 1;
-    grid-row: span 2;
+    grid-column: 1 / 4;
+    grid-row: span 1;
+
 }
 
 #container_dashboard_admin > article:nth-child(8) {
-    grid-column: 1 / 7;
-    grid-row: span 2;
-}
-
-#container_dashboard_admin > article:nth-child(9) {
-    grid-column: 1 / 4;
-    grid-row: span 1;
-}
-
-
-#container_dashboard_admin > article:nth-child(10) {
     grid-column: 4 / 7;
     grid-row: span 1;
 }
 
-#container_dashboard_admin > article:nth-child(11) {
+#container_dashboard_admin > article:nth-child(9) {
+    grid-column: 1 / 7;
+    grid-row: span 2;
+}
+
+#container_dashboard_admin > article:nth-child(10) {
     grid-column: 1 / 5;
     grid-row: span 2;
 }
 
-#container_dashboard_admin > article:nth-child(12) {
+#container_dashboard_admin > article:nth-child(11) {
     grid-column: span 2;
     grid-row: span 2;
+}
+
+.producto-info ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }

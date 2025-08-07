@@ -14,8 +14,10 @@ const renderVentasCategoria = async () => {
 
 
   const data = await fetchData();
-  const keys = data.map((item) => item.categoria);
+  const keys = data.map((item) => item.categoria);  
   const values = data.map((item) => item.cantidad);
+
+  console.log(keys, values);
 
   new Chart(ctx, {
     type: 'doughnut',
@@ -28,15 +30,16 @@ const renderVentasCategoria = async () => {
         tooltip: {
           enabled: true
         }
-      }
+      },
+      responsive: false, // 👈 esto es clave
+      maintainAspectRatio: false 
     },
     data: {
       labels: keys,
       datasets: [
         {
-          label: 'Pedidos por categoría',
+          label: keys,
           data: values,
-          borderRadius: 5,
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
