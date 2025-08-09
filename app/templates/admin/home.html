@@ -2,74 +2,82 @@
 
 {% block styles %}
 {{ super() }}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/layout/carrusel.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/layout/home.css')}}">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/layout/dashboard_admin.css')}}">
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout/carrusel.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout/home.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles/admin/dashboard.css')}}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 {% endblock %}
 {% block content %}
+    <section id="container_dashboard_admin">
+            <article class="dashboard-article">
+                    <span>
+                        <h4>Comparativa ventas mes pasado</h4>
+                        <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" id="search" width="48" height="48" x="0" y="0" fill="#000" version="1.1" viewBox="0 0 48 48">
+                            <path d="M46.599 40.236L36.054 29.691C37.89 26.718 39 23.25 39 19.5 39 8.73 30.27 0 19.5 0S0 8.73 0 19.5 8.73 39 19.5 39c3.75 0 7.218-1.11 10.188-2.943l10.548 10.545a4.501 4.501 0 0 0 6.363-6.366zM19.5 33C12.045 33 6 26.955 6 19.5S12.045 6 19.5 6 33 12.045 33 19.5 26.955 33 19.5 33z"></path>
+                        </svg>
+                    </span>
+                    <div class="canvas-container comparativa-mes-pasado">
+                        <canvas id="comparativa-ventas-mes-pasado" width="80" height="140"></canvas>
+                    </div>
+            </article>
+            <article class="dashboard-article">
+                <span>
+                    <h4>Historico ventas</h4>
+                </span>
+                <canvas id="historial-ventas-totales"></canvas>
+            </article>
+            <article class="dashboard-article">
+                <span>
+                    <h4>Mas vendido</h4>
+                </span>
+                <div id="mas-vendido"></div>
+            </article>
+            <article class="dashboard-article">
+                <span>
+                    <h4>Menos vendido</h4>
+                </span>
+                <div id="menos-vendido"></div>
+            </article>
+            <article class="dashboard-article">
+                <span>
+                    <h4>Ventas brutas por categoria</h4>
+                </span>
+                <canvas id="ventas-brutas-por-categoria" height="300"></canvas>
+            </article>
+            <article class="dashboard-article">
+                <span>
+                    <h4>Numero pedidos por categoria</h4>
+                </span>
+                <canvas id="numero-pedidos-por-categoria" width="" height="300"></canvas>
+            </article>
+<!-- ///////////////////////////////////////////////////////////////// -->
+            <article class="dashboard-article">
+                <span>
+                    <h4>
+                        Mas vendido por categoria: 
+                        <select name="categoria" id="select-mas-vendido-por-categoria"></select>
+                    </h4>
+                </span>
+                <div id="mas-vendido-por-categoria"></div>
+            </article>
+            <article class="dashboard-article">
+                <span>
+                    <h4>
+                        Menos vendido por categoria
+                        <select name="categoria" id="select-menos-vendido-por-categoria"></select>
+                    </h4>
+                </span>
+                <div id="menos-vendido-por-categoria"></div>
+            </article>
+            <article class="dashboard-article">9</article>
+            <article class="dashboard-article">10</article>
+            <article class="dashboard-article">11</article>
+            <article class="dashboard-article">12</article>
+            <article class="dashboard-article">13</article>
+    </section>
+{% endblock %}
 
-<div class="container_dashboard_admin">
-    <div class="header_dashboard">
-        <p>DASHBOARD</p>
-    </div>
-    <div class="cont_1">
-        <div id="cont_m_1">
-            <p>Ventas</p>
-            <h3>$1.937</h3>
-        </div>
-    </div>
-
-    <div class="cont_2">
-        <div id="cont_m_2">
-            <p>Órdenes</p>
-            <h3>1.937</h3>
-        </div>
-    </div>
-
-    <div class="cont_3">
-        <div id="cont_m_3">
-            <p>Poco Stock</p>
-            <h3>7</h3>
-        </div>
-    </div>
-
-    <div class="cont_4">
-        <div id="cont_m_4">
-            <p>Registrados</p>
-            <h3>193</h3>
-        </div>
-    </div>
-
-    <div class="cont_5">
-        <div id="cont_m_5">
-            <img src="../../static/images/p2.jpg" alt="">
-        </div>
-    </div>
-
-    <div class="cont_6">
-        <div id="cont_m_6">
-            <img src="../../static/images/grafica_3.jpg" alt="">
-        </div>
-    </div>
-
-    <div class="cont_7">
-        <div id="cont_m_7">
-            <img src="../../static/images/inv.jpg" alt="">
-        </div>
-    </div>
-
-    <div class="cont_8">
-        <div id="cont_m_8">
-            <p>Ventas</p>
-            <h3>$1.937</h3>
-        </div>
-    </div>
-    
-
-
-
-
-</div>
-
+{%  block scripts %} 
+    {{ super() }}
+    <script type="module" src="{{ url_for('static', filename='js/admin/dashboard/charts.js') }}"></script>
 {% endblock %}
