@@ -7,10 +7,10 @@ const fetchData = async (params) => {
   const resp = await fetch(url);
   const json = await resp.json();
 
-  if (params.mas_vendido_categoria) {
+  if (params.mas_vendido_categoria !== undefined) {
     return json.data?.mas_vendido_categoria || null;
   }
-  if (params.menos_vendido_categoria) {
+  if (params.menos_vendido_categoria !== undefined) {
     return json.data?.menos_vendido_categoria || null;
   }
   return null;
@@ -21,11 +21,12 @@ async function cargarCategorias(contenedor) {
   const json = await res.json();
   const categorias = json.data;
 
-  contenedor.innerHTML = `<option value="">Seleccione una categoría</option>`;
+  contenedor.innerHTML = `<option value="default">Seleccione una categoría</option>`;
   categorias.forEach(cat => {
     const option = document.createElement('option');
     option.value = cat.nombre;
-    option.textContent = cat.nombre;
+    const nombre = cat.nombre[0].toUpperCase() + cat.nombre.slice(1);
+    option.textContent = nombre;
     contenedor.appendChild(option);
   });
 }
@@ -84,13 +85,36 @@ const renderMasMenosVendidoCategoria = async () => {
     await cargarCategorias(selectMasVendido);
     await cargarCategorias(selectMenosVendido);
 
+    selectMasVendido.value = 'default';
+    selectMenosVendido.value = 'default';
+
+    const productoMas = await fetchData({ mas_vendido_categoria: '' });
+    mas_vendido.innerHTML = '';
+    mas_vendido.appendChild(crearCajaProducto(productoMas));
+
+    const productoMenos = await fetchData({ menos_vendido_categoria: '' });
+    menos_vendido.innerHTML = '';
+    menos_vendido.appendChild(crearCajaProducto(productoMenos));
+
     selectMasVendido.addEventListener('change', async () => {
+      if (selectMasVendido.value === 'default') {
+        const producto = await fetchData({ mas_vendido_categoria: '' });
+        mas_vendido.innerHTML = '';
+        mas_vendido.appendChild(crearCajaProducto(producto));
+        return;
+      }
       const producto = await fetchData({ mas_vendido_categoria: selectMasVendido.value });
       mas_vendido.innerHTML = '';
       mas_vendido.appendChild(crearCajaProducto(producto));
     });
 
     selectMenosVendido.addEventListener('change', async () => {
+      if (selectMenosVendido.value === 'default') {
+        const producto = await fetchData({ menos_vendido_categoria: '' });
+        menos_vendido.innerHTML = '';
+        menos_vendido.appendChild(crearCajaProducto(producto));
+        return;
+      }
       const producto = await fetchData({ menos_vendido_categoria: selectMenosVendido.value });
       menos_vendido.innerHTML = '';
       menos_vendido.appendChild(crearCajaProducto(producto));
