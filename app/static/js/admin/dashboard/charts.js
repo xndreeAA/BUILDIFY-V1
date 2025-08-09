@@ -3,6 +3,7 @@ import renderHistorialVentasTotales from './charts/historialTotalVentas.js';
 import renderComparativaVentasMesPasado from './charts/comparativaVentasMesPasado.js';
 import renderMasMenosVendido from './charts/masMenosVendido.js';
 import renderVentasBrutasCategoria from './charts/ventasBrutasCategoria.js';
+import renderMasMenosVendidoCategoria from './charts/masMenosVendidoCategoria.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     renderHistorialVentasTotales();
@@ -10,4 +11,5 @@ document.addEventListener('DOMContentLoaded', () => {
     renderComparativaVentasMesPasado();
     renderMasMenosVendido();
     renderVentasBrutasCategoria();
+    renderMasMenosVendidoCategoria();
 });
