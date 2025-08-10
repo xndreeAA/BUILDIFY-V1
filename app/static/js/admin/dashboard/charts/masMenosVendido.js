@@ -24,7 +24,8 @@ const renderMasMenosVendido = async () => {
       nombre.textContent = producto.nombre;
 
       const lista = document.createElement('ul');
-
+      lista.classList.add('producto-info-lista');
+      
       const elementos = [
         { label: 'Marca', valor: producto.marca },
         { label: 'Categoría', valor: producto.categoria },

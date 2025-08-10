@@ -1,3 +1,7 @@
+import paleta from "../../utils/colors.js";
+
+const colores = Object.values(paleta);
+
 const fetchData = async () => {
   const data = await fetch('/api/pedidos/historial-ventas-totales?fill=true');
   const res = await data.json();
@@ -52,21 +56,22 @@ const renderComparativaVentasMesPasado = async () => {
           {
             label: mes_pasado_label,
             data: [mes_pasado_data],
-            backgroundColor: 'rgba(255, 99, 132, 0.6)',
-            borderColor: 'rgba(255, 99, 132, 1)',
+            backgroundColor: colores[0],
+            borderColor: colores[0],
             borderWidth: 1
           },
           {
             label: mes_actual_label,
             data: [mes_actual_data],
-            backgroundColor: 'rgba(54, 162, 235, 0.6)',
-            borderColor: 'rgba(54, 162, 235, 1)',
+            backgroundColor: colores[1],
+            borderColor: colores[1],
             borderWidth: 1
           }
         ]
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
           legend: {
             display: true,

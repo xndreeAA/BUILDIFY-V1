@@ -1,3 +1,7 @@
+import paleta from "../../utils/colors.js";
+
+const colores = Object.values(paleta);
+
 const fetchData = async () => {
   const data = await fetch('/api/pedidos/categoria');
   const res = await data.json();
@@ -31,7 +35,7 @@ const renderVentasCategoria = async () => {
           enabled: true
         }
       },
-      responsive: false, // 👈 esto es clave
+      responsive: false,
       maintainAspectRatio: false 
     },
     data: {
@@ -40,14 +44,7 @@ const renderVentasCategoria = async () => {
         {
           label: keys,
           data: values,
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-          ],
+          backgroundColor: [...colores],
           borderColor: 'rgba(0, 0, 0, 1)',
           borderWidth: 1
         }

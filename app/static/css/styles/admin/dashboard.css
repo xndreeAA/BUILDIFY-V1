@@ -1,36 +1,93 @@
+:root {
+    --primario: #7DA0CA;      
+    --secundario: #70acf1;
+    --acento: #072941;
+    --textoClaro: #FFFFFF;
+    --davod_color_3: rgba(0, 0, 0, 0.397);
+    --color_complementario_2: #7DA0CA;
+
+
+} #container_encabezado_dashboard {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: fadeInDown 0.6s ease-out;
+    background-color: #ebebeb;
+}
+
+.container_encabezado_div:nth-child(1) {
+    background: linear-gradient(90deg, var(--primario), var(--secundario));
+    color: var(--textoClaro);
+    
+    & h5 {
+        margin: 0;
+        padding: 2px 20px;
+        text-align: center;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+    }
+}
+
+/* Segunda franja: título */
+.container_encabezado_div:nth-child(2) {
+    background-color: var(--acento);
+    color: var(--textoClaro);
+    
+    & h2 {
+        margin: 0;
+        padding: 15px 20px;
+        text-align: center;
+        font-size: 1.8rem;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
 #container_dashboard_admin {
     padding: 40px;
     margin: auto;
 
     display: grid;
     grid-template-columns: minmax(200px, 1fr) repeat(5, 1fr);
-    grid-template-rows: repeat(19, 200px);
+    grid-template-rows: repeat(auto, 220px);
     gap : 20px;
+    background-color: #ebebeb;
 }
 
 .dashboard-article {
-    min-height: 200px;
-    border: 2px solid #1e1e2f;
-    border-radius: 8px;
-    padding: 10px;
+    background-color: #f8f8f8;
+    min-height: 220px;
+    padding: 20px;
     box-sizing: border-box;
+    border: 2px solid transparent;
 
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    transition: 0.2s;
 
     & span {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 10px
+        gap: 10px;
+        border-bottom: #1e1e2f solid 1px;
+        padding-bottom: 10px;
     }
 
     & h4 {
-        margin: 0;
-    }
-
-    & h5 {
         margin: 0;
     }
 
@@ -39,6 +96,20 @@
         height: 30px;
         fill: #1e1e2f;
     }
+}
+
+.canvas-container {
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dashboard-article:hover {
+    box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.397);
+    border: 2px solid #7DA0CA;
 }
 
 
@@ -61,11 +132,6 @@
     grid-column: span 2;
     grid-row: span 1;
 }
-
-/* #container_dashboard_admin > article:nth-child(5) {
-    grid-column: span 1;
-    grid-row: span 2;
-} */
 
 #container_dashboard_admin > article:nth-child(5) {
     grid-column: span 4;
@@ -107,4 +173,72 @@
     list-style: none;
     padding: 0;
     margin: 0;
+}
+
+.btn-ampliar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1869e372;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    font-size: 12px;
+    transition: .2s;
+    z-index: 2;
+}
+
+.btn-ampliar:hover {
+    background-color: var(--acento);
+    box-shadow: 0 2px 9px 0 var(--davod_color_3);
+}
+
+.producto-info h5 {
+    font-size: 14px;
+    color: #0a4670;
+}
+
+.producto-info strong {
+    font-size: 14px;
+    color: #5a7fac;
+}
+
+.producto-info-lista li{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.producto-vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  border-radius: 12px;
+  color: var(--acento);
+  text-align: center;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.producto-vacio-icono {
+  font-size: 2.5rem;
+}
+
+.producto-vacio-texto h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.producto-vacio-texto p {
+  margin: 5px 0 0;
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }

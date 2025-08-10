@@ -1,4 +1,4 @@
-
+import paleta from "../../utils/colors.js";
 
 const fetchData = async () => {
     const data = await fetch('/api/pedidos/historial-ventas-totales?fill=true');
@@ -6,6 +6,7 @@ const fetchData = async () => {
     return res.data;
 }
 
+const colores = Object.values(paleta);
 
 const month_map = {
     1: 'Enero',
@@ -106,25 +107,28 @@ const renderHistorialVentasTotales = async () => {
         const data_chart = {
             labels: Object.values(month_map),
 
-            datasets: Object.entries(data).map(year => ({
-                label: year[0],
-                data: Object.values(year[1].meses),
+            datasets: Object.entries(data).map(([year, valores], index) => ({
+                label: year,
+                data: Object.values(valores.meses),
+                borderColor: colores[index % colores.length],
+                backgroundColor: colores[index % colores.length],
+                fill: false
             }))
         };
-
         new Chart(ctx, {
             
             type: 'line',
             data: data_chart,
             options: {
                 responsive: true,
+                maintainAspectRatio: false, 
                 plugins: {
                     title: {
                         display: true,
                         text: 'Historial de ventas anuales',
                     },
                     colors: {
-                        forceOverride: true
+                        forceOverride: false
                     }
                 },
                 scales: {

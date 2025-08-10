@@ -34,8 +34,14 @@ async function cargarCategorias(contenedor) {
 const crearCajaProducto = (producto) => {
   if (!producto) {
     const contenedor = document.createElement('div');
-    contenedor.classList.add('producto-info');
-    contenedor.textContent = "Sin datos disponibles";
+    contenedor.classList.add('producto-vacio');
+    contenedor.innerHTML = `
+      <div class="producto-vacio-icono">📦</div>
+      <div class="producto-vacio-texto">
+        <h3>Aún no has seleccionado una categoría</h3>
+        <p>Elige una para ver los productos más y menos vendidos.</p>
+      </div>
+    `;
     return contenedor;
   }
 
@@ -47,6 +53,8 @@ const crearCajaProducto = (producto) => {
   nombre.textContent = producto.nombre;
 
   const lista = document.createElement('ul');
+  lista.classList.add('producto-info-lista');
+
 
   const elementos = [
     { label: 'Marca', valor: producto.marca },
