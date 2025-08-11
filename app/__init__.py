@@ -16,7 +16,7 @@ serializer = None
 
 def create_app():
     load_dotenv()  
-    app = Flask(__name__, template_folder='templates', static_folder='static')
+    app = Flask(__name__, template_folder='core/templates')
     app.config.from_object('app.config.DevelopmentConfig')
 
     csrf = CSRFProtect()
@@ -31,68 +31,19 @@ def create_app():
     global serializer
     serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
 
-    # MODELOS
-    from app.models.usuario import Usuario
-    from app.models.rol import Rol
-    from app.models.producto import Producto, Categoria, Marca, MarcaCategoria
-    from app.models.detalles_producto import (
-        DetalleProcesador,
-        DetalleTarjetaGrafica,
-        DetalleMemoriaRAM,
-        DetallePlacaBase,
-        DetalleRefrigeracion,
-        DetalleChasis,
-        DetalleFuentePoder
-    )
-
+    from app.core.models.usuario import Usuario
     @login_manager.user_loader
     def load_user(user_id):
         return Usuario.query.get(int(user_id))
-
-    # RUTAS
-    from app.routes.auth_routes import auth_bp
-    from app.routes.main_routes import main_bp
-    from app.routes.admin_routes import admin_bp
-    from app.routes.colaborador_routes import colaborador_bp
-    from app.routes.user_routes import user_bp
-    from app.routes.checkout import checkout_bp
-
-    # APIS
-    from app.api.productos.api_productos import productos_bp
-    from app.api.productos.api_marcas import marcas_bp
-    from app.api.productos.api_categorias import categorias_bp
-    from app.api.productos.api_detalles import detalles_bp
-    from app.api.productos.api_carrito import carrito_bp
-    from app.api.usuarios.api_usuarios import user_api_bp
-
-    from app.api.payment_gateaway.api_checkout import checkout_api_bp
-    from app.api.payment_gateaway.api_webhook import webhook_api_bp
-
-    from app.api.pedidos.api_pedidos import pedidos_bp
-
-    # REGISTRO BLUEPRINTS
-    app.register_blueprint(auth_bp)
-    app.register_blueprint(main_bp)
-    app.register_blueprint(admin_bp)
-    app.register_blueprint(colaborador_bp)
-    app.register_blueprint(user_bp)
-
-    app.register_blueprint(productos_bp)
-    app.register_blueprint(marcas_bp)
-    app.register_blueprint(categorias_bp)
-    app.register_blueprint(detalles_bp)
-    app.register_blueprint(carrito_bp)
-
-    app.register_blueprint(user_api_bp)
-    app.register_blueprint(checkout_bp)
-
-    # PAYMENT GATEAWAY THAT ACTUALLY WORKS
-    app.register_blueprint(checkout_api_bp)
-    app.register_blueprint(webhook_api_bp)
-    app.register_blueprint(pedidos_bp)
     
-    csrf.exempt(checkout_api_bp)
-    csrf.exempt(webhook_api_bp)
+    # csrf.exempt(checkout_api_bp)
+    # csrf.exempt(webhook_api_bp)
+
+    from .api import api_v1
+    from .web import web_v1
+    
+    app.register_blueprint(api_v1)
+    app.register_blueprint(web_v1)
 
     return app
 

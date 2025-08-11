@@ -24,7 +24,7 @@
         </div>
 
         <div class="logo">
-            <a href="{{ url_for('main.home') }}">
+            <a href="{{ url_for('web_v1.user.home') }}">
             <span class="brand">BUILDIFY</span><span class="highlight"> X</span>
             </a>
         </div>
@@ -32,17 +32,14 @@
         <nav class="nav">
             <button class="menu-toggle" id="menu-toggle">☰</button>
             <ul class="menu" id="menu">
-                <li><a href="{{ url_for('user.section', category='chasises') }}">CHASIS</a></li>
-                <li><a href="{{ url_for('user.section', category='memorias ram') }}">RAM</a></li>
-                <li><a href="{{ url_for('user.section', category='refrigeraciones') }}">REFRIGERACIONES</a></li>
-                <li><a href="{{ url_for('user.section', category='procesadores') }}">PROCESADORES</a></li>
-                <li><a href="{{ url_for('user.section', category='placas base') }}">BOARDS</a></li>
-                <li><a href="{{ url_for('user.section', category='fuente de poder') }}">FUENTES</a></li>
-                <li><a href="{{ url_for('user.section', category='tarjetas graficas') }}">TARJETAS GRAFICAS</a></li>
+                <li><a href="{{ url_for('web_v1.user.section', category='chasises') }}">CHASIS</a></li>
+                <li><a href="{{ url_for('web_v1.user.section', category='memorias ram') }}">RAM</a></li>
+                <li><a href="{{ url_for('web_v1.user.section', category='refrigeraciones') }}">REFRIGERACIONES</a></li>
+                <li><a href="{{ url_for('web_v1.user.section', category='procesadores') }}">PROCESADORES</a></li>
+                <li><a href="{{ url_for('web_v1.user.section', category='placas base') }}">BOARDS</a></li>
+                <li><a href="{{ url_for('web_v1.user.section', category='fuente de poder') }}">FUENTES</a></li>
+                <li><a href="{{ url_for('web_v1.user.section', category='tarjetas graficas') }}">TARJETAS GRAFICAS</a></li>
 
-                <a href="{{ url_for('auth.login') }}">
-                    <li id="cuenta">Cuenta <i class="bi bi-person-fill" id="usuario"></i></li>
-                </a>
             </ul>
             <script>
                 const toggle = document.getElementById('menu-toggle');
@@ -61,14 +58,14 @@
                 <i class="bi bi-search"></i>
             </span>
             <!-- user -->
-            <a href="{{ url_for('user.user_info') }}">
+            <a href="{{ url_for('web_v1.user.user_info') }}">
                 <span class="icon" title="Ingresar" id="user-icon" >
                     <i class="bi bi-person-fill" id="usuario"></i>
                 </span>
             </a>
             
             <!-- carrito -->
-            <a href="{{ url_for('user.carrito') }}">
+            <a href="{{ url_for('web_v1.user.carrito') }}">
                 <span class="icon" title="Cesta">
                     <i class="bi bi-bag-plus-fill"></i>
                 </span>

@@ -1,9 +1,10 @@
 from app import db  
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-from itsdangerous import URLSafeTimedSerializer as Serializer  # 📌 Para tokens seguros
+from itsdangerous import URLSafeTimedSerializer as Serializer
 from flask import current_app
-from app.models.rol import Rol  # usa el modelo Rol
+from .rol import Rol
+# from app.models.rol import Rol
 
 class Usuario(db.Model, UserMixin):
 

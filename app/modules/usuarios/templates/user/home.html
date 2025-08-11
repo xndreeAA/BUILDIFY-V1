@@ -1,4 +1,4 @@
-{% extends "./layouts/layout-user.html" %}
+{% extends "layout-user.html" %}
 {% block styles %}
     {{ super() }}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/layout/carrusel.css') }}">
@@ -13,14 +13,14 @@
 
     {% if current_user.is_authenticated %}
     <div class="user_cliente">
-        <p>"¡Hola de nuevo, {{ current_user.nombre }}!  Qué gusto verte por aquí 😊" <a href="{{ url_for('auth.logout') }}">Cerrar sesión</a> </p>
+        <p>"¡Hola de nuevo, {{ current_user.nombre }}!  Qué gusto verte por aquí 😊" <a href="{{ url_for('web_v1.auth.logout') }}">Cerrar sesión</a> </p>
         <!-- <p>Hola, {{ current_user.apellido }} 👋</p>
         <p>Tu correo: {{ current_user.email }}</p> -->
     </div>
     {% else %}
     <div class="user_visit">
-        <p>Explora nuestros productos. <a href="{{ url_for('auth.login') }}">Iniciar sesión</a> o
-        <a href="{{ url_for('auth.register') }}">Registrarse</a></p>
+        <p>Explora nuestros productos. <a href="{{ url_for('web_v1.auth.login') }}">Iniciar sesión</a> o
+        <a href="{{ url_for('web_v1.auth.register') }}">Registrarse</a></p>
     </div>
     {% endif %}
 
@@ -83,7 +83,7 @@
                         Procesadores AMD Ryzen™ Serie 7000 con tecnología "Zen 4" ofrecen un rendimiento excepcional
                         para juegos y creación de contenido.
                     </p>
-                    <button class="btn-styled"> <a href="{{ url_for('user.brand_view') }}">Conoce mas</a></button>
+                    <button class="btn-styled"> <a href="{{ url_for('web_v1.user.brand_view') }}">Conoce mas</a></button>
                 </div>
             </article>
 
@@ -173,26 +173,7 @@
         </div>
     </section>
 </section>
-<!-- ----------------------------------------------------------------------------------------------- -->
-<!-- <section class="news-adds">
-        
-        <h2>Descuentos de semana santa!</h2>
-        <div class="news-adds-container">
-            <article class="news-adds-container-article">
-                <img src="https://decoratedi.com/8173/cartel-de-oferta-naranja.jpg" alt="">
-            </article>
-            <article class="news-adds-container-article">
-                <img src="https://thumbs.dreamstime.com/b/venta-de-destello-el-apagado-plantilla-del-dise%C3%B1o-cartel-oferta-especial-ejemplo-vector-descuento-adicional-148529233.jpg" alt="">
-            </article>
-            <article class="news-adds-container-article">
-                <img src="https://www.pcware.com.co/wp-content/uploads/2021/12/armadapc-ry-couguarmx6.jpg" alt="">
-            </article>
-            <article class="news-adds-container-article">
-                <img src="https://edit.org/editor/json/2021/10/11/b/e/be71fc7ab7240fe3c83700825d8f2275.webp" alt="">
-            </article>
-        </div>
-    </section> -->
-<!-- //////////////////////////// -->
+
 <section class="seccion-fila-productos" id="fila-productos-vistos-por-ti">
     <h2 class="sub-heading-h2">VISTOS POR TI</h2>
     <section class="fila-productos">

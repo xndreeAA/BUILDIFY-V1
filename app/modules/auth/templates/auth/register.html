@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro</title>
+</head>
+<body>
+    {% extends "auth/base.html" %}
+    {% block title %}Registrar{% endblock %}
+    {% block content %}
+    <div class="links">
+        <p>← ¿Ya tienes una cuenta? <a href="{{ url_for('auth.login') }}">Iniciar sesión</a></p>
+    </div>
+    
+    <form class="form_style" method="POST">
+        <h2 class="title2">Crear Cuenta</h2>
+        {{ form.hidden_tag() }}
+
+        <div>
+            {{ form.nombre.label(class="label_field", size=32)}}<br>
+            {{ form.nombre(class="input_field", size=32) }}
+        </div>
+
+        <div>
+            {{ form.apellido.label(class="label_field", size=32) }}<br>
+            {{ form.apellido(class="input_field", size=32) }}
+        </div>
+
+        <div>
+            {{ form.email.label(class="label_field", size=32)}}<br>
+            {{ form.email(class="input_field", size=32) }}
+        </div>
+
+        <div>
+            {{ form.direccion.label(class="label_field", size=32) }}<br>
+            {{ form.direccion(class="input_field", size=32) }}
+        </div>
+        
+        <div>
+            {{ form.telefono.label(class="label_field", size=32) }}<br>
+            {{ form.telefono(class="input_field", size=32) }}  
+        </div>  
+
+        <div>
+            {{ form.password.label(class="label_field", size=32) }}<br>
+            {{ form.password(class="input_field", size=32) }}
+        </div>
+
+        <div>
+            {{ form.confirm_password.label(class="label_field", size=32) }}<br>
+            {{ form.confirm_password(class="input_field", size=32) }}
+        </div>
+
+        <div>
+            {{ form.submit(class="input_submit", size=32) }}
+        </div>
+    </form>
+    
+    {% endblock %}
+
+</body>
+</html>

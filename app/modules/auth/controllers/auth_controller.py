@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for, flash, session
 from flask_login import login_user, logout_user
-from app.models.usuario import Usuario
+from app.core.models.usuario import Usuario
 from app.forms.login_form import LoginForm
 from app.forms.register_form import RegisterForm
 from app.forms.forgot_password_form import ForgotPasswordForm  # 📌 NUEVO
@@ -35,9 +35,9 @@ def login():
             session.pop('ultimo_login', None)
 
             if usuario.rol == 'administrador':
-                return redirect(url_for('admin.dashboard'))
+                return redirect(url_for('web_v1.admin.dashboard'))
             elif usuario.rol == 'colaborador':
-                return redirect(url_for('colaborador.dashboard'))
+                return redirect(url_for('web_v1.colaborador.dashboard'))
             elif usuario.rol == 'usuario':
                 return redirect(url_for('user.home'))
             else:
