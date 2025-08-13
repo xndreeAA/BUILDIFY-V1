@@ -110,5 +110,5 @@
 
 {%  block scripts %} 
     {{ super() }}
-    <script type="module" src="{{ url_for('static', filename='js/admin/dashboard/charts.js') }}"></script>
+    <script type="module" src="{{ url_for('web_v1.admin.static', filename='js/charts/index_chart.js') }}"></script>
 {% endblock %}

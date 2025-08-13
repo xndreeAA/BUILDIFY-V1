@@ -1,12 +1,15 @@
 from flask import Blueprint, jsonify, request, abort
 from flask_login import login_required, current_user
 from app import db
-from app.models.carrito import Carrito, ItemCarrito
-from app.models.usuario import Usuario
-from app.models.producto import Producto
+
+from app.modules.carrito.models.carrito import Carrito
+from app.modules.carrito.models.item_carrito import ItemCarrito
+
+from app.core.models.usuario import Usuario
+from app.modules.productos.models.producto import Producto
 from sqlalchemy.orm import joinedload
 
-carrito_bp = Blueprint('api_carrito', __name__, url_prefix='/api/carrito')
+carrito_bp = Blueprint('api_carrito', __name__, url_prefix='/carrito')
 
 @carrito_bp.route('/', methods=['GET'])
 def obtener_carrito():

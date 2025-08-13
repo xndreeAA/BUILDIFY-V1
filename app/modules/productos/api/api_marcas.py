@@ -1,10 +1,10 @@
 from flask import Blueprint, jsonify, request, abort
 from flask_login import login_required
 
-from app.models.producto import Marca
+from app.modules.productos.models import Marca
 from app import db
 
-marcas_bp = Blueprint('api_marcas', __name__, url_prefix='/api/marcas')
+marcas_bp = Blueprint('api_marcas', __name__, url_prefix='/marcas')
 
 @marcas_bp.route('/', methods=['GET', 'POST'])
 def get_marcas():

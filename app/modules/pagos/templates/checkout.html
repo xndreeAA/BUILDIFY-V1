@@ -1,0 +1,89 @@
+{% extends "layout-user.html" %}  
+{% block styles
+    %} {{ super() }}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout/checkout.css')}}" />
+    {% endblock %}
+{% block content %}
+<div class="container_checkout">
+    <main class="checkout-container">
+
+        <!-- Columna izquierda -->
+        <section class="checkout-info">
+            <h2>Cuenta</h2>
+            <p> {{ current_user.email }}</p>
+
+            <h2>Enviar a</h2>
+            <p> {{ current_user.nombre }} {{ current_user.apellido }}, Dirección: {{ current_user.direccion }}
+            </p>
+
+            <h2>Contacto</h2>
+            <p> {{ current_user.telefono }}</p>
+
+            <h2>Pago</h2>
+            <form method="POST" class="payment-form">
+                {{ form.hidden_tag() }}
+
+                <label for="metodo_pago">Método de pago</label>
+                {{ form.metodo_pago() }}
+
+                {{ form.numero_tarjeta(placeholder="Número de tarjeta") }}
+                {{ form.fecha_vencimiento(placeholder="Fecha de vencimiento (MM/AA)") }}
+                {{ form.codigo_seguridad(placeholder="Código de seguridad") }}
+                {{ form.nombre_tarjeta(placeholder="Nombre en la tarjeta") }}
+                {{ form.tipo_documento(placeholder="Tipo de documento") }}
+                {{ form.numero_documento(placeholder="Número de documento") }}
+
+            <button id="btn_checkout" class="btn_checkout">Ir a pagar</button>
+            <script>
+                document.getElementById("btn_checkout").addEventListener("click", async function () {
+                    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                    try {
+                        const response = await fetch("/api/v1/checkout/create-checkout-session", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "X-CSRFToken": csrfToken
+                            }
+                        });
+
+                        if (!response.ok) {
+                            const errorData = await response.json();
+                            alert("Error: " + errorData.error);
+                            return;
+                        }
+
+                        const data = await response.json();
+                        window.location.href = data.url;
+                    } catch (error) {
+                        console.error("Checkout error:", error);
+                        alert("Hubo un error al procesar el pago.");
+                    }
+                });
+            </script>
+            </form>
+        </section>
+
+        <!-- Columna derecha -->
+        <section class="checkout-summary">
+            <h2>Resumen</h2>
+            <div class="product">
+                <img src="https://reset.net.co/wp-content/uploads/2020/10/Procesador_AMD_Ryzen_5_5600X_3.7GHz.webp"
+                    alt="">
+                <p>NVIDA RTX 5090ti 6GB</p>
+                <span>$46.000,00</span>
+            </div>
+            <div class="discount">
+                <input type="text" placeholder="Código de descuento">
+                <button class="btn_checkout ">Aplicar</button>
+            </div>
+            <div class="totals">
+                <p>Subtotal: $92.000,00</p>
+                <p>Envío: $7.000,00</p>
+                <h3>Total: $99.000,00</h3>
+            </div>
+        </section>
+    </main>
+
+</div>
+{% endblock %}

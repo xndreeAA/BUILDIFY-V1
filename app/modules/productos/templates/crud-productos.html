@@ -1,0 +1,106 @@
+{% extends "layout-admin.html"%}
+
+{% block styles %}
+    {{ super() }}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/DataTables/datatables.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cruds/stock-styles.css') }}">
+{% endblock %}
+
+{% block content %}
+    <section id="stock-container-section">
+        <article class="stock-container-article">
+                <a id="btn-crear-producto" href="{{ url_for('web_v1.admin.crear_productos')}}">crear productos</a>
+                <br>
+                <table id="tabla-productos" class="display table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                            <th>Categoría</th>
+                            <th>Marca</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody> </tbody>
+                </table>
+        </article>
+        <div id="information-container">
+
+            <h2 >INFORMACION ADICIONAL</h2>
+            <article class="stock-container-article information-article">
+                <div class="informacion-div">
+                    <h4>Mas vendido Global:</h4>
+                </div>
+                <div class="informacion-div">
+                    <h4>Mas vendido mes:</h4>
+                </div>
+                <div class="informacion-div">
+                    <h4>Menos vendido:</h4>
+                </div>
+                <div class="informacion-div">
+                    <h4>Mas asequible:</h4>
+                </div>
+                <div class="informacion-div">
+                    <h4>Mas Costoso:</h4>
+                </div>
+            </article>
+        </div>
+    </section>
+    <section id="modal-detalles" class="modal">  
+        <form id="modal-detalles-content">
+            <article class="modal-article">
+                <div class="modal-header">
+                    <button id="open-modal-btn" class="btn-modal">❌</button>
+                    <h4 id="modal-detalles-title"></h4>
+                </div>
+                <picture class="modal-img-container">
+                    <img src="https://reset.net.co/wp-content/uploads/2020/10/Procesador_AMD_Ryzen_5_5600X_3.7GHz.webp" alt="imagen de producto">
+                </picture>
+            </article>
+            <article class="modal-article">
+                <div id="detalles-container">
+                    <h2>Detalles</h2>
+                    <label for="precio" class="label_field">Precio:
+                        <div class="input-container">
+                            <input disabled class="input_field" type="number" name="precio" value="1000" id="precio-producto">
+                            <button class="btn-edit">✏️</button>
+                        </div>
+                    </label>
+                    
+                    <label for="stock" class="label_field">Stock:
+                        <div class="input-container">
+                            <input disabled class="input_field" type="number" name="stock" value="10" id="stock-producto">
+                            <button class="btn-edit">✏️</button>
+                        </div>
+                    </label>
+                    
+                    <label for="categoria" class="label_field">Categoria:
+                        <div class="input-container">
+                            <input disabled class="input_field" type="number" name="categoria" value="1000" id="precio-producto">
+                            <button class="btn-edit">✏️</button>
+                        </div>
+                    </label>
+                    
+                    <label for="marca" class="label_field">Marca:
+                        <div class="input-container">
+                            <input disabled class="input_field" type="number" name="marca" value="10" id="stock-producto">
+                            <button class="btn-edit">✏️</button>
+                        </div>
+                    </label>
+                </div>
+            </article>
+        </form>
+    </section>
+{% endblock %}
+
+
+{%  block scripts %} 
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/DataTables/datatables.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/crud_productos/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/crud_productos/modal_detalles.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/crud_productos/modal_borrar.js') }}"></script>
+{% endblock %}

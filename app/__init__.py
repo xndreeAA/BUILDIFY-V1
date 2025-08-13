@@ -16,7 +16,7 @@ serializer = None
 
 def create_app():
     load_dotenv()  
-    app = Flask(__name__, template_folder='core/templates')
+    app = Flask(__name__, template_folder='core/templates', static_folder='core/static')
     app.config.from_object('app.config.DevelopmentConfig')
 
     csrf = CSRFProtect()
@@ -36,14 +36,20 @@ def create_app():
     def load_user(user_id):
         return Usuario.query.get(int(user_id))
     
-    # csrf.exempt(checkout_api_bp)
-    # csrf.exempt(webhook_api_bp)
+
+    from app.modules.pagos.api.api_checkout import checkout_api_bp
+    from app.modules.pagos.api.api_webhook import webhook_api_bp
 
     from .api import api_v1
     from .web import web_v1
-    
+
+    csrf.exempt(checkout_api_bp)
+    csrf.exempt(webhook_api_bp)
+
     app.register_blueprint(api_v1)
     app.register_blueprint(web_v1)
+
+
 
     return app
 

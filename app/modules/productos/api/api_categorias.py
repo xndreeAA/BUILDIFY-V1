@@ -1,10 +1,10 @@
 from flask import Blueprint, jsonify, request, abort
 from flask_login import login_required
 
-from app.models.producto import Categoria
+from app.modules.productos.models import Categoria
 from app import db
 
-categorias_bp = Blueprint('api_categorias', __name__, url_prefix='/api/categorias')
+categorias_bp = Blueprint('api_categorias', __name__, url_prefix='/categorias')
 
 @categorias_bp.route('/', methods=['GET', 'POST'])
 def get_categorias():

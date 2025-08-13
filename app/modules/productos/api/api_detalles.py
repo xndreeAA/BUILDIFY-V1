@@ -1,14 +1,15 @@
 from flask import Blueprint, jsonify, abort, request
 from sqlalchemy.orm import joinedload
-from app.models.producto import Producto, ImagenesProducto
-from app.models.detalles_producto import (
+from app.modules.productos.models import ( 
+    Producto,
+    ImagenesProducto, 
     DetalleChasis, DetalleFuentePoder, DetalleMemoriaRAM,
     DetallePlacaBase, DetalleProcesador, DetalleRefrigeracion,
     DetalleTarjetaGrafica
 )
 from app import db
 
-detalles_bp = Blueprint('api_detalles', __name__, url_prefix='/api/detalles')
+detalles_bp = Blueprint('api_detalles', __name__, url_prefix='/detalles')
 
 MAPA_DETALLES = {
     1: DetalleProcesador,

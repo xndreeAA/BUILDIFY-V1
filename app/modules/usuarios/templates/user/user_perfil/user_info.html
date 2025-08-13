@@ -1,4 +1,4 @@
-{% extends "./layouts/layout-user.html" %} {% block content %} {% block styles
+{% extends "layout-user.html" %} {% block content %} {% block styles
 %} {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/layout/user_perfil.css')}}" />
 <link rel="stylesheet" href="{{ url_for('static', filename='css/styles/form.css')}}" />
@@ -24,7 +24,7 @@
                         fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
                 </svg>
                 <div class="admin-link-container">
-                    <a href="{{ url_for('user.user_info') }}" class="admin-side-bar-link">Mis compras</a>
+                    <a href="{{ url_for('web_v1.user.user_info') }}" class="admin-side-bar-link">Mis compras</a>
                 </div>
             </li>
 
@@ -35,7 +35,7 @@
                         fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
                 </svg>
                 <div class="admin-link-container">
-                    <a href="{{ url_for('user.mi_perfil') }}" class="admin-side-bar-link">Mi perfil</a>
+                    <a href="{{ url_for('web_v1.user.mi_perfil') }}" class="admin-side-bar-link">Mi perfil</a>
                 </div>
             </li>
 
@@ -46,7 +46,7 @@
                         fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
                 </svg>
                 <div class="admin-link-container">
-                    <a href="{{ url_for('user.estado_pedidos') }}" class="admin-side-bar-link">Estado de pedidos</a>
+                    <a href="{{ url_for('web_v1.user.estado_pedidos') }}" class="admin-side-bar-link">Estado de pedidos</a>
                 </div>
             </li>
             <li class="admin-side-bar-option">
@@ -56,7 +56,7 @@
                         fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
                 </svg>
                 <div class="admin-link-container">
-                    <a href="{{ url_for('user.configuracion_perfil') }}" class="admin-side-bar-link">Configuracion
+                    <a href="{{ url_for('web_v1.user.configuracion_perfil') }}" class="admin-side-bar-link">Configuracion
                         cuenta</a>
                 </div>
             </li>
@@ -69,7 +69,7 @@
     <div class="content_mis_compras">
         <div class="volver">
             <p id="home_link">
-                ← Regresar al home <a href="{{ url_for('main.home') }}">Volver</a>
+                ← Regresar al home <a href="{{ url_for('web_v1.user.home') }}">Volver</a>
             </p>
         </div>
         <h1>Mis compras</h1>

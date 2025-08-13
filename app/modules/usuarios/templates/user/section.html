@@ -1,4 +1,4 @@
-{% extends "./layouts/layout-user.html" %} 
+{% extends "layout-user.html" %} 
 
 {% block styles %}
     {{ super() }}
@@ -10,7 +10,7 @@
     <div class="categorias">
         <div class="volver">
             <p id="home_link">
-                ← Regresar al home <a href="{{ url_for('main.home') }}">Volver</a>
+                ← Regresar al home <a href="{{ url_for('web_v1.user.home') }}">Volver</a>
             </p>
         </div>
         <h1 id="title_categorias">Productos de {{ category | upper }}</h1>
@@ -65,5 +65,5 @@
 
 {% block scripts %}
     {{ super() }}
-    <script src="{{ url_for('static', filename='js/carrito/añadir_producto.js') }}"></script>
+    <script src="{{ url_for('web_v1.carrito.static', filename='js/añadir_producto.js') }}"></script>
 {% endblock %}

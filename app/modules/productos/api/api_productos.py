@@ -5,18 +5,19 @@ from sqlalchemy import or_
 import cloudinary
 import cloudinary.uploader
 
-from app.models.producto import Producto, Categoria, Marca, ImagenesProducto
-from app.models.detalles_producto import (
+from app.modules.productos.models import (
+    Producto, Categoria, Marca, ImagenesProducto,
     DetalleChasis, DetalleFuentePoder, DetalleMemoriaRAM,
     DetallePlacaBase, DetalleProcesador, DetalleRefrigeracion,
     DetalleTarjetaGrafica
 )
+
 from app import db
 import os
 import traceback
 import shutil
 
-productos_bp = Blueprint('api_productos', __name__, url_prefix='/api/productos')
+productos_bp = Blueprint('api_productos', __name__, url_prefix='/productos')
 
 MAPA_DETALLES = {
     1: DetalleProcesador,
@@ -27,6 +28,7 @@ MAPA_DETALLES = {
     6: DetalleFuentePoder,
     7: DetallePlacaBase,
 }
+
 @productos_bp.route('/', methods=['GET', 'POST'])
 def api_productos():
     if request.method == 'GET':
@@ -205,7 +207,6 @@ def subir_imagen():
     os.makedirs(base_path, exist_ok=True)
 
     rutas = []
-    from app.models.producto import ImagenesProducto
 
     for idx, imagen in enumerate(imagenes):
         if imagen and allowed_file(imagen.filename):

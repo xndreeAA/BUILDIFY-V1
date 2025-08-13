@@ -8,6 +8,7 @@ from app.forms.reset_password_form import ResetPasswordForm    # 📌 NUEVO
 from app.utils.email import send_reset_email                   # 📌 NUEVO
 from app import db
 import time
+import os
 
 # Constantes de seguridad evita ataques de fuerza bruta
 MAX_INTENTOS = 5
@@ -15,6 +16,7 @@ TIEMPO_BLOQUEO = 60  # en segundos
 
 # ------------------ LOGIN ------------------ #
 def login():
+
     form = LoginForm()
 
     intentos = session.get('intentos_login', 0)
@@ -22,7 +24,7 @@ def login():
 
     if intentos >= MAX_INTENTOS and time.time() - ultimo_intento < TIEMPO_BLOQUEO:
         flash('Demasiados intentos fallidos. Intenta nuevamente en 1 minuto.', 'danger')
-        return render_template('auth/login.html', form=form) #Cambio 
+        return render_template('login.html', form=form) #Cambio 
 
     if form.validate_on_submit():
         email = form.email.data
@@ -39,21 +41,21 @@ def login():
             elif usuario.rol == 'colaborador':
                 return redirect(url_for('web_v1.colaborador.dashboard'))
             elif usuario.rol == 'usuario':
-                return redirect(url_for('user.home'))
+                return redirect(url_for('web_v1.user.home'))
             else:
                 flash('Rol de usuario no autorizado.', 'danger')
-                return redirect(url_for('auth.login'))
+                return redirect(url_for('web_v1.auth.login'))
 
         session['intentos_login'] = intentos + 1
         session['ultimo_login'] = time.time()
         flash('Credenciales incorrectas.', 'danger')
 
-    return render_template('auth/login.html', form=form)
+    return render_template('login.html', form=form)
 
 # ------------------ LOGOUT ------------------ #
 def logout():
     logout_user()
-    return redirect(url_for('auth.login'))
+    return redirect(url_for('web_v1.auth.login'))
 
 # ------------------ REGISTER ------------------ #
 def register():
@@ -78,9 +80,9 @@ def register():
         db.session.commit()
 
         flash('Registro exitoso. Ahora puedes iniciar sesión.', 'success')
-        return redirect(url_for('auth.register'))
+        return redirect(url_for('web_v1.auth.register'))
 
-    return render_template('auth/register.html', form=form)
+    return render_template('register.html', form=form)
 
 # ------------------ OLVIDÉ MI CONTRASEÑA ------------------ #
 def forgot_password():
@@ -90,22 +92,22 @@ def forgot_password():
         if usuario:
             send_reset_email(usuario)
         flash('Si el correo está registrado, recibirás instrucciones para restablecer tu contraseña.', 'info')
-        return redirect(url_for('auth.login'))
+        return redirect(url_for('web_v1.auth.login'))
     
-    return render_template('auth/forgot_password.html', form=form)
+    return render_template('forgot_password.html', form=form)
 
 # ------------------ RESETEAR CONTRASEÑA CON TOKEN ------------------ #
 def reset_password(token):
     usuario = Usuario.verify_reset_token(token)
     if not usuario:
         flash('El enlace es inválido o ha expirado.', 'danger')
-        return redirect(url_for('auth.forgot_password'))
+        return redirect(url_for('web_v1.auth.forgot_password'))
 
     form = ResetPasswordForm()
     if form.validate_on_submit():
         usuario.set_password(form.password.data)
         db.session.commit()
         flash('Tu contraseña ha sido actualizada. Ahora puedes iniciar sesión.', 'success')
-        return redirect(url_for('auth.login'))
+        return redirect(url_for('web_v1.auth.login'))
 
-    return render_template('auth/reset_password.html', form=form)
+    return render_template('reset_password.html', form=form)

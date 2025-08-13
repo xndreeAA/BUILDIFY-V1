@@ -18,7 +18,7 @@ def home():
 
 @usuario_routes_bp.route('/section/<category>')
 def section(category):
-    response = requests.get(f'http://127.0.0.1:5000/api/productos?categoria={category}')
+    response = requests.get(f'http://127.0.0.1:5000/api/v1/productos?categoria={category}')
     
     if response.ok:
         products = response.json().get("data", [])
@@ -34,25 +34,6 @@ def brand_view():
 @usuario_routes_bp.route('/product_details')
 def product_details():
     return render_template('user/product_details.html')
-
-# ----------------------------------------------------------------
-
-@usuario_routes_bp.route('/carrito')
-@login_required
-def carrito():
-    return render_template('user/carrito.html')
-# ----------------------------------------------------------------
-from app.forms.checkout_form import CheckoutForm
-
-@usuario_routes_bp.route('/checkout', methods=['GET', 'POST'])
-def checkout():
-    form = CheckoutForm()
-    if form.validate_on_submit():
-        # procesar datos
-        pass
-    return render_template('user/checkout.html', form=form)
-# ----------------------------------------------------------------
-#-------------------Rutas de perfil de usuario-------------------
 
 @usuario_routes_bp.route('/user_info')
 @login_required
