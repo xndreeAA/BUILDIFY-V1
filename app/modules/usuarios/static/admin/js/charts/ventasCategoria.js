@@ -5,7 +5,6 @@ const colores = Object.values(paleta);
 const fetchData = async () => {
   const data = await fetch('/api/v1/pedidos/categoria');
   const res = await data.json();
-  console.log(res);
   
   return res.data;
 };
@@ -16,12 +15,9 @@ const renderVentasCategoria = async () => {
   if (!canvas) return console.error("Canvas no encontrado");
   const ctx = canvas.getContext('2d');
 
-
   const data = await fetchData();
   const keys = data.map((item) => item.categoria);  
   const values = data.map((item) => item.cantidad);
-
-  console.log(keys, values);
 
   new Chart(ctx, {
     type: 'doughnut',

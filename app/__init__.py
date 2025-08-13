@@ -26,7 +26,7 @@ def create_app():
     mail.init_app(app)
     csrf.init_app(app)
 
-    login_manager.login_view = 'auth.login'
+    login_manager.login_view = 'web_v1.auth.login'
 
     global serializer
     serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
@@ -40,8 +40,8 @@ def create_app():
     from app.modules.pagos.api.api_checkout import checkout_api_bp
     from app.modules.pagos.api.api_webhook import webhook_api_bp
 
-    from .api import api_v1
-    from .web import web_v1
+    from .interfaces.api import api_v1
+    from .interfaces.web import web_v1
 
     csrf.exempt(checkout_api_bp)
     csrf.exempt(webhook_api_bp)

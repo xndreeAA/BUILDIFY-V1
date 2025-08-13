@@ -40,7 +40,7 @@
                                 fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
                         </svg>
                         <div class="admin-link-container">
-                            <a href="" class="admin-side-bar-link">Ajustes de administrador</a>
+                            <a href="{{ url_for('web_v1.admin.crud_usuarios') }}" class="admin-side-bar-link">Crud de usuarios</a>
                         </div>
                     </li>
                     <li class="admin-side-bar-option">
@@ -50,7 +50,7 @@
                                 fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
                         </svg>
                         <div class="admin-link-container">
-                            <a href="" class="admin-side-bar-link">Estadisticas</a>
+                            <a href="{{ url_for('web_v1.admin.dashboard') }}" class="admin-side-bar-link">Estadisticas</a>
                         </div>
                     </li>
                     <li class="admin-side-bar-option">
@@ -60,7 +60,7 @@
                                 fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
                         </svg>
                         <div class="admin-link-container">
-                            <a href="{{ url_for('web_v1.admin.crud_productos') }}" class="admin-side-bar-link">Crud de productos</a>
+                            <a href="{{ url_for('web_v1.productos.crud_productos') }}" class="admin-side-bar-link">Crud de productos</a>
                         </div>
                     </li>
                     <li class="admin-side-bar-option">

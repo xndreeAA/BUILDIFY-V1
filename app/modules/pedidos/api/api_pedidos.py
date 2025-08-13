@@ -3,13 +3,12 @@ from flask_login import login_required
 from sqlalchemy.orm import joinedload
 from sqlalchemy import func
 
-from app.models.pedidos import Pedido, ProductoPedido, Estado
+from app.modules.pedidos.models import Pedido, ProductoPedido, Estado
 from app.core.models.usuario import Usuario
 from app.modules.productos.models import Producto, Categoria, Marca
 from datetime import datetime
 from collections import defaultdict
 from app import db
-import calendar
 
 pedidos_bp = Blueprint('api_pedidos', __name__, url_prefix='/pedidos')
 

@@ -1,11 +1,13 @@
 from flask import render_template, request, redirect, url_for, flash, session
 from flask_login import login_user, logout_user
 from app.core.models.usuario import Usuario
-from app.forms.login_form import LoginForm
-from app.forms.register_form import RegisterForm
-from app.forms.forgot_password_form import ForgotPasswordForm  # 📌 NUEVO
-from app.forms.reset_password_form import ResetPasswordForm    # 📌 NUEVO
-from app.utils.email import send_reset_email                   # 📌 NUEVO
+from app.modules.auth.forms.login_form import LoginForm
+from app.modules.auth.forms.register_form import RegisterForm
+from app.modules.auth.forms.forgot_password_form import ForgotPasswordForm  # 📌 NUEVO
+from app.modules.auth.forms.reset_password_form import ResetPasswordForm    # 📌 NUEVO
+
+from app.modules.auth.utils.email import send_reset_email                   # 📌 NUEVO
+
 from app import db
 import time
 import os

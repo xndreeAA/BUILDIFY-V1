@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, json, request, abort, current_app
-from app.models.pedidos import Pedido, ProductoPedido, Estado
+from app.modules.pedidos.models import Pedido, ProductoPedido, Estado
 from app.modules.productos.models.producto import Producto
 from app.modules.carrito.models.carrito import Carrito
 from app import db

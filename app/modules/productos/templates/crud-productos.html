@@ -3,14 +3,14 @@
 {% block styles %}
     {{ super() }}
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/DataTables/datatables.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/cruds/stock-styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('web_v1.productos.static', filename='css/crud_productos/datatables.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('web_v1.productos.static', filename='css/crud_productos/stock-styles.css') }}">
 {% endblock %}
 
 {% block content %}
     <section id="stock-container-section">
         <article class="stock-container-article">
-                <a id="btn-crear-producto" href="{{ url_for('web_v1.admin.crear_productos')}}">crear productos</a>
+                <a id="btn-crear-producto" href="{{ url_for('web_v1.productos.crear_productos')}}">crear productos</a>
                 <br>
                 <table id="tabla-productos" class="display table table-striped">
                     <thead>
@@ -99,8 +99,8 @@
 
 {%  block scripts %} 
     {{ super() }}
-    <script src="{{ url_for('static', filename='js/DataTables/datatables.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/crud_productos/script.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/crud_productos/modal_detalles.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/crud_productos/modal_borrar.js') }}"></script>
+    <script src="{{ url_for('web_v1.productos.static', filename='js/crud_productos/datatables.min.js') }}"></script>
+    <script src="{{ url_for('web_v1.productos.static', filename='js/crud_productos/script.js') }}"></script>
+    <script src="{{ url_for('web_v1.productos.static', filename='js/crud_productos/modal_detalles.js') }}"></script>
+    <script src="{{ url_for('web_v1.productos.static', filename='js/crud_productos/modal_borrar.js') }}"></script>
 {% endblock %}

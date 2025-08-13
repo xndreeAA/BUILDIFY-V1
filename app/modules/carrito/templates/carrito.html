@@ -2,7 +2,7 @@
 {% block styles %} 
 {{ super() }}
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout/carrito.css')}}" />
+    <link rel="stylesheet" href="{{ url_for('web_v1.carrito.static', filename='css/carrito.css')}}" />
 {% endblock %}
 
 {% block content %} 

@@ -17,10 +17,7 @@ admin_routes_bp = Blueprint(
 def dashboard():
     return render_template('home.html', nombre=current_user.nombre)
 
-@admin_routes_bp.route('/usuarios')
+@admin_routes_bp.route('/crud-usuarios')
 @login_required
 def crud_usuarios():
-    return render_template('crud-usuarios.html')
-
-
-
+    return render_template('crud_usuarios.html')

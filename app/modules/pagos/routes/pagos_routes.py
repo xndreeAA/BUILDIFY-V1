@@ -1,13 +1,15 @@
 from flask import Blueprint, render_template, redirect, url_for, flash
-from app.forms.checkout_form import CheckoutForm
+from app.modules.pagos.forms.checkout_form import CheckoutForm
 import os
 
 template_dir = os.path.join(os.path.dirname(__file__), '..', 'templates')
+static_dir = os.path.join(os.path.dirname(__file__), '..', 'static')
 
 pagos_routes_bp = Blueprint(
     'pagos',
     __name__,
-    template_folder=template_dir
+    template_folder=template_dir,
+    static_folder=static_dir
 )
 
 @pagos_routes_bp.route('/checkout', methods=['GET', 'POST'])

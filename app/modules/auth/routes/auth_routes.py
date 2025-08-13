@@ -6,7 +6,9 @@ from app.modules.auth.controllers.auth_controller import (
 import os
     
 template_dir = os.path.join(os.path.dirname(__file__), '..', 'templates')
-auth_routes_bp = Blueprint('auth', __name__, template_folder=template_dir)
+static_dir = os.path.join(os.path.dirname(__file__), '..', 'static')
+
+auth_routes_bp = Blueprint('auth', __name__, template_folder=template_dir, static_folder=static_dir)
 
 auth_routes_bp.add_url_rule('/login', view_func=login, methods=['GET', 'POST'])
 auth_routes_bp.add_url_rule('/logout', view_func=logout)

@@ -4,7 +4,7 @@
 {{ super() }}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/layout/carrusel.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/layout/home.css')}}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles/admin/dashboard.css')}}">
+    <link rel="stylesheet" href="{{ url_for('web_v1.admin.static', filename='css/dashboard/dashboard.css')}}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 {% endblock %}
 {% block content %}

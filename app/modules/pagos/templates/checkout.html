@@ -2,7 +2,7 @@
 {% block styles
     %} {{ super() }}
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout/checkout.css')}}" />
+    <link rel="stylesheet" href="{{ url_for('web_v1.pagos.static', filename='css/checkout.css')}}" />
     {% endblock %}
 {% block content %}
 <div class="container_checkout">
