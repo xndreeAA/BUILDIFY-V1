@@ -39,12 +39,14 @@ def create_app():
 
     from app.modules.pagos.api.api_checkout import checkout_api_bp
     from app.modules.pagos.api.api_webhook import webhook_api_bp
+    from app.modules.usuarios.api.api_usuarios import usuarios_api_bp
 
     from .interfaces.api import api_v1
     from .interfaces.web import web_v1
 
     csrf.exempt(checkout_api_bp)
     csrf.exempt(webhook_api_bp)
+    csrf.exempt(usuarios_api_bp)
 
     app.register_blueprint(api_v1)
     app.register_blueprint(web_v1)

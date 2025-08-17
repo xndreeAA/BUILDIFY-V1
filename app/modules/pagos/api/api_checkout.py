@@ -12,7 +12,6 @@ checkout_api_bp = Blueprint('checkout_api', __name__, url_prefix='/checkout')
 
 @checkout_api_bp.route('/create-checkout-session', methods=['POST'])
 def create_checkout_session():
-
     STRIPE_SECRET_KEY = current_app.config.get('STRIPE_SECRET_KEY')
     STRIPE_SUCCESS_URL = current_app.config.get('STRIPE_SUCCESS_URL')
     STRIPE_CANCEL_URL = current_app.config.get('STRIPE_CANCEL_URL')
@@ -28,7 +27,7 @@ def create_checkout_session():
 
     if not carrito:
         return jsonify({"error": "El carrito no existe."}), 400
-    
+
     items = ItemCarrito.query.options(
         joinedload(ItemCarrito.producto).joinedload(Producto.imagenes),
         joinedload(ItemCarrito.producto).joinedload(Producto.categoria),
@@ -37,10 +36,9 @@ def create_checkout_session():
 
     items_serializados = [item.to_dict() for item in items]
     if not items_serializados:
-        return jsonify({"error": "El carrito está vacío."}), 400
+        return jsonify({"error": "El carrito está vacío."}), 400
 
     line_items = []
-
     for item in items_serializados:
         line_items.append({
             'price_data': {
@@ -50,12 +48,51 @@ def create_checkout_session():
                 },
                 'unit_amount': int(item['precio'] * 100),
             },
-            
             'quantity': item['cantidad'],
         })
 
-    try :
+    try:
+        if not usuario.stripe_customer_id:
+            customer = stripe.Customer.create(
+                email=usuario.email,
+                name=f"{usuario.nombre} {usuario.apellido}",
+                address={
+                    "line1": usuario.direccion,
+                    "country": "CO"
+                }
+            )
+            usuario.stripe_customer_id = customer.id
+            from app import db
+
+            db.session.commit()
+        else:
+            try:
+                customer = stripe.Customer.retrieve(usuario.stripe_customer_id)
+                stripe.Customer.modify(
+                    usuario.stripe_customer_id,
+                    email=usuario.email,
+                    name=f"{usuario.nombre} {usuario.apellido}",
+                    address={
+                        "line1": usuario.direccion,
+                        "country": "CO"
+                    }
+                )
+
+            except stripe.error.InvalidRequestError:
+                customer = stripe.Customer.create(
+                    email=usuario.email,
+                    name=f"{usuario.nombre} {usuario.apellido}",
+                    address={
+                        "line1": usuario.direccion,
+                        "city": getattr(usuario, "ciudad", None),
+                        "country": "CO"
+                    }
+                )
+                usuario.stripe_customer_id = customer.id
+                db.session.commit()
+
         checkout_session = stripe.checkout.Session.create(
+            customer=customer.id,
             line_items=line_items,
             mode='payment',
             metadata={
@@ -67,12 +104,14 @@ def create_checkout_session():
                 "fecha": datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
                 "total": str(sum(item["precio"] * item["cantidad"] for item in items_serializados))
             },
-            success_url= STRIPE_SUCCESS_URL or "http://localhost:5000/pagos/success",
-            cancel_url=  STRIPE_CANCEL_URL or "http://localhost:5000/pagos/cancel",
+            invoice_creation={
+                "enabled": True
+            },
+            success_url=STRIPE_SUCCESS_URL or "http://localhost:5000/pagos/success",
+            cancel_url=STRIPE_CANCEL_URL or "http://localhost:5000/pagos/cancel",
         )
 
         return jsonify({'url': checkout_session.url}), 200
     
     except stripe.error.StripeError as e:
         return jsonify({'error': str(e)}), 400
-    

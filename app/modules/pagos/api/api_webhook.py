@@ -34,8 +34,12 @@ def webhook():
 
     if event['type'] == 'checkout.session.completed':
         session = event['data']['object']
-        handle_checkout_completed(session)
 
+        if session.get("invoice"):
+            stripe.Invoice.send_invoice(session["invoice"])
+        
+        handle_checkout_completed(session)
+        
     return jsonify(success=True), 200
 
 def handle_checkout_completed(session):
@@ -60,6 +64,7 @@ def handle_checkout_completed(session):
     if carrito:
         carrito.items.clear()
         db.session.commit()
+
 
     crear_pedido(id_usuario, productos_pedidos, fecha, total)
 
