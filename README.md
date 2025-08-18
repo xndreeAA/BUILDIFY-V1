@@ -10,7 +10,10 @@ Una solucion e-commerce de venta de componentes de ordenadores a tu alcance
 - HTML
 - CSS
 
-
+## SaaS:
+- Stripe
+- Cloudinary
+- Supabase
 
 ### Historial de Versiones de la Base de Datos BUILDIFY
 
