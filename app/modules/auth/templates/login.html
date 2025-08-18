@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('web_v1.auth.static', filename='css/login.css') }}">
     <link rel="stylesheet" href="{{ url_for('web_v1.auth.static', filename='css/form.css') }}">
 
+    
 </head>
 
 <body>
@@ -22,12 +23,16 @@
 
                 <div class="input_style">
                     {{ form.email.label(class="label_field", size=32) }}<br>
-                    {{ form.email(class="input_field", size=32) }}
+                    {{ form.email(class="input_field", placeholder="Ingresa tu correo",size=32) }}
                 </div>
 
                 <div class="input_style">
                     {{ form.password.label(class="label_field", size=32) }}<br>
-                    {{ form.password(class="input_field", size=32)  }}
+                    {{ form.password(class="input_field", placeholder="Ingresa tu contraseña", size=32)  }}
+                    <button type="button" id="togglePassword">
+                            <i id="eyeOpen" class="bi bi-eye-slash-fill"></i>
+                            <i id="eyeClosed" class="bi bi-eye-fill" style="display: none;"></i>
+                        </button> 
                 </div>
 
                 <div class="submit_style">
@@ -39,7 +44,7 @@
                 <p>¿Olvidaste tu contraseña?<a href="{{ url_for('web_v1.auth.forgot_password') }}">Recuperala aquí</a></p>
             </div>
             
-        
+    
     {% endblock %}
     
 </body>

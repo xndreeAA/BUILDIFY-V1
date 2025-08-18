@@ -1,9 +1,11 @@
-
 {% extends "layout-auth.html" %}
 {% block title %}Registrar{% endblock %}
+
 {% block content %}
 <div class="links">
-    <p>← ¿Ya tienes una cuenta? <a href="{{ url_for('web_v1.auth.login') }}">Iniciar sesión</a></p>
+    <p>← ¿Ya tienes una cuenta? 
+        <a href="{{ url_for('web_v1.auth.login') }}">Iniciar sesión</a>
+    </p>
 </div>
 
 <form class="form_style" method="POST">
@@ -11,44 +13,70 @@
     {{ form.hidden_tag() }}
 
     <div>
-        {{ form.nombre.label(class="label_field", size=32)}}<br>
-        {{ form.nombre(class="input_field", size=32) }}
+        {{ form.nombre.label(class="label_field", size=32) }}<br>
+        {{ form.nombre(class="input_field", placeholder="Ej: Juan", size=32) }}
     </div>
 
     <div>
         {{ form.apellido.label(class="label_field", size=32) }}<br>
-        {{ form.apellido(class="input_field", size=32) }}
+        {{ form.apellido(class="input_field", placeholder="Ej: García", size=32) }}
     </div>
 
     <div>
-        {{ form.email.label(class="label_field", size=32)}}<br>
-        {{ form.email(class="input_field", size=32) }}
+        {{ form.email.label(class="label_field", size=32) }}<br>
+        {{ form.email(class="input_field", placeholder="correo@ejemplo.com", size=32) }}
     </div>
 
     <div>
         {{ form.direccion.label(class="label_field", size=32) }}<br>
-        {{ form.direccion(class="input_field", size=32) }}
+        {{ form.direccion(class="input_field", placeholder="Calle 123", size=32) }}
     </div>
     
     <div>
         {{ form.telefono.label(class="label_field", size=32) }}<br>
-        {{ form.telefono(class="input_field", size=32) }}  
+        {{ form.telefono(class="input_field", placeholder="3001234567", size=32) }}  
     </div>  
 
     <div>
         {{ form.password.label(class="label_field", size=32) }}<br>
-        {{ form.password(class="input_field", size=32) }}
+        {{ form.password(class="input_field", placeholder="Mínimo 8 caracteres", size=32, id="password") }}
     </div>
 
     <div>
         {{ form.confirm_password.label(class="label_field", size=32) }}<br>
-        {{ form.confirm_password(class="input_field", size=32) }}
+        {{ form.confirm_password(class="input_field", placeholder="Repite tu contraseña", size=32, id="confirm_password") }}
     </div>
+
+    <p id="passwordMessage"></p>
 
     <div>
         {{ form.submit(class="input_submit", size=32) }}
     </div>
 </form>
 
-{% endblock %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const password = document.getElementById("password");
+        const confirmPassword = document.getElementById("confirm_password");
+        const message = document.getElementById("passwordMessage");
 
+        function checkPasswordMatch() {
+            if (password.value === "" || confirmPassword.value === "") {
+                message.textContent = "";
+                return;
+            }
+
+            if (password.value === confirmPassword.value) {
+                message.style.color = "green";
+                message.textContent = "✅ Las contraseñas coinciden";
+            } else {
+                message.style.color = "red";
+                message.textContent = "❌ Las contraseñas no coinciden";
+            }
+        }
+
+        password.addEventListener("input", checkPasswordMatch);
+        confirmPassword.addEventListener("input", checkPasswordMatch);
+    });
+</script>
+{% endblock %}
