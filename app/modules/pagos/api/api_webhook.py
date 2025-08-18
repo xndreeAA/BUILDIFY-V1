@@ -1,10 +1,15 @@
 from flask import Blueprint, jsonify, json, request, abort, current_app
+from flask_login import current_user
+
 from app.modules.pedidos.models import Pedido, ProductoPedido, Estado
 from app.modules.productos.models.producto import Producto
 from app.modules.carrito.models.carrito import Carrito
+from app.modules.pagos.models.factura import Factura
+
 from app import db
 from datetime import datetime
 import stripe
+import requests
 
 webhook_api_bp = Blueprint('webhook_api', __name__, url_prefix='/checkout/webhook')
 
@@ -35,11 +40,15 @@ def webhook():
     if event['type'] == 'checkout.session.completed':
         session = event['data']['object']
 
-        if session.get("invoice"):
-            stripe.Invoice.send_invoice(session["invoice"])
-        
-        handle_checkout_completed(session)
-        
+        id_pedido = handle_checkout_completed(session)
+
+        if id_pedido and session.get("invoice"):
+
+            id_usuario = session["metadata"]["id_usuario"]
+            invoice = stripe.Invoice.retrieve(session["invoice"])
+
+            guardar_factura(invoice, id_pedido, id_usuario)
+            
     return jsonify(success=True), 200
 
 def handle_checkout_completed(session):
@@ -66,7 +75,7 @@ def handle_checkout_completed(session):
         db.session.commit()
 
 
-    crear_pedido(id_usuario, productos_pedidos, fecha, total)
+    return crear_pedido(id_usuario, productos_pedidos, fecha, total)
 
 
 def crear_pedido(id_usuario, productos_pedidos, fecha, total):
@@ -109,8 +118,50 @@ def crear_pedido(id_usuario, productos_pedidos, fecha, total):
 
         db.session.commit()
         print('[INFO] Pedido y productos guardados correctamente')
-        print('[INFO] Pedido: ', nuevo_pedido )
+        return nuevo_pedido.id_pedido
+    
     except Exception as e:
         db.session.rollback()
         print('[ERROR] Could not create order', e)
         return
+
+def guardar_factura(invoice, id_pedido, id_usuario):
+    SUPABASE_URL = current_app.config.get('SUPABASE_URL')
+    SUPABASE_SERVICE_ROLE_KEY = current_app.config.get('SUPABASE_SERVICE_ROLE_KEY')
+
+    file_path = f"{str(id_usuario)}/factura_{invoice.id}.pdf"
+
+    url = f"{SUPABASE_URL}/storage/v1/object/facturas/{file_path}"
+
+    headers = {
+        "Authorization": f"Bearer {SUPABASE_SERVICE_ROLE_KEY}",
+        "Content-Type": "application/pdf",
+        "x-upsert": "true"
+    }
+
+    try:
+        pdf_response = requests.get(invoice.invoice_pdf)
+        pdf_response.raise_for_status()
+        pdf_bytes = pdf_response.content
+
+        resp = requests.put(url, headers=headers, data=pdf_bytes)
+        resp.raise_for_status()
+
+        nueva_factura = Factura(
+            id_factura=invoice.id,
+            id_pedido=id_pedido,
+            numero_factura=invoice.number,
+            factura_url_invoice_stripe=invoice.hosted_invoice_url,
+            factura_url_pdf_stripe=invoice.invoice_pdf,
+            factura_url_pdf_cloud=f"{SUPABASE_URL}/storage/v1/object/facturas/{file_path}",
+            total=invoice.total,
+            moneda=invoice.currency
+        )
+
+        db.session.add(nueva_factura)
+        db.session.commit()
+
+        print(f"[INFO] Factura {invoice.id} guardada y subida a Supabase para pedido {id_pedido}")
+
+    except Exception as e:
+        print('[ERROR] Could not create factura', e)
