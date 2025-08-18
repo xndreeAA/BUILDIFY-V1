@@ -1,0 +1,77 @@
+{% extends "layout-user.html" %} 
+{% block styles %} 
+{{ super() }}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="{{ url_for('web_v1.carrito.static', filename='css/carrito.css')}}" />
+{% endblock %}
+
+{% block content %} 
+    <div class="volver">
+        <p id="home_link">
+            ← Regresar al home <a href="{{ url_for('web_v1.user.home') }}">Volver</a>
+        </p>
+    </div>
+
+    <main class="grid-carrito">
+        <!-- Detalles del carrito -->
+        <section class="carrito-detalles">
+            <h2>Tu Carrito</h2>
+            <div id="carrito-container"></div>
+        </section>
+
+        <!-- Resumen del pedido -->
+        <aside class="resumen-pedido">
+            <h2>Resumen del pedido</h2>
+            <ul>
+                <!-- <li><span>1 producto</span><span>$456.965</span></li>
+                <li><span>Precio original</span><span>$649.990</span></li>
+                <li><span>Envío</span><span>Gratis</span></li>
+                <li><span>Descuento</span><span>-$193.025</span></li> -->
+                <li class="total" id="total"><strong>Total</strong><strong></strong></li>
+            </ul>
+
+            <input type="text" placeholder="Usa un código promocional" />
+
+            <button id="btn_checkout" class="pagar">Ir a pagar</button>
+            <script>
+                document.getElementById("btn_checkout").addEventListener("click", async function () {
+                    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                    try {
+                        const response = await fetch("/api/v1/checkout/create-checkout-session", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "X-CSRFToken": csrfToken
+                            }
+                        });
+
+                        if (!response.ok) {
+                            const errorData = await response.json();
+                            alert("Error: " + errorData.error);
+                            return;
+                        }
+
+                        const data = await response.json();
+                        window.location.href = data.url;
+                    } catch (error) {
+                        console.error("Checkout error:", error);
+                        alert("Hubo un error al procesar el pago.");
+                    }
+                });
+            </script>
+
+            <div class="metodos-pago">
+                <p>Formas de pago aceptadas:</p>
+                <img src="https://logodownload.org/wp-content/uploads/2022/04/visa-logo-1.png" alt="Visa" />
+                <img src="https://logodownload.org/wp-content/uploads/2019/09/mastercard-logo.png" alt="MasterCard" />
+                <img src="https://logodownload.org/wp-content/uploads/2020/07/american-express-logo.png" alt="Amex" />
+            </div>
+        </aside>
+
+    </main>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('web_v1.carrito.static', filename='js/carrito.js') }}"></script>
+{% endblock %}
