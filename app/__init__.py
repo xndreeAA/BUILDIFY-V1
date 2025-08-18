@@ -5,12 +5,15 @@ from flask_login import LoginManager
 from flask_mail import Mail 
 from itsdangerous import URLSafeTimedSerializer 
 from flask_wtf.csrf import CSRFProtect
+from flask_jwt_extended import JWTManager
+
 from dotenv import load_dotenv
 
 db = SQLAlchemy()
 migrate = Migrate()
 login_manager = LoginManager()
 mail = Mail()
+jwt = JWTManager()
 
 serializer = None
 
@@ -25,6 +28,7 @@ def create_app():
     login_manager.init_app(app)
     mail.init_app(app)
     csrf.init_app(app)
+    jwt.init_app(app)
 
     login_manager.login_view = 'web_v1.auth.login'
 
