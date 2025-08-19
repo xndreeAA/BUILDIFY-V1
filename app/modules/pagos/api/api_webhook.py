@@ -1,10 +1,11 @@
 from flask import Blueprint, jsonify, json, request, abort, current_app
-from flask_login import current_user
 
 from app.modules.pedidos.models import Pedido, ProductoPedido, Estado
 from app.modules.productos.models.producto import Producto
 from app.modules.carrito.models.carrito import Carrito
 from app.modules.pagos.models.factura import Factura
+
+from app.modules.pagos.utils.factura_email import send_factura_email
 
 from app import db
 from datetime import datetime
@@ -47,7 +48,14 @@ def webhook():
             id_usuario = session["metadata"]["id_usuario"]
             invoice = stripe.Invoice.retrieve(session["invoice"])
 
-            guardar_factura(invoice, id_pedido, id_usuario)
+            res = guardar_factura(invoice, id_pedido, id_usuario)
+
+            if res == False:
+                return jsonify(success=False), 400
+            
+            email = session["customer_details"]["email"]
+
+            send_factura_email(invoice, id_pedido, email)
             
     return jsonify(success=True), 200
 
@@ -162,6 +170,8 @@ def guardar_factura(invoice, id_pedido, id_usuario):
         db.session.commit()
 
         print(f"[INFO] Factura {invoice.id} guardada y subida a Supabase para pedido {id_pedido}")
+
+        return True
 
     except Exception as e:
         print('[ERROR] Could not create factura', e)
