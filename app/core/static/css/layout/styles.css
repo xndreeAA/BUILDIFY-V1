@@ -20,7 +20,7 @@ body {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   /* Fix the grid-template-rows to use proper units */
-  grid-template-rows: auto 1fr auto auto;
+  grid-template-rows: auto 1fr auto;
   grid-template-areas:
     "header header header"
     "main main main"
