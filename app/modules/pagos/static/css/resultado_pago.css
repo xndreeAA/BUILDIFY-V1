@@ -1,5 +1,10 @@
+:root {
+    --color_svg: #286dd6;
+    --color_svg_hover: #1855b0;
+}
+
 .header_pago_exitoso {
-    border: 1px solid #ff0000;
+    /* border: 1px solid #ff0000; */
     border-radius: 20px;
     height: max-content;
     padding : 10px;
@@ -7,11 +12,13 @@
 }
 
 #main {
-    border: 2px solid #00ff99;
+    /* border: 2px solid #00ff99; */
     min-height: 90vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    background: radial-gradient(circle at bottom, #052659, #000000 80%);
+
 }
 
 .header {
@@ -33,35 +40,41 @@
     justify-content: center;
     align-items: center;
     gap: 20px;
+    
 }
 
 .pago_article svg {
-    width: 100px;
-    height: 100px;
-    fill: #00ff99;
+    width: 70px;
+    height: 70px;
+    fill: var(--color_svg);
 }
 
 .pago_article {
     border: 1px solid #000000;
-    border-radius: 20px;
-    padding: 10px;
+    border-radius: 8px;
+    padding: 30px;
     text-align: center;
     width: 100%;
     height: 460px;
+    gap: 10px;
+    background-color: #e3e3e3;
+
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .preview_container {
     flex: 1;
     position: relative;
+    width: 100%;
 }
 
 .preview_container iframe {
     width: 100%;
     height: 100%;
-    border-radius: 16px;
+    border-radius: 8px;
     border : 1px solid #000000;
 }
 
@@ -70,24 +83,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
 }
 
-.preview_div button {
-    width: 100%;
-    height: 100%;
-    background-color: #00cc88;
-    color: #fff;
-    font-size: 16px;
-    font-weight: bold;
-    border: none;
-    border-radius: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.1s ease;
-}
 
 /* Hover y efecto al hacer click */
 .preview_div button:hover {
-    background-color: #00b077;
+    background-color: var(--color_svg_hover);
 }
 
 .preview_div button:active {
@@ -101,7 +103,7 @@
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    background: #00cc88;
+    background: var(--color_svg);
     border: none;
     color: white;
     display: flex;
@@ -112,10 +114,111 @@
 }
 
 #preview_btn:hover {
-    background: #00b077;
+    background: var(--color_svg_hover);
+}
+
+#preview_btn:active {
+    transform: scale(0.98);
 }
 
 #preview_btn svg {
     width: 20px;
     height: 20px;
+}
+
+.confirmation-message {
+    width: 100%;
+    text-align: left;
+
+    & h2 {
+        text-align: center;
+    }
+
+    
+}
+
+hr {
+    margin-top: 20px;
+    width: 100%;
+    border: 1px solid #000000
+}
+
+.btn_container {
+    display: flex;
+    gap: 20px;
+}
+
+.icon-wrapper svg path {
+  fill: none;
+  stroke: var(--color_svg);
+  stroke-width: 3;
+  stroke-dasharray: 300; 
+  stroke-dashoffset: 300;
+  animation: draw 1.5s ease forwards, fillin 0.5s ease-in 1.5s forwards;
+}
+
+
+.preview_div {
+    width: 100%;
+    height: 30px;
+    display: flex;
+    gap: 1rem;
+}
+
+.preview_div button,
+.preview_div a.btn_inverted_color {
+    width: 100%;
+    height: 100%;
+    background-color: var(--color_svg);
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+.preview_div button:hover,
+.preview_div a.btn_inverted_color:hover {
+    background-color: var(--color_svg_hover);
+    color: #fff;
+}
+
+.preview_div button:active,
+.preview_div a.btn_inverted_color:active {
+    transform: scale(0.98);
+}
+
+.btn_inverted_color {
+    background-color: #e3e3e3 !important;
+    color: var(--color_svg) !important;
+    border: 2px solid var(--color_svg) !important;
+}
+
+.btn_inverted_color:hover {
+    background-color: var(--color_svg_hover) !important;
+    color: #e3e3e3 !important;
+    border: 2px solid var(--color_svg_hover) !important;
+    scale: 1.05;
+}
+
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fillin {
+  from {
+    fill: transparent;
+  }
+  to {
+    fill: var(--color_svg);
+  }
 }
