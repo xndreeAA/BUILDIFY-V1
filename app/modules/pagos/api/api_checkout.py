@@ -1,12 +1,15 @@
-from flask import Blueprint, json, jsonify, request, abort, current_app
+from flask import Blueprint, json, jsonify, redirect, request, abort, current_app
 from flask_login import login_required, current_user
 from app.core.models.usuario import Usuario
 from app.modules.carrito.models.carrito import Carrito
 from app.modules.carrito.models.item_carrito import ItemCarrito
 from app.modules.productos.models.producto import Producto
+from app.modules.pagos.models.factura import Factura
+
 from sqlalchemy.orm import joinedload
 from datetime import datetime
 import stripe
+import jwt
 
 checkout_api_bp = Blueprint('checkout_api', __name__, url_prefix='/checkout')
 
@@ -115,3 +118,23 @@ def create_checkout_session():
     
     except stripe.error.StripeError as e:
         return jsonify({'error': str(e)}), 400
+
+@checkout_api_bp.route('/descargar_factura', methods=['GET'])
+def descargar_factura():
+    token = request.cookies.get("factura_token")
+    
+    if not token:
+        return jsonify({"error": "No autorizado"}), 401
+
+    try:
+        payload = jwt.decode(token, current_app.config["JWT_SECRET_KEY"], algorithms=["HS256"])
+    except jwt.ExpiredSignatureError:
+        return jsonify({"error": "Token expirado"}), 401
+    except jwt.InvalidTokenError:
+        return jsonify({"error": "Token inválido"}), 401
+
+    factura = Factura.query.filter_by(id_pedido=payload["id_pedido"]).first()
+    if not factura:
+        return jsonify({"error": "Factura no encontrada"}), 404
+
+    return redirect(factura.factura_url_pdf_cloud)
