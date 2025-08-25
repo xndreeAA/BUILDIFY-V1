@@ -12,5 +12,5 @@ class Pedido(db.Model):
 
     usuario = db.relationship('Usuario', backref='pedidos', lazy=True)
     estado = db.relationship('Estado', backref='pedidos', lazy=True)
-
     productos_pedidos = db.relationship('ProductoPedido', backref='pedido', cascade='all, delete-orphan', lazy=True)
+    factura = db.relationship('Factura', backref='pedido', lazy=True, uselist=False)
