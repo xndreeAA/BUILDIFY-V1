@@ -8,6 +8,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 
                 const contenedor = document.getElementById('fila-productos-mas-vendidos');
 
+                // for (let i = 0; i < productos.length; i++) {
+                    
+
                 for (let i = 0; i < 5 && i < productos.length; i++) {
                     
                     const elemento = document.createElement('a');
