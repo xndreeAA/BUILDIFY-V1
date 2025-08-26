@@ -43,10 +43,18 @@
     
 }
 
+.pago_cancelado_container {
+    width: 30% !important;
+}
+
 .pago_article svg {
     width: 70px;
     height: 70px;
     fill: var(--color_svg);
+}
+
+#svg_pago_cancelado {
+    fill: rgb(190, 25, 25) !important
 }
 
 .pago_article {
@@ -157,6 +165,13 @@ hr {
   animation: draw 1.5s ease forwards, fillin 0.5s ease-in 1.5s forwards;
 }
 
+#svg_pago_cancelado {
+    fill: rgb(190, 25, 25) !important
+}
+
+#svg_pago_cancelado path {
+    stroke: rgb(190, 25, 25) !important;
+}
 
 .preview_div {
     width: 100%;
