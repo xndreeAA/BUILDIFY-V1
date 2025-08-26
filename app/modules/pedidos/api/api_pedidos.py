@@ -528,3 +528,33 @@ def obtener_pedidos_mas_menos():
             }), 400
 
     return jsonify(resultado)
+
+@pedidos_bp.route('/get-pedido-by-session', methods=['GET'])
+def get_pedido_by_session():
+    session_id = request.args.get('session_id')
+    if not session_id:
+        return jsonify({"error": "Falta el parámetro session_id"}), 400
+
+    pedido = (
+        Pedido.query
+        .options(
+            joinedload(Pedido.factura),
+            joinedload(Pedido.usuario)  
+        )
+        .filter_by(stripe_session_id=session_id)
+        .first()
+    )
+
+    if not pedido:
+        return jsonify({"error": "Pedido no encontrado"}), 404
+
+    factura_data = pedido.factura.to_dict() if pedido.factura else None
+
+    return jsonify({
+        "id_pedido": pedido.id_pedido,
+        "id_usuario": pedido.id_usuario,
+        "email": pedido.usuario.email,
+        "fecha_pedido": pedido.fecha_pedido.isoformat() if pedido.fecha_pedido else None,
+        "valor_total": float(pedido.valor_total),
+        "factura": factura_data
+    })
