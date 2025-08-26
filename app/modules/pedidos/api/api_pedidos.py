@@ -533,7 +533,10 @@ def obtener_pedidos_mas_menos():
 def get_pedido_by_session():
     session_id = request.args.get('session_id')
     if not session_id:
-        return jsonify({"error": "Falta el parámetro session_id"}), 400
+        return jsonify({
+            "success": False,
+            "error": "Falta el parámetro session_id"
+        }), 400
 
     pedido = (
         Pedido.query
@@ -546,15 +549,21 @@ def get_pedido_by_session():
     )
 
     if not pedido:
-        return jsonify({"error": "Pedido no encontrado"}), 404
+        return jsonify({
+            "success": False,
+            "error": "Pedido no encontrado"
+        }), 404
 
     factura_data = pedido.factura.to_dict() if pedido.factura else None
 
     return jsonify({
-        "id_pedido": pedido.id_pedido,
-        "id_usuario": pedido.id_usuario,
-        "email": pedido.usuario.email,
-        "fecha_pedido": pedido.fecha_pedido.isoformat() if pedido.fecha_pedido else None,
-        "valor_total": float(pedido.valor_total),
-        "factura": factura_data
+        "success": True,
+        "data" : {            
+            "id_pedido": pedido.id_pedido,
+            "id_usuario": pedido.id_usuario,
+            "email": pedido.usuario.email,
+            "fecha_pedido": pedido.fecha_pedido.isoformat() if pedido.fecha_pedido else None,
+            "valor_total": float(pedido.valor_total),
+            "factura": factura_data
+        }
     })
