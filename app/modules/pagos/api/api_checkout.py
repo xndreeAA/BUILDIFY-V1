@@ -110,7 +110,7 @@ def create_checkout_session():
             invoice_creation={
                 "enabled": True
             },
-            success_url=STRIPE_SUCCESS_URL or "http://localhost:5000/pagos/success",
+            success_url="http://localhost:5000/pagos/success?session_id={CHECKOUT_SESSION_ID}",
             cancel_url=STRIPE_CANCEL_URL or "http://localhost:5000/pagos/cancel",
         )
 
