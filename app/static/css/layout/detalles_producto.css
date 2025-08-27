@@ -37,10 +37,9 @@
     width: 100%;
 }
 
-/* Detalles técnicos */
+/* ------------------------------Detalles técnicos */
 .detalles-tecnicos {
     grid-area: detalles-tecnicos;
-    width: 100%;
     text-align: center;
     padding: 20px;
     background-color: #f5f5f5; 
@@ -57,4 +56,65 @@
 #conten-detalles-izquierda{
     border: 1px solid rgb(207, 206, 206);
 }
+/* -------------------------input-cantidad--------------------- */
+.cantidad {
+    font-size: 20px;
+    color: #000;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
 
+.cantidad input {
+    width: 50%;
+    height: 30px;
+    border-radius: 10px;
+    background-color: #f8f8f8;
+    text-align: center;
+    border: none;
+}
+/* -------------------------input-agrega al carrito--------------------- */
+.boton_agregar_carrito{
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.boton_agregar_carrito button{
+    width: 40%;
+}
+/* -------------------------input-comprar-ahora--------------------- */
+.boton_comprar{
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.boton_comprar button{
+    width: 40%;
+}
+
+
+@media (max-width: 750px) {
+    .details_product{
+        display: flex;
+        flex-direction: column;
+    }
+    .boton_agregar_carrito button{
+        width: 80%;
+    }
+    .cantidad input{
+        width: 80%;
+    }
+    .boton_comprar button{
+        width: 80%;
+    }
+    #conten-detalles-derecha,
+    #conten-detalles-izquierda{
+        padding: 10px;
+        font-size: 11px;
+        text-align: start;
+    }
+}

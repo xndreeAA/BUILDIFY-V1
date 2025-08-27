@@ -34,6 +34,13 @@ class DevelopmentConfig:
     SESSION_COOKIE_HTTPONLY = True
     REMEMBER_COOKIE_HTTPONLY = True
 
+# ----- Configuración de Cloudinary -----
+    JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
+
+# ----- Configuracion de Supabase -----
+    SUPABASE_URL = os.getenv('SUPABASE_URL')
+    SUPABASE_SERVICE_ROLE_KEY = os.getenv('SUPABASE_SERVICE_ROLE_KEY')
+
 # ----- Configuración de Stripe -----
     STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY', 'MISSING_STRIPE_SECRET_KEY')
     STRIPE_WEBHOOK_KEY = os.getenv('STRIPE_WEBHOOK_KEY', 'MISSING_STRIPE_WEBHOOK_KEY')

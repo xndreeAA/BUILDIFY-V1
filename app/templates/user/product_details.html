@@ -4,7 +4,6 @@
 {{ super() }}
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/layout/detalles_producto.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout/categorias.css') }}">
 {% endblock %}
 
 {% block content %}

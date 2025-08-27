@@ -1,0 +1,151 @@
+import paleta from "../utils/colors.js";
+
+const fetchData = async () => {
+    const data = await fetch('/api/v1/pedidos/historial-ventas-totales?fill=true');
+    const res = await data.json();
+    return res.data;
+}
+
+const colores = Object.values(paleta);
+
+const month_map = {
+    1: 'Enero',
+    2: 'Febrero',
+    3: 'Marzo',
+    4: 'Abril',
+    5: 'Mayo',
+    6: 'Junio',
+    7: 'Julio',
+    8: 'Agosto',
+    9: 'Septiembre',
+    10: 'Octubre',
+    11: 'Noviembre',
+    12: 'Diciembre'
+}
+
+const renderHistorialVentasTotales = async () => {
+        
+    const canvas = document.getElementById('historial-ventas-totales')
+    if (!canvas) return console.error("Canvas no encontrado");
+    const ctx = canvas.getContext('2d');
+    try {
+        // const data = await fetchData();
+
+        const data = {
+            "2025": {
+                meses: {
+                    "1": 0.0,
+                    "2": 0.0,
+                    "3": 0.0,
+                    "4": 0.0,
+                    "5": 0.0,
+                    "6": 0.0,
+                    "7": 2259000.0,
+                    "8": 1295000.0,
+                    "9": 0.0,
+                    "10": 0.0,
+                    "11": 0.0,
+                    "12": 0.0
+                },
+                    total_ventas: 3554000.0
+                },
+            "2024": {
+                meses: {
+                    "1": 1000000.0,
+                    "2": 1200000.0,
+                    "3": 900000.0,
+                    "4": 1100000.0,
+                    "5": 1050000.0,
+                    "6": 950000.0,
+                    "7": 0.0,
+                    "8": 0.0,
+                    "9": 0.0,
+                    "10": 0.0,
+                    "11": 0.0,
+                    "12": 0.0
+                },
+                total_ventas: 6200000.0
+            },
+            
+            "2023": {
+                meses: {
+                    "1": 800000.0,
+                    "2": 750000.0,
+                    "3": 600000.0,
+                    "4": 700000.0,
+                    "5": 720000.0,
+                    "6": 680000.0,
+                    "7": 670000.0,
+                    "8": 690000.0,
+                    "9": 710000.0,
+                    "10": 0.0,
+                    "11": 0.0,
+                    "12": 0.0
+                },
+                total_ventas: 7320000.0
+            },
+            
+            "2022": {
+                meses: {
+                    "1": 500000.0,
+                    "2": 530000.0,
+                    "3": 550000.0,
+                    "4": 580000.0,
+                    "5": 600000.0,
+                    "6": 620000.0,
+                    "7": 640000.0,
+                    "8": 660000.0,
+                    "9": 680000.0,
+                    "10": 700000.0,
+                    "11": 720000.0,
+                    "12": 740000.0
+                },
+                total_ventas: 8520000.0
+            }
+        }
+
+        const data_chart = {
+            labels: Object.values(month_map),
+
+            datasets: Object.entries(data).map(([year, valores], index) => ({
+                label: year,
+                data: Object.values(valores.meses),
+                borderColor: colores[index % colores.length],
+                backgroundColor: colores[index % colores.length],
+                fill: false
+            }))
+        };
+        new Chart(ctx, {
+            
+            type: 'line',
+            data: data_chart,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false, 
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Historial de ventas anuales',
+                    },
+                    colors: {
+                        forceOverride: false
+                    }
+                },
+                scales: {
+                    y: {
+                        suggestedMin: 30,
+                    }
+                }
+            },
+        });
+
+
+        
+    } catch (error) {
+        
+        console.log('Error en la petición:', error);
+    }
+    
+}
+
+export default renderHistorialVentasTotales

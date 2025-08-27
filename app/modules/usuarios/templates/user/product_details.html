@@ -1,0 +1,18 @@
+{% extends "layout-user.html" %} 
+
+{% block styles %}
+    {{ super() }}
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <link rel="stylesheet" href="{{ url_for('web_v1.user.static', filename='user/css/product_details.css') }}">
+    {% endblock %}
+
+{% block content %}
+    <main>
+        <section id="detalle-producto"></section>
+    </main>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('web_v1.carrito.static', filename='js/añadir_producto.js') }}"></script>
+    <script src="{{ url_for('web_v1.user.static', filename='user/js/product_details.js') }}"></script>
+{% endblock %}

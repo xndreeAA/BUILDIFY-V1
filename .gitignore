@@ -3,6 +3,7 @@ venv/
 .venv/
 ENV/
 env/
+.env
 
 # Archivos de Python cache/compilados
 _pycache_/

@@ -43,7 +43,7 @@ function renderProducto(producto) {
                 <h3>$${producto.precio.toLocaleString('es-CO')}</h3>
                 <p>${producto.descripcion || "Descripción no disponible."}</p>
                 
-                <div class="boton_agregar_categoria">
+                <div class="boton_agregar_carrito">
                     <button id="agregar" class="btn-styled">Añadir al carrito</button>
                 </div>
 
@@ -52,7 +52,7 @@ function renderProducto(producto) {
                     <input type="number" name="cantidad" id="cantidad" placeholder="Cantidad" min="1" max="10" />
                 </div>
 
-                <div class="boton_agregar_categoria">
+                <div class="boton_comprar">
                     <button id="comprar-ahora" class="btn-styled">Comprar ahora</button>
                 </div>
 

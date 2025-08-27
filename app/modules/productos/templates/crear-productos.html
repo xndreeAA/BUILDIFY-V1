@@ -1,0 +1,52 @@
+{% extends "layout-admin.html"%}
+
+{% block styles %}
+    {{ super() }}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cruds/stock-styles.css') }}">
+{% endblock %}
+
+
+{% block content %}
+
+    <form id="form-nuevo-producto">
+        <h2>Registrar nuevo producto</h2>
+        <label>Nombre:
+            <input type="text" name="nombre" required>
+        </label>
+        <label>Precio:
+            <input type="number" name="precio" step="0.01" required>
+        </label>
+        <label>Stock:
+            <input type="number" name="stock" required>
+        </label>
+        <label for="marca-select">Marca:</label>
+            <select id="marca-select" name="id_marca" required>
+                <option value="">Seleccione una marca</option>
+            </select>
+        <label for="categoria">Categoría:
+            <select id="categoria-select" name="id_categoria" required>
+                <option value="">Seleccione una categoría</option>
+            </select>
+        </label>
+        <div id="detalles-dinamicos"></div>
+        <br>
+        <br>
+        <label>Imágenes del producto:
+            <input type="file" name="imagenes" id="input-imagenes" multiple accept="image/*">
+        </label>
+        <label>
+            Imagen principal (elige el archivo que será la principal):
+            <select id="imagen-principal-select" name="imagen_principal" required>
+                <option value="">Seleccione una imagen</option>
+            </select>
+        </label>
+        <button type="submit">Registrar producto</button>
+    </form>
+{% endblock %}
+
+
+{%  block scripts %} 
+    {{ super() }}
+    <script src="{{ url_for('web_v1.productos.static', filename='js/crud_productos/crear_productos.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+.container_checkout{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+}
+
+
+
+.checkout-container {
+    margin-top: 80px;
+    display: grid;
+    grid-template-columns: 1fr 0.6fr;
+    gap: 2rem;
+    padding: 2rem;
+    /* max-width: 1500px; */
+    width: 100%;
+    /* margin: auto; */
+    background-color: white;
+
+}
+.product{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.product img{
+    width: 140px;
+}
+.checkout-info {
+    padding: 1rem;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.checkout-info h2 {
+    margin-top: 1.5rem;
+    color: #333;
+}
+
+.payment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 1rem;
+}
+
+.payment-form input,
+.payment-form select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.payment-form button {
+    background-color: black;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.checkout-summary {
+    padding: 1rem;
+    background: #fafafa;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.checkout-summary .product,
+.checkout-summary .totals,
+.checkout-summary .discount {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0;
+}
+
+.checkout-summary input {
+    flex: 1;
+    padding: 8px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.checkout-summary button {
+    padding: 8px 12px;
+    background-color:black;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.btn_checkout {
+    background-color: black;
+    color: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .checkout-container {
+        grid-template-columns: 1fr;
+    }
+}

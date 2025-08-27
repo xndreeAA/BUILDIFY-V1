@@ -1,69 +1,74 @@
-{% extends "./layouts/layout-user.html" %} 
+{% extends "./layouts/layout-user.html" %}
 
 {% block styles %}
-    {{ super() }}
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout/categorias.css')}}">
+{{ super() }}
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/layout/categorias.css')}}">
 {% endblock %}
 
 {% block content %}
-    <div class="categorias">
-        <div class="volver">
-            <p id="home_link">
-                ← Regresar al home <a href="{{ url_for('main.home') }}">Volver</a>
-            </p>
-        </div>
-        <h1 id="title_categorias">Productos de {{ category | upper }}</h1>
-        <div class="filtros">
-            <p>Mostrar filtros</p>
-        </div>
-        {% if products %}
-            <div class="products-container">
-                {% for product in products %}
-                    <div class="product-card">
-                        <h3>{{ product['nombre'] }}</h3>
-                        <p>Precio: ${{ product['precio'] }}</p>
-                    </div>
-
-                    <div class="cards_container">
-                        <div class="container_imagen">
-                            {% if product['imagenes'] and product['imagenes'][0]['ruta'] %}
-                                <img src="{{ product['imagenes'][0]['ruta'] }}" alt="{{ product['nombre'] }}" />
-                            {% else %}
-                                <img src="{{ url_for('static', filename='img/default-product.png') }}" alt="Sin imagen" />
-                            {% endif %}
-                            <div class="propiedades">
-                                <h3>{{ product['nombre'] }}</h3>
-                                <p>Lorem ipsum dolor sit amet consectetur</p>
-                            </div>
-                        </div>
-                        <div class="container_description">
-                            <div class="precio">
-                                <p id="precio">Precio: ${{ product['precio'] }}</p>
-                            </div>
-                            <div class="cantidad">
-                                <input type="number" name="cantidad" id="cantidad" placeholder="Cantidad" min="1" max="{{ product['stock'] }}" />
-                            </div>
-                            <a href="">
-                                <div class="boton_agregar_categoria">
-                                    <button 
-                                        class="btn-styled btn-agregar" 
-                                        data-id="{{ product['id_producto'] }}">
-                                        Añadir al carrito
-                                    </button>    
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        {% else %}
-            <p>No hay productos en esta categoría.</p>
-        {% endif %}
+<div class="categorias">
+    <div class="volver">
+        <p id="home_link">
+            ← Regresar al home <a href="{{ url_for('main.home') }}">Volver</a>
+        </p>
     </div>
+    <h1 id="title_categorias">Productos de {{ category | upper }}</h1>
+    <div class="filtros">
+        <p>Mostrar filtros</p>
+    </div>
+    {% if products %}
+    <div class="products-container">
+        {% for product in products %}
+        <!-- <div class="product-card">
+            <h3>{{ product['nombre'] }}</h3>
+            <p>Precio: ${{ product['precio'] }}</p>
+        </div> -->
+
+        <div class="cards_container" data-id="{{ product['id_producto'] }}">
+            <div class="container_imagen">
+                {% if product['imagenes'] and product['imagenes'][0]['ruta'] %}
+                <img src="{{ product['imagenes'][0]['ruta'] }}" alt="{{ product['nombre'] }}" class="enlace-detalle" />
+                {% else %}
+                <img src="{{ url_for('static', filename='img/default-product.png') }}" alt="Sin imagen"
+                    class="enlace-detalle" />
+                {% endif %}
+            </div>
+
+            <div class="propiedades">
+                <h3 class="enlace-detalle">{{ product['nombre'] }}</h3>
+                <p>Lorem ipsum dolor sit amet consectetur</p>
+            </div>
+
+            <div class="container_description">
+                <div class="precio">
+                    <p id="precio">Precio: ${{ product['precio'] }}</p>
+                </div>
+                <div class="cantidad">
+                    <input type="number" name="cantidad" class="cantidad-input" placeholder="Cantidad" min="1"
+                        max="{{ product['stock'] }}" />
+                </div>
+                <div class="boton_agregar_categorias">
+                    <button class="btn-styled btn-agregar" data-id="{{ product['id_producto'] }}">
+                        Añadir al carrito
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>No hay productos en esta categoría.</p>
+    {% endif %}
+</div>
 {% endblock %}
 
 {% block scripts %}
-    {{ super() }}
-    <script src="{{ url_for('static', filename='js/carrito/añadir_producto.js') }}"></script>
+{{ super() }}
+<script src="{{ url_for('static', filename='js/carrito/añadir_producto.js') }}"></script>
+<script src="{{ url_for('static', filename='js/home/ver_detalles.js') }}"></script>
+
+
+
 {% endblock %}
