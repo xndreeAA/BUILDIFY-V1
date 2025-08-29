@@ -35,20 +35,10 @@ def brand_view():
 def product_details():
     return render_template('user/product_details.html')
 
-@usuario_routes_bp.route('/user_info')
-@login_required
-def user_info():
-    return render_template('user/user_perfil/' + 'user_info.html')
-
 @usuario_routes_bp.route('/mi_perfil')
 @login_required
 def mi_perfil():
     return render_template('user/user_perfil/' + 'mi_perfil.html')
-
-@usuario_routes_bp.route('/mis_compras')
-@login_required
-def mis_compras():
-    return render_template('user/user_perfil/' + 'mis_compras.html')
 
 @usuario_routes_bp.route('/estado_pedidos')
 @login_required

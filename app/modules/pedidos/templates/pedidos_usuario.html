@@ -1,0 +1,67 @@
+{% extends "layout-user.html" %}
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout/carrusel.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout/home.css')}}">
+
+    <link rel="stylesheet" href="{{ url_for('web_v1.pedidos.static', filename='css/pedidos_usuario.css')}}">
+{% endblock %}
+
+{% block content %}
+    <section id="mis_pedidos_container">
+        <div class="title_container">
+            <h1>Mis pedidos</h1>
+        </div>
+        <article class="pedido_container">
+            <div class="pedido_div pedido_header">
+                <span><strong>02/02/2021</strong></span>
+                <span><strong>ID pedido: dsas_yeiianAHSHJAnnc</strong></span>
+            </div>
+            <div class="pedido_div">
+                <div class="detalles_pedido_container">
+                    <h3>DETALLES DEL PAGO:</h3>
+
+                    <p><span><strong>Total:</strong> $5.000</span></p>
+                    <p><span><strong>Fecha y hora del pago:</strong> 02/02/2021 12:00</span></p>
+                    <p><span><strong>Estado:</strong>Pago pendiente</span></p>
+                    <p><span><strong>Metodo de pago:</strong> Transferencia bancaria</span></p>
+                    <p>¿Tienes problemas? Hablanos sobre tu compra <a href="">aqui</a></p>
+                </div>
+            </div>
+            <div class="pedido_div">
+                <div class="detalles_pedido_container">
+                    <h3>DETALLES DE ENTREGA</h3>
+
+                    <p><span><strong>Estado:</strong> Pendiente</span></p>
+                    <p><span><strong>Direccion de entrega:</strong></span>KRA 18 #4A-46</p>
+                    <p>¿Tienes problemas? Hablanos sobre tu compra <a href="">aqui</a></p>
+                </div>
+            </div>
+            <div class="pedido_div productos_pedidos_container">
+                <hr>
+                <h3>PRODUCTOS PEDIDOS:</h3>
+                <section class="producto_pedido">
+                    <div class="producto_info">
+                        <article>
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZu1DD3VdIJ5Y7BhsSrqyIMyT1uQe-eSXTfA&s" alt="">
+                        </article>
+                        <article>
+                            <p><strong>RYZEN 5600G TXT 4000mhx 4.2Ghz</strong></p>
+                            <p><strong>Marca:</strong> ASUS</p>
+                            <p><strong>Precio:</strong>1.550.000</p>
+                            <p><strong>Cantidad:</strong> 2</p>
+                            <p><a href="">editar opinion</a></p>
+                        </article>
+                    </div>
+                    <div>
+                        <hr>
+                    </div>
+                </section>
+            </div>
+        </article>
+    </section>
+{% endblock %}
+
+{%  block scripts %} 
+    {{ super() }}
+{% endblock %}
