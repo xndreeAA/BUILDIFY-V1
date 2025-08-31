@@ -65,11 +65,10 @@
 
 .producto_info article {
     width: 100%;
-    /* border: 2px solid red; */
 }
 
 .producto_info article img {
-    height: 100%;
+    width: 100%;
 }
 
 .producto_pedido div {

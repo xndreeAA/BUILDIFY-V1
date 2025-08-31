@@ -97,11 +97,7 @@ def obtener_pedidos():
                     "cantidad": pp.cantidad,
                 }
                 for pp in pedido.productos_pedidos
-            ],
-            "factura": pedido.factura.to_dict() if pedido.factura else {
-                "error": f"No factura found for pedido {pedido.id_pedido}"
-            }
-
+            ]
         }
         for pedido in pedidos_query
     ]
@@ -128,6 +124,7 @@ def obtener_pedidos_usuario(id_usuario):
         joinedload(Pedido.productos_pedidos).joinedload(ProductoPedido.producto),
         joinedload(Pedido.usuario),
         joinedload(Pedido.estado),
+        joinedload(Pedido.factura)
     )
 
     try:
@@ -178,7 +175,10 @@ def obtener_pedidos_usuario(id_usuario):
                     "cantidad": pp.cantidad,
                 }
                 for pp in pedido.productos_pedidos
-            ]
+            ],
+            "factura": pedido.factura.to_dict() if pedido.factura else {
+                "error": f"No factura found for pedido {pedido.id_pedido}"
+            }
         }
         for pedido in pedidos_query
     ]
