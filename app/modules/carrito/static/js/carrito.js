@@ -67,7 +67,7 @@ const formatPrice = (price) => {
 
 const createCartItemTemplate = (producto) => `
     <article class="producto-carrito" id="producto-${producto.id_producto}">
-        <img src="/static/${producto.imagenes[0].ruta}" alt="${producto.nombre}" /> 
+        <img src="${producto.imagenes[0].ruta}" alt="${producto.nombre}" /> 
         <div class="info-producto">
             <h3>${producto.nombre}</h3>
             <p>Color: black</p>
