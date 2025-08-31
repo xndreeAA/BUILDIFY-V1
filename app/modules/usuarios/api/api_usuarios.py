@@ -17,16 +17,7 @@ def get_current_user():
         return jsonify({
             "success": True, 
             "data": {
-                "current_user": current_user.to_dict() if hasattr(current_user, "to_dict") else {
-                    "id_usuario": getattr(current_user, "id_usuario", None),
-                    "nombre": getattr(current_user, "nombre", None),
-                    "apellido": getattr(current_user, "apellido", None),
-                    "email": getattr(current_user, "email", None),
-                    "direccion": getattr(current_user, "direccion", None),
-                    "telefono": getattr(current_user, "telefono", None),
-                    "id_rol": getattr(current_user, "id_rol", None),
-                    "stripe_customer_id": getattr(current_user, "stripe_customer_id", None)
-                }
+                "id_usuario": getattr(current_user, "id_usuario", None)
             }
         })
     return jsonify({"error": "not authenticated"}), 401
