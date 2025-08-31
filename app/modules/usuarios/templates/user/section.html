@@ -4,6 +4,8 @@
 {{ super() }}
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <link rel="stylesheet" href="{{ url_for('web_v1.user.static', filename='user/css/categorias.css') }}">
+<link rel="stylesheet" href="{{ url_for('web_v1.user.static', filename='user/css/btn_styled.css') }}">
+
 {% endblock %}
 
 {% block content %}
@@ -13,41 +15,57 @@
             ← Regresar al home <a href="{{ url_for('web_v1.user.home') }}">Volver</a>
         </p>
     </div>
+
     <h1 id="title_categorias">Productos de {{ category | upper }}</h1>
+
     <div class="filtros">
         <p>Mostrar filtros</p>
     </div>
+
     {% if products %}
     <div class="products-container">
         {% for product in products %}
         <div class="cards_container">
-            <div class="container_imagen">
-                {% if product['imagenes'] and product['imagenes'][0]['ruta'] %}
-                <img src="{{ product['imagenes'][0]['ruta'] }}" alt="{{ product['nombre'] }}" />
-                {% else %}
-                <img src="{{ url_for('static', filename='img/default-product.png') }}" alt="Sin imagen" />
-                {% endif %}
-                <div class="propiedades">
-                    <h3>{{ product['nombre'] }}</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur</p>
-                </div>
-            </div>
-            <div class="container_description">
-                <div class="precio">
-                    <p id="precio">Precio: ${{ product['precio'] }}</p>
-                </div>
-                <div class="cantidad">
-                    <input type="number" name="cantidad" id="cantidad" placeholder="Cantidad" min="1"
-                        max="{{ product['stock'] }}" />
-                </div>
-                <a href="">
-                    <div class="boton_agregar_categoria">
-                        <button class="btn-styled btn-agregar" data-id="{{ product['id_producto'] }}">
-                            Añadir al carrito
-                        </button>
-                    </div>
+
+            <!-- IZQUIERDA -->
+            <div class="product-left">
+                <a href="{{ url_for('web_v1.user.product_details', id=product['id_producto']) }}">
+                    {% if product['imagenes'] and product['imagenes'][0]['ruta'] %}
+                    <img src="{{ product['imagenes'][0]['ruta'] }}" alt="{{ product['nombre'] }}" />
+                    {% else %}
+                    <img src="{{ url_for('static', filename='img/default-product.png') }}" alt="Sin imagen" />
+                    {% endif %}
                 </a>
+
+                <div class="product-info">
+                    <p class="categoria">{{ category }}</p>
+                    <a href="{{ url_for('web_v1.user.product_details', id=product['id_producto']) }}">
+                        <h3>{{ product['nombre'] }}</h3>
+                    </a>
+                    <p class="comentarios">0 Comentarios · <a href="#">Escriba un comentario</a></p>
+                </div>
             </div>
+
+            <!-- DERECHA -->
+            <div class="product-right">
+                <div class="precio">
+                    <p>${{ "{:,.0f}".format(product['precio']) }}</p>
+                </div>
+                <hr>
+                <div class="cantidad">
+                    <label for="cantidad-{{ product['id_producto'] }}">Cantidad</label>
+                    <div class="cantidad-input">
+                        <input type="number" id="cantidad-{{ product['id_producto'] }}" name="cantidad" value="1"
+                            min="1" max="{{ product['stock'] }}" />
+                    </div>
+                </div>
+                <div class="boton_agregar_producto">
+                    <button class="btn-styled btn-agregar" data-id="{{ product['id_producto'] }}">
+                        + Añadir al carrito
+                    </button>
+                </div>
+            </div>
+
         </div>
         {% endfor %}
     </div>

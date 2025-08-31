@@ -33,31 +33,29 @@ function renderProducto(producto) {
             </div>
 
             <div class="description_product">
-                <div class="volver">
-                    <p id="home_link">
-                        ← Regresar al home <a href="/">Volver</a>
-                    </p>
-                </div>
+                <p id="home_link">
+                    ← Regresar al home <a href="/">Volver</a>
+                </p>
                 <h1>${producto.nombre}</h1>
-                <h3>$${producto.precio.toLocaleString('es-CO')}</h3>
+                <h3 title="Precio">$${producto.precio.toLocaleString('es-CO')}</h3>
                 <p>${producto.descripcion || "Descripción no disponible."}</p>
-                
-                <div class="boton_agregar_categoria">
+            </div>   
+            <div class="btn_product">
+                <div class="boton_agregar_producto">
+                    <input type="number" name="cantidad" id="cantidad" placeholder="1" min="1" max="10" />
                     <button id="agregar" class="btn-styled">Añadir al carrito</button>
                 </div>
 
-                <div class="cantidad">
-                    <input type="number" name="cantidad" id="cantidad" placeholder="Cantidad" min="1" max="10" />
-                </div>
 
-                <div class="boton_agregar_categoria">
-                    <button id="comprar-ahora" class="btn-styled">Comprar ahora</button>
+                <div class="boton_comprar_producto">
+                    <button id="comprar-ahora"">Comprar ahora</button>
                 </div>
             </div>
 
             <div id="detalles-tecnicos" class="detalles-tecnicos">
                 <!-- Aquí se insertarán los detalles técnicos -->
             </div>
+
         </div>
     `;
 

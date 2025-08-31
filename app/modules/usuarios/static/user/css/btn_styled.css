@@ -1,0 +1,60 @@
+/* Estilo de botones con animacion */
+:root {
+    --baground_btn: #0095e0;
+    --option_2: #052659;
+    --shadow: rgba(0, 0, 0, 0.712);
+}
+
+.btn-styled {
+    background-color: var(--baground_btn);
+    color: white;
+    font-weight: bold;
+    width: max-content;
+    border-radius: 8px;
+    border-style: none;
+    padding: 8px;
+    transition: 0.2s;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-styled::after,
+.btn-styled::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    background-image: conic-gradient(from var(--angle),
+            var(--baground_btn),
+            white,
+            var(--baground_btn));
+    z-index: -1;
+    border-radius: 10px;
+    padding: 2px;
+
+    animation: spining-shadow-box 2s linear infinite;
+}
+
+.btn-styled::before {
+    filter: blur(10px);
+    opacity: .7;
+}
+
+@keyframes spining-shadow-box {
+    from {
+        --angle: 0deg;
+    }
+
+    to {
+        --angle: 360deg;
+    }
+}
+
+
+.btn-styled:hover {
+    background-color: white;
+    color: var(--shadow);
+}
