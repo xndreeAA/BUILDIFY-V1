@@ -20,6 +20,10 @@ class Producto(db.Model):
     detalles_tarjeta_grafica = db.relationship('DetalleTarjetaGrafica', backref='producto', uselist=False, cascade='all, delete')
     imagenes = db.relationship('ImagenesProducto', backref='producto', cascade='all, delete', lazy=True)
     
+    productos_pedidos = db.relationship(
+        'ProductoPedido', back_populates='producto', passive_deletes=True
+    )
+
     @property
     def imagen_principal(self):
         return next((img for img in self.imagenes if img.es_principal), None)
