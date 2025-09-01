@@ -9,20 +9,22 @@ function viewDeleteProduct({ id_producto }) {
         headers: {
             'X-CSRFToken': csrfToken
         },
-        credentials: 'include' // Necesario si usas sesión con cookies (Flask-Login, etc.)
+        credentials: 'include'
     })
     .then(response => {
         if (!response.ok) throw new Error("Error al eliminar el producto");
-        return response.json();
+
+        // Si el código de estado es 204 No Content, no hace .json()
+        if (response.status === 204) {
+            return null;
+        }
+
+        return response.json(); // Solo si hay contenido
     })
     .then(data => {
-        if (data.success) {
-            alert("Producto eliminado exitosamente.");
-            // Recargar la tabla sin recargar la página completa
-            $('#tabla-productos').DataTable().ajax.reload(null, false);
-        } else {
-            alert("No se pudo eliminar el producto.");
-        }
+        // Si response fue 204, data será null
+        alert("Producto eliminado exitosamente.");
+        $('#tabla-productos').DataTable().ajax.reload(null, false);
     })
     .catch(error => {
         alert("Ocurrió un error al eliminar: " + error.message);

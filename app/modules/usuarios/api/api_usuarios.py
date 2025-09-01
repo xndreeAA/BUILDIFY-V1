@@ -7,6 +7,21 @@ import stripe
 
 usuarios_api_bp = Blueprint('api_usuarios', __name__, url_prefix='/usuarios')
 
+@login_required
+@usuarios_api_bp.route('/current_user', methods=['GET'])
+def get_current_user():
+    
+    is_authenticated = current_user.is_authenticated
+    
+    if is_authenticated:
+        return jsonify({
+            "success": True, 
+            "data": {
+                "id_usuario": getattr(current_user, "id_usuario", None)
+            }
+        })
+    return jsonify({"error": "not authenticated"}), 401
+
 @usuarios_api_bp.route('/', methods=['GET', 'POST'])
 def api_usuarios():
 
