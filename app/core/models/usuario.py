@@ -19,8 +19,8 @@ class Usuario(db.Model, UserMixin):
     password = db.Column(db.String(256), nullable=False)
     id_rol = db.Column(db.Integer, db.ForeignKey('roles.id_rol'))
     rol_rel = db.relationship('Rol', backref='usuarios')
-    
-    
+    stripe_customer_id = db.Column(db.String(64), unique=True, nullable=True)
+
     # ----- CONSTRUCTOR PARA EVITAR ADVERTENCIAS en el editor por pylance (análisis estático) -----
     def __init__(self, nombre, apellido, email, direccion, telefono, id_rol):
         self.nombre = nombre
@@ -38,7 +38,8 @@ class Usuario(db.Model, UserMixin):
             'email': self.email,
             'direccion': self.direccion,
             'telefono': self.telefono,
-            'rol': self.rol  # usa la propiedad .rol para mostrar el nombre del rol
+            'rol': self.rol,
+            'stripe_customer_id': self.stripe_customer_id
         }
 
     # ----- MÉTODOS DE SEGURIDAD -----

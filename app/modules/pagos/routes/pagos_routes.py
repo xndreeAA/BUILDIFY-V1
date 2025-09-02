@@ -27,3 +27,7 @@ def success():
 @pagos_routes_bp.route('/cancel')
 def cancel():
     return render_template('/cancel.html')
+
+@pagos_routes_bp.route('/email-factura')
+def email_factura():
+    return render_template('/email-factura.html')

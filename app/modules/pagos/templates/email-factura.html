@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Factura – Buildify</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Preheader (texto de vista previa en inbox) -->
+  <style>
+    .preheader { display:none !important; visibility:hidden; opacity:0; color:transparent; height:0; width:0; overflow:hidden; mso-hide:all; }
+  </style>
+</head>
+<body style="margin:0; padding:0; background:#f4f6f8;">
+  <span class="preheader">Tu factura de Buildify ya está lista. Nº {{ invoice_number }} · Pedido #{{ id_pedido }}</span>
+
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background:#f4f6f8;">
+    <tr>
+      <td align="center" style="padding:24px;">
+        <!-- Wrapper -->
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width:640px; background:#ffffff; border-radius:12px; overflow:hidden;">
+          <!-- Header / Marca -->
+          <tr>
+            <td style="background:#101828; padding:24px;">
+              <table width="100%">
+                <tr>
+                  <td align="left">
+                    <!-- Logo opcional -->
+                    <!-- <img src="https://tu-cdn/logo-buildify.png" width="120" alt="Buildify" style="display:block;border:0;"> -->
+                    <div style="font:700 22px/1.2 Arial,Helvetica,sans-serif; color:#ffffff;">Buildify</div>
+                    <div style="font:400 12px/1.6 Arial,Helvetica,sans-serif; color:#D0D5DD;">Construye. Escala. Repite.</div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Título + saludo -->
+          <tr>
+            <td style="padding:28px 28px 8px 28px;">
+              <div style="font:700 20px/1.3 Arial,Helvetica,sans-serif; color:#111827;">Tu factura {{ id_pedido }} está lista</div>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:0 28px 8px 28px;">
+              <div style="font:400 14px/1.7 Arial,Helvetica,sans-serif; color:#344054;">
+                Hola{% if customer_name %} {{ customer_name }}{% endif %}, gracias por tu compra en <strong>Buildify</strong>.
+                Adjuntamos tu factura en PDF. También puedes verla online con el botón de abajo.
+              </div>
+            </td>
+          </tr>
+
+          <!-- Botón Ver factura -->
+          <tr>
+            <td style="padding:8px 28px 24px 28px;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="left">
+                <tr>
+                  <td bgcolor="#146EF5" style="border-radius:8px;">
+                    <a href="{{ hosted_url }}" target="_blank"
+                       style="display:inline-block; padding:12px 18px; font:700 14px Arial,Helvetica,sans-serif; color:#ffffff; text-decoration:none;">
+                      Ver factura online
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Bloque de contenido adicional (para más texto) -->
+          <tr>
+            <td style="padding:0 28px 24px 28px;">
+              <div style="font:700 14px/1.5 Arial,Helvetica,sans-serif; color:#111827; margin-bottom:6px;">Información importante</div>
+              <div style="font:400 13px/1.8 Arial,Helvetica,sans-serif; color:#475467;">
+                {% if extra_text %}
+                  {{ extra_text | safe }}
+                {% else %}
+                  Si necesitas soporte, cambios en tu facturación o requieres datos fiscales adicionales, responde a este correo o escríbenos a
+                  <a href="buildifygroupp@gmail.com" style="color:#146EF5; text-decoration:none;">buildifygroupp@gmail.com</a>.
+                  Recuerda que puedes descargar esta factura en cualquier momento desde tu panel en Buildify.
+                {% endif %}
+              </div>
+            </td>
+          </tr>
+
+          <!-- Ayuda / Soporte -->
+          <tr>
+            <td style="padding:0 28px 28px 28px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" 
+                     style="border:1px solid #EAECF0; border-radius:10px; background:#F9FAFB;">
+                <tr>
+                  <td style="padding:16px;">
+                    <div style="font:700 14px Arial,Helvetica,sans-serif; color:#111827; margin-bottom:4px;">¿Necesitas ayuda?</div>
+                    <div style="font:400 13px/1.7 Arial,Helvetica,sans-serif; color:#475467;">
+                      Visita nuestro centro de ayuda o contáctanos. Estamos aquí para ayudarte a construir más con Buildify.
+                    </div>
+                    <div style="margin-top:10px;">
+                      <a href="{{ help_url or '#' }}" style="display:inline-block; padding:10px 14px; background:#EAECF0; border-radius:8px; text-decoration:none; color:#111827; font:700 12px Arial;">Centro de ayuda</a>
+                      <a href="mailto:soporte@buildify.io" style="display:inline-block; padding:10px 14px; background:#EAECF0; border-radius:8px; text-decoration:none; color:#111827; font:700 12px Arial; margin-left:8px;">Soporte</a>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding:16px 28px 28px 28px;">
+              <div style="font:400 12px/1.6 Arial,Helvetica,sans-serif; color:#98A2B3; text-align:center;">
+                © {{ year or 2025 }} Buildify. Todos los derechos reservados.<br>
+                Este correo fue enviado automáticamente. No respondas a esta dirección si no esperabas este mensaje.
+              </div>
+            </td>
+          </tr>
+
+        </table>
+        <!-- /Wrapper -->
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

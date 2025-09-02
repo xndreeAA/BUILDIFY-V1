@@ -1,21 +1,19 @@
-{% extends "./layouts/layout-user.html" %}
+{% extends "layout-user.html" %}
 
 {% block styles %}
 {{ super() }}
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout/detalles_producto.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout/categorias.css') }}">
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<link rel="stylesheet" href="{{ url_for('web_v1.user.static', filename='user/css/product_details.css') }}">
+<link rel="stylesheet" href="{{ url_for('web_v1.user.static', filename='user/css/btn_styled.css') }}">
 {% endblock %}
 
 {% block content %}
 <main>
     <section id="detalle-producto"></section>
 </main>
-
-
 {% endblock %}
 
 {% block scripts %}
-<script src="{{ url_for('static', filename='js/home/product_details.js') }}"></script>
-<script src="{{ url_for('static', filename='js/carrito/añadir_producto.js') }}"></script>
+<script src="{{ url_for('web_v1.carrito.static', filename='js/añadir_producto.js') }}"></script>
+<script src="{{ url_for('web_v1.user.static', filename='user/js/product_details.js') }}"></script>
 {% endblock %}

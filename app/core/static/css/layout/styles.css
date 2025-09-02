@@ -1,50 +1,45 @@
+/* ===========================
+PALETA DE COLORES
+   =========================== */
 :root {
-  --color_titulo: #021024;
-  --color_fondo_1: #c1e8ff;
-  --color_subtitulo: #052659;
-  --color_complementario_1: #5683b3;
-  --color_complementario_2: #7da0ca;
+  --color-title: #021024;              /* Títulos principales */
+  --color-subtitle: #052659;           /* Subtítulos y acentos */
+  --color-bg-light: #c1e8ff;           /* Fondo claro general */
+  --color-accent-1: #5683b3;           /* Azul intermedio */
+  --color-accent-2: #7da0ca;           /* Azul claro complementario */
 
-    --david_color_1: #0095e0;
-    --david_color_2: #052659;
-    --davod_color_3: rgba(0, 0, 0, 0.397);
+  --color-brand-1: #0095e0;            /* Azul corporativo fuerte */
+  --color-brand-2: #052659;            /* Azul oscuro institucional */
+  --color-overlay: rgba(0, 0, 0, 0.397); /* Fondos translúcidos */
+
+  --color-text-dark: #1f1f1f;          /* Texto oscuro principal */
+  --color-text-light: #ffffff;         /* Texto claro */
 }
 
-
-
+/* ===========================
+LAYOUT GENERAL
+   =========================== */
 body {
   width: 100%;
   min-height: 100vh;
   margin: 0;
-  color: black;
+  color: var(--color-text-dark);
+
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  /* Fix the grid-template-rows to use proper units */
-  grid-template-rows: auto 1fr auto auto;
+  grid-template-rows: auto 1fr auto; /* Encabezado - contenido - footer */
   grid-template-areas:
     "header header header"
     "main main main"
     "footer footer footer";
 }
 
+/* ===========================
+CONTENIDO PRINCIPAL
+   =========================== */
 #main {
   grid-area: main;
   display: flex;
-}
-
-svg {
-  fill: white;
-}
-
-button {
-  border-radius: 10px;
-  border-style: none;
-  color: #1f1f1f;
-  cursor: pointer;
-
-  & svg {
-    fill: #1f1f1f;
-  }
 }
 
 #content {
@@ -53,87 +48,28 @@ button {
   width: 100%;
 }
 
-#footer {
-  grid-area: footer;
-  background-color: #2a2a2a;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
+/* ===========================
+ELEMENTOS GENERALES
+   =========================== */
+svg {
+  fill: var(--color-text-light);
 }
 
-.footer-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 30px;
+button {
+  border-radius: 10px;
+  border-style: none;
+  color: var(--color-text-dark);
+  cursor: pointer;
+  background-color: var(--color-accent-2);
+  padding: 8px 16px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.footer-section {
-  margin-bottom: 20px;
+button svg {
+  fill: var(--color-text-dark);
 }
 
-.footer-logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: var(--color_complementario_2);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-}
-
-.footer-description {
-  margin-top: 10px;
-  font-size: 0.9rem;
-  line-height: 1.4;
-  color: white;
-}
-
-.footer-title {
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: var(--color_complementario_2);
-  margin-bottom: 10px;
-}
-
-.footer-links,
-.footer-contact {
-  list-style: none;
-  padding: 0;
-  font-size: 0.9rem;
-  color: white;
-}
-
-.footer-links li,
-.footer-contact li {
-  margin-bottom: 8px;
-}
-
-.footer-links a {
-  text-decoration: none;
-  color: #ccc;
-}
-
-.footer-links a:hover {
-  text-decoration: underline;
-}
-
-.footer-social a {
-  margin-right: 15px;
-  color: #ccc;
-  text-decoration: none;
-  font-size: 0.9rem;
-}
-
-.footer-social a:hover {
-  color: #4fa3ff;
-}
-
-.footer-bottom {
-  text-align: center;
-  font-size: 0.8rem;
-  color: #888;
-  border-top: 1px solid #333;
-  padding-top: 15px;
+button:hover {
+  background-color: var(--color-accent-1);
+  transform: translateY(-2px);
 }

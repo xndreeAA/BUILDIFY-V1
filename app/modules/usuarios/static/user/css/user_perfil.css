@@ -1,0 +1,56 @@
+:root {
+    --color_titulo: #3a3b3b;
+    --color_tenue: rgb(160, 160, 160);
+    --color_complementario_1: #5683B3;
+    --color_complementario_2: #7DA0CA;
+    --baground_btn: #0095e0;
+    --baground_cantidad:rgb(238, 236, 236);
+}
+#perfil-usuario{
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container{
+    width: 50%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+}
+
+#form-usuario{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    width: 70%;
+    border: 1px solid rgb(211, 208, 208);
+    border-radius: 5px;
+}
+#form-usuario label{
+    margin-top: 10px;
+    font-weight: bold;
+    color: rgb(85, 84, 84);
+}
+#form-usuario input{
+    margin-top: 5px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+#form-usuario button{
+    margin-top: 20px;
+    padding: 10px;
+    background-color: var(--baground_btn);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+#form-usuario button:hover{
+    background-color:#38b5f4;
+}

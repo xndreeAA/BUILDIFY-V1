@@ -1,20 +1,20 @@
-from flask import render_template, request, redirect, url_for, flash, session
+from flask import render_template, request, redirect, url_for, flash, session, make_response
 from flask_login import login_user, logout_user
+from flask_jwt_extended import create_access_token, set_access_cookies
+
 from app.core.models.usuario import Usuario
 from app.modules.auth.forms.login_form import LoginForm
 from app.modules.auth.forms.register_form import RegisterForm
-from app.modules.auth.forms.forgot_password_form import ForgotPasswordForm  # 📌 NUEVO
-from app.modules.auth.forms.reset_password_form import ResetPasswordForm    # 📌 NUEVO
-
-from app.modules.auth.utils.email import send_reset_email                   # 📌 NUEVO
+from app.modules.auth.forms.forgot_password_form import ForgotPasswordForm
+from app.modules.auth.forms.reset_password_form import ResetPasswordForm
+from app.modules.auth.utils.email import send_reset_email
 
 from app import db
+from datetime import timedelta
 import time
-import os
 
-# Constantes de seguridad evita ataques de fuerza bruta
 MAX_INTENTOS = 5
-TIEMPO_BLOQUEO = 60  # en segundos
+TIEMPO_BLOQUEO = 60
 
 # ------------------ LOGIN ------------------ #
 def login():
@@ -26,7 +26,7 @@ def login():
 
     if intentos >= MAX_INTENTOS and time.time() - ultimo_intento < TIEMPO_BLOQUEO:
         flash('Demasiados intentos fallidos. Intenta nuevamente en 1 minuto.', 'danger')
-        return render_template('login.html', form=form) #Cambio 
+        return render_template('login.html', form=form)
 
     if form.validate_on_submit():
         email = form.email.data
@@ -38,21 +38,36 @@ def login():
             session.pop('intentos_login', None)
             session.pop('ultimo_login', None)
 
+            token = generar_token(usuario.id_usuario)
+
             if usuario.rol == 'administrador':
-                return redirect(url_for('web_v1.admin.dashboard'))
+                resp = make_response(redirect(url_for('web_v1.admin.dashboard')))
             elif usuario.rol == 'colaborador':
-                return redirect(url_for('web_v1.colaborador.dashboard'))
+                resp = make_response(redirect(url_for('web_v1.colaborador.dashboard')))
             elif usuario.rol == 'usuario':
-                return redirect(url_for('web_v1.user.home'))
+                resp = make_response(redirect(url_for('web_v1.user.home')))
             else:
                 flash('Rol de usuario no autorizado.', 'danger')
                 return redirect(url_for('web_v1.auth.login'))
+
+            set_access_cookies(resp, token)
+            return resp
 
         session['intentos_login'] = intentos + 1
         session['ultimo_login'] = time.time()
         flash('Credenciales incorrectas.', 'danger')
 
     return render_template('login.html', form=form)
+
+
+def generar_token(id_usuario):
+    claims = {"user_id": id_usuario}
+    token = create_access_token(
+        identity=str(id_usuario),
+        additional_claims=claims,
+        expires_delta=timedelta(hours=2)
+    )
+    return token
 
 # ------------------ LOGOUT ------------------ #
 def logout():
@@ -75,7 +90,7 @@ def register():
             email=form.email.data,
             direccion=form.direccion.data,
             telefono=form.telefono.data,
-            id_rol=1  # Por defecto "colaborador"
+            id_rol=1
         )
         nuevo_usuario.set_password(form.password.data)
         db.session.add(nuevo_usuario)

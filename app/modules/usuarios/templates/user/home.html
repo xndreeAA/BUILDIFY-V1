@@ -1,29 +1,29 @@
 {% extends "layout-user.html" %}
 {% block styles %}
-    {{ super() }}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout/carrusel.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout/home.css')}}">
-
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('web_v1.user.static', filename='user/css/home.css') }}">
+<link rel="stylesheet" href="{{ url_for('web_v1.user.static', filename='user/css/carrusel.css') }}">
 {% endblock %}
 
 {% block content %}
+<!-- ----------------------------------------------------------------------------------------------------- -->
 <!-- -----------------------Mensaje personalizado para usuarios autenticados----------------------- -->
 
 <h1>Bienvenido a la tienda</h1>
 
-    {% if current_user.is_authenticated %}
-    <div class="user_cliente">
-        <p>"¡Hola de nuevo, {{ current_user.nombre }}!  Qué gusto verte por aquí 😊" <a href="{{ url_for('web_v1.auth.logout') }}">Cerrar sesión</a> </p>
-        <!-- <p>Hola, {{ current_user.apellido }} 👋</p>
-        <p>Tu correo: {{ current_user.email }}</p> -->
-    </div>
-    {% else %}
-    <div class="user_visit">
-        <p>Explora nuestros productos. <a href="{{ url_for('web_v1.auth.login') }}">Iniciar sesión</a> o
-        <a href="{{ url_for('web_v1.auth.register') }}">Registrarse</a></p>
-    </div>
-    {% endif %}
-
+{% if current_user.is_authenticated %}
+<div class="user_cliente">
+    <p>"¡Hola de nuevo, {{ current_user.nombre }}! Qué gusto verte por aquí 😊"
+</div>
+{% else %}
+<div class="user_visit">
+    <p>Explora nuestros productos. <a href="{{ url_for('web_v1.auth.login') }}">Iniciar sesión</a> o
+        <a href="{{ url_for('web_v1.auth.register') }}">Registrarse</a>
+    </p>
+</div>
+{% endif %}
+<!-- ----------------------------------------------------------------------------------------------------- -->
+<!-- -----------------------CARRUSEL----------------------- -->
 <article class="carrusel">
     <img src="../../static/images/ella-don-l8MbHpjxg3A-unsplash.jpg" alt="">
     <div class="carrusel-texto">
@@ -33,12 +33,14 @@
             <button class="btn-styled">Explorar productos</button>
         </div>
 </article>
-
+<!-- ----------------------------------------------------------------------------------------------------- -->
+<!-- -----------------------MAS VENDIDOS----------------------- -->
 <section class="seccion-fila-productos">
     <h2 class="sub-heading-h2">MAS VENDIDOS</h2>
     <section class="fila-productos" id="fila-productos-mas-vendidos"></section>
 </section>
 <!-- ----------------------------------------------------------------------------------------------------- -->
+<!-- -----------------------NEWSLETTER----------------------- -->
 <section class="seccion-fila-productos">
     <section class="newsletter-buildify">
         <div class="newsletter-container">
@@ -64,116 +66,123 @@
         </div>
     </section>
 </section>
-<!-- ///////////////////////////////------------------------------------------------------------------------------ -->
-<section class="esenciales-del-gaming">
+<!-- ----------------------------------------------------------------------------------------------------- -->
+<!-- -----------------------MARCAS ALIADAS----------------------- -->
+<div class="container-marcas">
+    <section class="esenciales-del-gaming">
 
-    <section class="esenciales-seccion">
-        <h2 class="sub-heading-h2">ALIADOS</h2>
-        <br>
+        <section class="esenciales-seccion">
+            <h2 class="sub-heading-h2">ALIADOS</h2>
+            <br>
 
-        <div class="accordion-container">
-            <article class="dynamic-hover-container"
-                style="--brand-bg: url(https://cloudfront-us-east-1.images.arcpublishing.com/elespectador/QACHQUT4WBAIXEDYZVGCBO2XB4.jpg);">
-                <div class="impact-description">
-                    <h4>AMD</h4>
-                    <p class="impact-p">Rendimiento sin límites. AMD Ryzen™</p>
-                </div>
-                <div class="fading-description">
-                    <p>
-                        Procesadores AMD Ryzen™ Serie 7000 con tecnología "Zen 4" ofrecen un rendimiento excepcional
-                        para juegos y creación de contenido.
-                    </p>
-                    <button class="btn-styled"> <a href="{{ url_for('web_v1.user.brand_view') }}">Conoce mas</a></button>
-                </div>
-            </article>
+            <div class="accordion-container">
+                <article class="dynamic-hover-container"
+                    style="--brand-bg: url(https://cloudfront-us-east-1.images.arcpublishing.com/elespectador/QACHQUT4WBAIXEDYZVGCBO2XB4.jpg);">
+                    <div class="impact-description">
+                        <h4>AMD</h4>
+                        <p class="impact-p">Rendimiento sin límites. AMD Ryzen™</p>
+                    </div>
+                    <div class="fading-description">
+                        <p>
+                            Procesadores AMD Ryzen™ Serie 7000 con tecnología "Zen 4" ofrecen un rendimiento excepcional
+                            para juegos y creación de contenido.
+                        </p>
+                        <button class="btn-styled"> <a href="{{ url_for('web_v1.user.brand_view') }}">Conoce
+                                mas</a></button>
+                    </div>
+                </article>
+                <!-- ---------------------------------------------------------------------------------------- -->
+                <article class="dynamic-hover-container"
+                    style="--brand-bg: url(https://s1.elespanol.com/2022/05/10/omicrono/hardware/671443462_224204039_1706x960.jpg);">
+                    <div class="impact-description">
+                        <h4>INTEL</h4>
+                        <p class="impact-p">Potencia inigualable. Intel® Core™</p>
+                    </div>
+                    <div class="fading-description">
+                        <p>
+                            Procesadores Intel® Core™ de 14ª generación, diseñados para ofrecer el máximo rendimiento en
+                            gaming y productividad.
+                        </p>
+                        <button class="btn-styled"> Conoce mas</button>
+                    </div>
+                </article>
+            </div>
+        </section>
+        <!-- ----------------------------------------------------------------------------------------------- -->
+        <section class="esenciales-seccion">
+            <br>
+            <div class="accordion-container">
+                <article class="dynamic-hover-container"
+                    style="--brand-bg: url(https://i.blogs.es/b2d4f5/amdrdna3-12/1366_2000.jpeg);">
+                    <div class="impact-description">
+                        <h4>RADEON</h4>
+                        <p class="impact-p">Cada jugada cuenta. Radeon RX 6800</p>
+                    </div>
 
-            <article class="dynamic-hover-container"
-                style="--brand-bg: url(https://s1.elespanol.com/2022/05/10/omicrono/hardware/671443462_224204039_1706x960.jpg);">
-                <div class="impact-description">
-                    <h4>INTEL</h4>
-                    <p class="impact-p">Potencia inigualable. Intel® Core™</p>
-                </div>
-                <div class="fading-description">
-                    <p>
-                        Procesadores Intel® Core™ de 14ª generación, diseñados para ofrecer el máximo rendimiento en
-                        gaming y productividad.
-                    </p>
-                    <button class="btn-styled"> Conoce mas</button>
-                </div>
-            </article>
-        </div>
+                    <div class="fading-description">
+                        <p>
+                            Con imágenes de última generación y funciones preparadas para el futuro, potenciadas con IA.
+                        </p>
+                        <button class="btn-styled"> Conoce mas</button>
+                    </div>
+                </article>
+                <!-- ---------------------------------------------------------------------------------------- -->
+                <article class="dynamic-hover-container"
+                    style="--brand-bg: url(https://www.nvidia.com/content/dam/en-zz/Solutions/geforce/ada/rtx-4090/geforce-rtx-4090-100vp-d.jpg);">
+                    <div class="impact-description">
+                        <h4>NVIDIA</h4>
+                        <p class="impact-p">Domina el juego. GeForce RTX™</p>
+                    </div>
+                    <div class="fading-description">
+                        <p>
+                            Las GPU NVIDIA® GeForce RTX™ Serie 40 son más que rápidas para los jugadores y creadores.
+                            Están
+                            potenciadas por la arquitectura NVIDIA Ada Lovelace.
+                        </p>
+                        <button class="btn-styled"> Conoce mas</button>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="esenciales-seccion">
+            <br>
+            <div class="accordion-container">
+                <article class="dynamic-hover-container"
+                    style="--brand-bg: url(https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/media/image/2019/03/Disco%20duro%20SSD%20oferta%20mejor%20precio.jpg);">
+                    <div class="impact-description">
+                        <h4>SSD</h4>
+                        <p class="impact-p">Velocidad extrema. NVMe Gen4</p>
+                    </div>
+                    <div class="fading-description">
+                        <p>
+                            Unidades de estado sólido de última generación que ofrecen velocidades de transferencia
+                            ultrarrápidas y máxima fiabilidad.
+                        </p>
+                        <button class="btn-styled"> Conoce mas</button>
+                    </div>
+                </article>
+                <!-- ---------------------------------------------------------------------------------------- -->
+                <article class="dynamic-hover-container"
+                    style="--brand-bg: url(https://www.adrenaline.com.br/wp-content/uploads/2023/02/CHAMADA-RM.jpg);">
+                    <div class="impact-description">
+                        <h4>RAM's</h4>
+                        <p class="impact-p">Rendimiento DDR5. Nueva generación</p>
+                    </div>
+                    <div class="fading-description">
+                        <p>
+                            Memorias RAM DDR5 diseñadas para ofrecer mayor ancho de banda y menor latencia en tus
+                            aplicaciones más exigentes.
+                        </p>
+                        <button class="btn-styled"> Conoce mas</button>
+                    </div>
+                </article>
+            </div>
+        </section>
     </section>
-    <!-- ----------------------------------------------------------------------------------------------- -->
-    <section class="esenciales-seccion">
-        <br>
-        <div class="accordion-container">
-            <article class="dynamic-hover-container"
-                style="--brand-bg: url(https://i.blogs.es/b2d4f5/amdrdna3-12/1366_2000.jpeg);">
-                <div class="impact-description">
-                    <h4>RADEON</h4>
-                    <p class="impact-p">Cada jugada cuenta. Radeon RX 6800</p>
-                </div>
-
-                <div class="fading-description">
-                    <p>
-                        Con imágenes de última generación y funciones preparadas para el futuro, potenciadas con IA.
-                    </p>
-                    <button class="btn-styled"> Conoce mas</button>
-                </div>
-            </article>
-
-            <article class="dynamic-hover-container"
-                style="--brand-bg: url(https://www.nvidia.com/content/dam/en-zz/Solutions/geforce/ada/rtx-4090/geforce-rtx-4090-100vp-d.jpg);">
-                <div class="impact-description">
-                    <h4>NVIDIA</h4>
-                    <p class="impact-p">Domina el juego. GeForce RTX™</p>
-                </div>
-                <div class="fading-description">
-                    <p>
-                        Las GPU NVIDIA® GeForce RTX™ Serie 40 son más que rápidas para los jugadores y creadores. Están
-                        potenciadas por la arquitectura NVIDIA Ada Lovelace.
-                    </p>
-                    <button class="btn-styled"> Conoce mas</button>
-                </div>
-            </article>
-        </div>
-    </section>
-    <section class="esenciales-seccion">
-        <br>
-        <div class="accordion-container">
-            <article class="dynamic-hover-container"
-                style="--brand-bg: url(https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/media/image/2019/03/Disco%20duro%20SSD%20oferta%20mejor%20precio.jpg);">
-                <div class="impact-description">
-                    <h4>SSD</h4>
-                    <p class="impact-p">Velocidad extrema. NVMe Gen4</p>
-                </div>
-                <div class="fading-description">
-                    <p>
-                        Unidades de estado sólido de última generación que ofrecen velocidades de transferencia
-                        ultrarrápidas y máxima fiabilidad.
-                    </p>
-                    <button class="btn-styled"> Conoce mas</button>
-                </div>
-            </article>
-
-            <article class="dynamic-hover-container"
-                style="--brand-bg: url(https://www.adrenaline.com.br/wp-content/uploads/2023/02/CHAMADA-RM.jpg);">
-                <div class="impact-description">
-                    <h4>RAM's</h4>
-                    <p class="impact-p">Rendimiento DDR5. Nueva generación</p>
-                </div>
-                <div class="fading-description">
-                    <p>
-                        Memorias RAM DDR5 diseñadas para ofrecer mayor ancho de banda y menor latencia en tus
-                        aplicaciones más exigentes.
-                    </p>
-                    <button class="btn-styled"> Conoce mas</button>
-                </div>
-            </article>
-        </div>
-    </section>
-</section>
-
+</div>
+<!-- ----------------------------------------------------------------------------------------------------- -->
+<!-- -----------------------VISTOS POR TI----------------------- -->
 <section class="seccion-fila-productos" id="fila-productos-vistos-por-ti">
     <h2 class="sub-heading-h2">VISTOS POR TI</h2>
     <section class="fila-productos">
@@ -323,10 +332,11 @@
             </article>
         </a>
     </section>
-    <!-- ---------------------------------------------------------------------------------------- -->
     <br>
     <hr class="linea-medio">
     <br>
+    <!-- ----------------------------------------------------------------------------------------------------- -->
+    <!-- -----------------------INFORMACION ADICIONAL----------------------- -->
     <section class="info-adicional">
         <article class="info-adicional-article">
             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
@@ -357,7 +367,10 @@
 </section>
 {% endblock %}
 
-{%  block scripts %} 
-    {{ super() }}
-    <script src="{{ url_for('static', filename='js/home.js') }}"></script>
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('web_v1.user.static', filename='user/js/detalles_producto.js') }}"></script>
+<script src="{{ url_for('web_v1.user.static', filename='user/js/home.js') }}"></script>
+
+
 {% endblock %}

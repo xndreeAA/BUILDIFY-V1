@@ -5,11 +5,14 @@ import requests
 import os
 
 template_dir = os.path.join(os.path.dirname(__file__), '..', 'templates')
+static_dir = os.path.join(os.path.dirname(__file__), '..', 'static')
 
 usuario_routes_bp = Blueprint(
     'user',
     __name__,
-    template_folder=template_dir
+    template_folder=template_dir,
+    static_folder=static_dir,             
+    static_url_path='/usuarios/static'    
 )
 
 @usuario_routes_bp.route('/')
@@ -31,24 +34,14 @@ def brand_view():
     return render_template('user/brand_view.html')
 # ----------------------------------------------------------------
 
-@usuario_routes_bp.route('/product_details')
-def product_details():
-    return render_template('user/product_details.html')
-
-@usuario_routes_bp.route('/user_info')
-@login_required
-def user_info():
-    return render_template('user/user_perfil/' + 'user_info.html')
+@usuario_routes_bp.route('/product_details/<int:id>')
+def product_details(id):
+    return render_template('user/product_details.html', product_id=id)
 
 @usuario_routes_bp.route('/mi_perfil')
 @login_required
 def mi_perfil():
-    return render_template('user/user_perfil/' + 'mi_perfil.html')
-
-@usuario_routes_bp.route('/mis_compras')
-@login_required
-def mis_compras():
-    return render_template('user/user_perfil/' + 'mis_compras.html')
+    return render_template('user/user_perfil/' + 'user_perfil.html')
 
 @usuario_routes_bp.route('/estado_pedidos')
 @login_required

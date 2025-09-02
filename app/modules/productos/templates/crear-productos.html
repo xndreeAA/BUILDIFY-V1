@@ -48,5 +48,5 @@
 
 {%  block scripts %} 
     {{ super() }}
-    <script src="{{ url_for('static', filename='js/crud_productos/crear_productos.js') }}"></script>
+    <script src="{{ url_for('web_v1.productos.static', filename='js/crud_productos/crear_productos.js') }}"></script>
 {% endblock %}

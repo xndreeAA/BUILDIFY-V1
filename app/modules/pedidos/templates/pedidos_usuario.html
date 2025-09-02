@@ -1,0 +1,21 @@
+{% extends "layout-user.html" %}
+{% block styles %}
+    {{ super() }}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout/carrusel.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout/home.css')}}">
+    <link rel="stylesheet" href="{{ url_for('web_v1.pedidos.static', filename='css/pedidos_usuario.css')}}">
+{% endblock %}
+
+{% block content %}
+    <section id="mis_pedidos_container">
+        <div class="title_container">
+            <h1>Mis pedidos</h1>
+        </div>
+    </section>
+{% endblock %}
+
+{%  block scripts %} 
+    {{ super() }}
+    <script src="{{ url_for('web_v1.pedidos.static', filename='js/pedidos_usuario.js') }}"></script>
+{% endblock %}

@@ -8,10 +8,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 
                 const contenedor = document.getElementById('fila-productos-mas-vendidos');
 
+                // for (let i = 0; i < productos.length; i++) {
+                    
+
                 for (let i = 0; i < 5 && i < productos.length; i++) {
                     
                     const elemento = document.createElement('a');
-                    elemento.href = `/producto/${productos[i].id_producto}`;
+                    elemento.href = `/product_details/${productos[i].id_producto}`;
                     elemento.className = 'tarjeta-producto';
                     
                     elemento.innerHTML = `
