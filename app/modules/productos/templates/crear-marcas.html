@@ -1,0 +1,25 @@
+{% extends "layout-admin.html"%}
+
+{% block styles %}
+    {{ super() }}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cruds/stock-styles.css') }}">
+{% endblock %}
+
+
+{% block content %}
+
+    <form id="form-nueva-marca">
+        <h2>Registrar nueva marca</h2>
+        <label>Nombre:
+            <input type="text" name="nombre" required>
+        </label>
+        <button type="submit">Registrar marca</button>
+    </form>
+{% endblock %}
+
+
+{%  block scripts %} 
+    {{ super() }}
+    <script src="{{ url_for('web_v1.productos.static', filename='js/crud_marcas/crear_marcas.js') }}"></script>
+{% endblock %}

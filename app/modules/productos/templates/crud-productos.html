@@ -96,11 +96,10 @@
     </section>
 {% endblock %}
 
-
 {%  block scripts %} 
     {{ super() }}
     <script src="{{ url_for('web_v1.productos.static', filename='js/crud_productos/datatables.min.js') }}"></script>
-    <script src="{{ url_for('web_v1.productos.static', filename='js/crud_productos/script.js') }}"></script>
+    <script src="{{ url_for('web_v1.productos.static', filename='js/crud_productos/crud_productos.js') }}"></script>
     <script src="{{ url_for('web_v1.productos.static', filename='js/crud_productos/modal_detalles.js') }}"></script>
     <script src="{{ url_for('web_v1.productos.static', filename='js/crud_productos/modal_borrar.js') }}"></script>
 {% endblock %}

@@ -1,31 +1,20 @@
-// data table 
 $(document).ready(function() {
-    $('#tabla-productos').DataTable({
+    $('#tabla-marcas').DataTable({
         ajax: {
-            url: "/api/v1/productos",
+            url: "/api/v1/marcas",
             dataSrc: "data",
             error: function(xhr) { console.error('AJAX Error:', xhr); }
         },
         columns: [
-            { data: "id_producto" },
+            { data: "id_marca" },
             { data: "nombre" },
-            { 
-                data: "precio",
-                render: function(data) {
-                    const price = parseFloat(data);
-                    return isNaN(price) ? "$0.00" : `$${price.toFixed(2)}`;
-                }
-            },
-            { data: "stock" },
-            { data: "categoria" },
-            { data: "marca" },
             {
                 data: null,
                 orderable: false,
                 render: function(data, type, row) {
                     return `<div class="btn-group">
-                        <button class="btn btn-sm btn-danger" data-id="${row.id_producto}" onClick="viewDeleteProduct({ id_producto: ${row.id_producto} })">🗑️</button>
-                        <button class="btn btn-sm btn-info view-product" data-id="${row.id_producto}" onClick="viewDetailsProduct({ id_producto: ${row.id_producto} })">✏️</button>
+                        <button class="btn btn-sm btn-danger" data-id="${row.id_marca}" onClick="viewDeleteMarca({ id_marca: ${row.id_marca} })">🗑️</button>
+                        <button class="btn btn-sm btn-info view-marca" data-id="${row.id_marca}" onClick="viewDetailsMarca({ id_marca: ${row.id_marca} })">✏️</button>
                     </div>`;
                 }
             }
@@ -34,7 +23,6 @@ $(document).ready(function() {
             "<'row'<'col-sm-12'tr>>" +
             "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>" +
             "<'row'<'col-sm-12'B>>",  
-        // dom: 'Bfrtip',  
         buttons: [
             {
                 extend: 'excel',

@@ -21,3 +21,13 @@ def crud_productos():
 @login_required
 def crear_productos():
     return render_template('crear-productos.html')
+
+@productos_routes_bp.route('/crud-marcas.html')
+@login_required
+def crud_marcas():
+    return render_template('crud-marcas.html')
+
+@productos_routes_bp.route('/crear-marcas')
+@login_required
+def crear_marcas():
+    return render_template('crear-marcas.html')
