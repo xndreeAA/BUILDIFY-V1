@@ -1,10 +1,10 @@
-function viewDeleteProduct({ id_producto }) {
-    if (!id_producto) return;
+function viewDeleteProduct({ id_marca }) {
+    if (!id_marca) return;
 
-    const confirmado = confirm("¿Estás seguro de que deseas eliminar este producto?");
+    const confirmado = confirm("¿Estás seguro de que deseas eliminar esta marca?");
     if (!confirmado) return;
 
-    fetch(`/api/v1/productos/${id_producto}`, {
+    fetch(`/api/v1/marcas/${id_marca}`, {
         method: 'DELETE',
         headers: {
             'X-CSRFToken': csrfToken
@@ -12,7 +12,7 @@ function viewDeleteProduct({ id_producto }) {
         credentials: 'include'
     })
     .then(response => {
-        if (!response.ok) throw new Error("Error al eliminar el producto");
+        if (!response.ok) throw new Error("Error al eliminar la marca");
 
         if (response.status === 204) {
             return null;
@@ -21,8 +21,8 @@ function viewDeleteProduct({ id_producto }) {
         return response.json();
     })
     .then(data => {
-        alert("Producto eliminado exitosamente.");
-        $('#tabla-productos').DataTable().ajax.reload(null, false);
+        alert("Marca eliminado exitosamente.");
+        $('#tabla-marcas').DataTable().ajax.reload(null, false);
     })
     .catch(error => {
         alert("Ocurrió un error al eliminar: " + error.message);
