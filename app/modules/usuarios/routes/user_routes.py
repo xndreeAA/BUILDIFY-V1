@@ -41,7 +41,7 @@ def product_details(id):
 @usuario_routes_bp.route('/mi_perfil')
 @login_required
 def mi_perfil():
-    return render_template('user/user_perfil/' + 'mi_perfil.html')
+    return render_template('user/user_perfil/' + 'user_perfil.html')
 
 @usuario_routes_bp.route('/estado_pedidos')
 @login_required

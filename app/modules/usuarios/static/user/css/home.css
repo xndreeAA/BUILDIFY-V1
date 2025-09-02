@@ -50,7 +50,7 @@ PRODUCTOS MAS VENDIDOS(CARRUSEL)
 .fila-productos {
     display: flex;
     flex-wrap: nowrap;
-    gap: 15px;
+    gap: 10px;
     padding: 10px;
     overflow-x: auto; /* 🎯 scroll solo aquí */
     scroll-snap-type: x mandatory;
@@ -73,8 +73,8 @@ PRODUCTOS MAS VENDIDOS(CARRUSEL)
 /* Tarjeta de producto */
 .tarjeta-producto {
     flex: 0 0 80%;
-    max-width: 300px;
-    min-width: 240px;
+    max-width: 200px;
+    min-width: 190px;
     height: 350px;
     padding: 10px;
 

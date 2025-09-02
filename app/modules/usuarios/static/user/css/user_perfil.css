@@ -1,90 +1,56 @@
-/* bloque */
-#content_info_perfil{
-    position: absolute;
-    top: 100px;
-    left: 100px;
-    right: 15px;
+:root {
+    --color_titulo: #3a3b3b;
+    --color_tenue: rgb(160, 160, 160);
+    --color_complementario_1: #5683B3;
+    --color_complementario_2: #7DA0CA;
+    --baground_btn: #0095e0;
+    --baground_cantidad:rgb(238, 236, 236);
 }
-/* -------------------------mi_perfil------------------------- */
-.content_mi_perfil {
-    display: grid;
-    height: 100vh;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas: "foto_perfil perfil_info";
-}
-.foto_perfil {
-    grid-area: foto_perfil;
-    padding: 20px;
+#perfil-usuario{
+    margin-top: 100px;
     display: flex;
-    flex-direction: column;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
+    padding: 20px;
+}
+
+.container{
     width: 50%;
-}
-.foto_perfil img {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 20px;
-    margin-top: 20px;
-}
-.perfil_info {
-    grid-area: perfil_info;
-    padding: 40px;
     display: flex;
+    justify-content: space-around;
+    align-items: center;
     flex-direction: column;
-    justify-content: start;
-}
-
-/* ------------------------------------------------------------- */
-.content_mis_compras{
-    height: 100%;
-    padding: 40px;
-    background-color: rgb(255, 255, 255);
-    border: 5px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    display: flex;
-    flex-direction: column;
-}
-.contenedor_cards{
-    display: flex;
-    gap: 20px   ;
-}
-
-.card_compras {
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    width: 250px;
-    height: 380px;
-    border-radius: 10px;
     padding: 20px;
 }
-.card_compras_header {
-    padding: 5px;
-    border-radius: 10px;
-    text-align: center;
-    background-color: rgb(226, 226, 226);
-}
-.card_compras_img{
-    display: flex;
-    width: 100%;
-    height: 150px;
-    justify-content: center;
-    align-items: center;
-}
-.card_compras_img img{
-    height: 100px;
-}
-.card_compras_descripcion {
+
+#form-usuario{
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: start;
+    padding: 20px;
+    width: 70%;
+    border: 1px solid rgb(211, 208, 208);
+    border-radius: 5px;
 }
-.card_compras_descripcion p{
-    font-size: 13px;
+#form-usuario label{
+    margin-top: 10px;
+    font-weight: bold;
+    color: rgb(85, 84, 84);
 }
-.card_compras_descripcion button{
-    width: 100%;
+#form-usuario input{
+    margin-top: 5px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+#form-usuario button{
+    margin-top: 20px;
     padding: 10px;
+    background-color: var(--baground_btn);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+#form-usuario button:hover{
+    background-color:#38b5f4;
 }

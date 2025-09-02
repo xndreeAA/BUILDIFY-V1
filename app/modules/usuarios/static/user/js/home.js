@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 // for (let i = 0; i < productos.length; i++) {
                     
 
-                for (let i = 0; i < 10 && i < productos.length; i++) {
+                for (let i = 0; i < 5 && i < productos.length; i++) {
                     
                     const elemento = document.createElement('a');
                     elemento.href = `/product_details/${productos[i].id_producto}`;

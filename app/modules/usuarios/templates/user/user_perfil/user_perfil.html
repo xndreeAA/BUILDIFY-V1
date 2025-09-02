@@ -1,0 +1,19 @@
+{% extends "layout-user.html" %}
+
+{% block styles %}
+{{ super() }}
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<link rel="stylesheet" href="{{ url_for('web_v1.user.static', filename='user/css/user_perfil.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div id="perfil-usuario">
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('web_v1.user.static', filename='user/js/user_perfil.js') }}"></script>
+{% endblock %}
