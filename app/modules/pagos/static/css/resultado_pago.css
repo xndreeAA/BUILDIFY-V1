@@ -222,6 +222,15 @@ hr {
     scale: 1.05;
 }
 
+#footer {
+    & h2 {
+        color: #7da0ca;
+    }
+
+    & h3 {
+        color: #7da0ca;
+    }
+}
 
 @keyframes draw {
   to {
