@@ -21,7 +21,7 @@ def crud_productos():
 @login_required
 def crear_productos():
     return render_template('crear-productos.html')
-
+# ----------------------------------------------------------------
 @productos_routes_bp.route('/crud-marcas.html')
 @login_required
 def crud_marcas():
@@ -31,3 +31,13 @@ def crud_marcas():
 @login_required
 def crear_marcas():
     return render_template('crear-marcas.html')
+# ----------------------------------------------------------------
+@productos_routes_bp.route('/crud-categorias.html')
+@login_required
+def crud_categorias():
+    return render_template('crud-categorias.html')
+
+@productos_routes_bp.route('/crear-categorias')
+@login_required
+def crear_categorias():
+    return render_template('crear-categorias.html')

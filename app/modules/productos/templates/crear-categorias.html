@@ -1,0 +1,21 @@
+{% extends "layout-admin.html"%}
+
+{% block styles %}
+    {{ super() }}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+{% endblock %}
+
+{% block content %}
+    <form id="form-nueva-categoria">
+        <h2>Registrar nueva categoría</h2>
+        <label>Nombre:
+            <input type="text" name="nombre" required>
+        </label>
+        <button type="submit">Registrar categoría</button>
+    </form>
+{% endblock %}
+
+{%  block scripts %} 
+    {{ super() }}
+    <script src="{{ url_for('web_v1.productos.static', filename='js/crud_categorias/crear_categorias.js') }}"></script>
+{% endblock %}

@@ -4,8 +4,7 @@ const closeModalBtn = document.getElementById('close-modal-btn');
 const detallesContainer = document.getElementById('detalles-container');
 const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-
-let marcaGlobal = null;
+let categoriaGlobal = null;
 
 const closeModal = () => modalDetalles.style.display = 'none';
 
@@ -18,53 +17,40 @@ window.addEventListener('click', e => {
     if (e.target === modalDetalles) closeModal();
 });
 
-const fetchData = async ({ id_marca }) => {
-    const url = `/api/v1/marcas/${id_marca}`
-    const res = await fetch(url, { credentials:'include' });
+const fetchData = async ({ id_categoria }) => {
+    const url = `/api/v1/categorias/${id_categoria}`;   
+    const res = await fetch(url, { credentials: 'include' });
     const json = await res.json();
-    
+
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return json.data;
 };
 
-const viewDetailsMarca = async ({ id_marca }) => {
-    const marca = await fetchData({ id_marca });
-    marcaGlobal = marca
-    modalTitle.textContent = `Marca #${marca.id_marca}`;
+const viewDetailsCategoria = async ({ id_categoria }) => {
+    const categoria = await fetchData({ id_categoria });
+    categoriaGlobal = categoria;
+    modalTitle.textContent = `Categoría #${categoria.id_categoria}`;
     modalDetalles.style.display = 'flex';
 
     let html = `
         <label class="label_field">Nombre:
         <div class="input-container">
             <input disabled data-static="true" class="input_field" type="text"
-                name="nombre" value="${marca.nombre}">
+                name="nombre" value="${categoria.nombre}">
             <button type="button" class="btn-edit">✏️</button>
         </div>
         </label>
         <button type="button" id="submit-btn">Guardar cambios</button>
-    `
+    `;
     detallesContainer.innerHTML = html;
-}
-
+};
 
 detallesContainer.addEventListener('click', e => {
     e.preventDefault();
 
-    if (e.target.classList.contains('btn-edit') && e.target.classList.contains('select')) {
-        const inp = e.target.closest('.input-container').querySelector('select');
-        inp.disabled = !inp.disabled;
-        e.target.textContent = inp.disabled ? '✏️' : '✔️';
-        return;
-    }
-
     if (e.target.classList.contains('btn-edit')) {
         const inp = e.target.closest('.input-container').querySelector('input');
         inp.disabled = !inp.disabled;
-
-        if (inp.type === 'checkbox') {
-        if (inp.checked) inp.checked = false;
-        else inp.checked = true;
-        }
         e.target.textContent = inp.disabled ? '✏️' : '✔️';
         return;
     }
@@ -73,34 +59,26 @@ detallesContainer.addEventListener('click', e => {
         e.preventDefault();
 
         const formInputs = document.querySelectorAll('.input_field');
-        console.log(formInputs);
-
         const data = {
             nombre: formInputs[0].value,
         };
 
-        // console.log (data);
-
-        fetch(`/api/v1/marcas/${marcaGlobal.id_marca}`, {
+        fetch(`/api/v1/categorias/${categoriaGlobal.id_categoria}`, {   // ✅ corregido
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': csrfToken
             },
-            credentials: 'include',
             body: JSON.stringify(data)
         })
         .then(res => {
-            if (!res.ok) throw new Error(`Error HTTP ${res.status}`, res);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
             return res.json();
         })
-        .then(json => {
-            alert('Producto actualizado correctamente');
+        .then(result => {
+            console.log('Guardado con éxito:', result);
             closeModal();
         })
-        .catch(err => {
-            console.error('Error al actualizar producto:', err);
-            alert('Hubo un error al guardar los cambios');
-        });
+        .catch(err => console.error('Error al guardar:', err));
     }
 });

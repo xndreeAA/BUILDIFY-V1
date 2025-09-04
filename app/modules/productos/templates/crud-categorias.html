@@ -1,0 +1,63 @@
+{% extends "layout-admin.html"%}
+
+{% block styles %}
+    {{ super() }}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="{{ url_for('web_v1.productos.static', filename='css/crud_productos/datatables.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('web_v1.productos.static', filename='css/crud_productos/stock-styles.css') }}">
+{% endblock %}
+
+{% block content %}
+    <section id="stock-container-section">
+        <article class="stock-container-article">
+                <a id="btn-crear-categoria" href="{{ url_for('web_v1.productos.crear_categorias')}}">Crear categoría</a>
+                <br>
+                <table id="tabla-categorias" class="display table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody> </tbody>
+                </table>
+        </article>
+    </section>
+
+    <!-- Modal detalles categoría -->
+    <section id="modal-detalles" class="modal">  
+        <form id="modal-detalles-content">
+            <article class="modal-article">
+                <div class="modal-header">
+                    <button id="open-modal-btn" class="btn-modal">❌</button>
+                    <h4 id="modal-detalles-title"></h4>
+                </div>
+                <picture class="modal-img-container">
+                    <img src="https://cdn-icons-png.flaticon.com/512/709/709496.png" alt="imagen categoría">
+                </picture>
+            </article>
+            <article class="modal-article">
+                <div id="detalles-container">
+                    <h2>Detalles</h2>
+                    <label for="nombre" class="label_field">Nombre:
+                        <div class="input-container">
+                            <input disabled class="input_field" type="text" name="nombre" id="nombre-categoria">
+                            <button class="btn-edit">✏️</button>
+                        </div>
+                    </label>
+                </div>
+            </article>
+        </form>
+    </section>
+{% endblock %}
+
+{%  block scripts %} 
+    {{ super() }}
+    <!-- Cargar jQuery primero -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('web_v1.productos.static', filename='js/crud_productos/datatables.min.js') }}"></script>
+    <script src="{{ url_for('web_v1.productos.static', filename='js/crud_categorias/crud_categorias.js') }}"></script>
+    <script src="{{ url_for('web_v1.productos.static', filename='js/crud_categorias/editar_categorias.js') }}"></script>
+    <script src="{{ url_for('web_v1.productos.static', filename='js/crud_categorias/modal_borrar.js') }}"></script>
+{% endblock %}
