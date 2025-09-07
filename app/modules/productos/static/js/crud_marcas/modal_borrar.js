@@ -1,4 +1,4 @@
-function viewDeleteProduct({ id_marca }) {
+function viewDeleteMarca({ id_marca }) {
     if (!id_marca) return;
 
     const confirmado = confirm("¿Estás seguro de que deseas eliminar esta marca?");

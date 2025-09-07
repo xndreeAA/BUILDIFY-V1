@@ -7,7 +7,7 @@ def send_reset_email(usuario):
     token = usuario.get_reset_token()
     
     # Construye el enlace absoluto con el token
-    link = url_for('auth.reset_password', token=token, _external=True)
+    link = url_for('web_v1.auth.reset_password', token=token, _external=True)
 
     # Crea el mensaje del correo
     msg = Message(
