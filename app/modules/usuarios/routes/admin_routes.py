@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, render_template, request, abort
 from flask_login import login_required, current_user
+from app.core.models.rol import Rol 
 import os
     
 template_dir = os.path.join(os.path.dirname(__file__), '..', 'templates/admin')
@@ -21,3 +22,10 @@ def dashboard():
 @login_required
 def crud_usuarios():
     return render_template('crud_usuarios.html')
+
+
+@admin_routes_bp.route('/crear_usuarios')
+@login_required
+def crear_usuarios():
+    roles = Rol.query.all()   
+    return render_template('crear_usuarios.html', roles=roles)

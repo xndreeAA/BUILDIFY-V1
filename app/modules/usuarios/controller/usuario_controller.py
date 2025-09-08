@@ -28,7 +28,7 @@ class UsuarioController:
         data, status = UsuarioService.traer_un_usuario(id_usuario)
 
         return jsonify(data), status
-    
+    # Se elimina el parametro password en la modificacion de usuario
     @staticmethod
     def modificar_un_usuario(id_usuario, *args, **kwargs):
         
@@ -36,7 +36,7 @@ class UsuarioController:
         if not payload:
             abort(400, description="Request body debe ser JSON válido.")
 
-        campos = ["nombre", "apellido", "email", "direccion", "telefono", "id_rol", "password"]
+        campos = ["nombre", "apellido", "email", "direccion", "telefono", "id_rol"]
         for campo in campos:
             if campo not in payload:
                 abort(400, description=f"Falta el campo requerido: {campo}")

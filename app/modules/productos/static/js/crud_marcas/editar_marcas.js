@@ -95,11 +95,11 @@ detallesContainer.addEventListener('click', e => {
             return res.json();
         })
         .then(json => {
-            alert('Producto actualizado correctamente');
+            alert('Marca actualizada correctamente');
             closeModal();
         })
         .catch(err => {
-            console.error('Error al actualizar producto:', err);
+            console.error('Error al actualizar Marca:', err);
             alert('Hubo un error al guardar los cambios');
         });
     }

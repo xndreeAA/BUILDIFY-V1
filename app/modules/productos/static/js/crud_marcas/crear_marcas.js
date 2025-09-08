@@ -28,9 +28,9 @@ formNuevaMarca.addEventListener('submit', async (e) => {
 
         if (res.ok && json.success) {
             const idProducto = json.data.id_producto;
-            alert('Producto creado exitosamente con ID: ' + idProducto);
+            alert('Marca creada exitosamente con ID: ' + idProducto);
         } else {
-            alert('Error al crear producto: ' + (json.message || 'Desconocido'));
+            alert('Error al crear Marca: ' + (json.message || 'Desconocido'));
         }
 
     
