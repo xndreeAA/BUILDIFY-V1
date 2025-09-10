@@ -56,7 +56,8 @@
     {{ super() }}
     <!-- Cargar jQuery primero -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{{ url_for('web_v1.admin.static', filename='js/crud_usuarios/datatables.min.js') }}"></script>
+    <!-- <script src="{{ url_for('web_v1.admin.static', filename='js/crud_usuarios/datatables.min.js') }}"></script> -->
+    <script src="{{ url_for('web_v1.productos.static', filename='js/crud_productos/datatables.min.js') }}"></script>
     <script src="{{ url_for('web_v1.admin.static', filename='js/crud_usuarios/crud_usuarios.js') }}"></script>
     <script src="{{ url_for('web_v1.admin.static', filename='js/crud_usuarios/crear_usuario.js') }}"></script>
     <script src="{{ url_for('web_v1.admin.static', filename='js/crud_usuarios/editar_usuarios.js') }}"></script>
