@@ -1,48 +1,62 @@
-{% extends "layout-admin.html"%}
+{% extends "layout-admin.html"%} 
 
 {% block styles %}
 {{ super() }}
 <meta name="csrf-token" content="{{ csrf_token() }}">
+<link rel="stylesheet" href="{{ url_for('web_v1.auth.static', filename='css/login.css') }}">
+<link rel="stylesheet" href="{{ url_for('web_v1.auth.static', filename='css/form.css') }}">
 {% endblock %}
 
 {% block content %}
-<form id="form-nuevo-usuario">
-    <h2>Registrar nuevo usuario</h2>
+<form id="form-nuevo-usuario" class="form_style">
+    <h2 class="title2">Registrar nuevo usuario</h2>
 
-    <label>Nombre:
-        <input type="text" name="nombre" required>
-    </label>
+    <div class="input_style">
+        <label class="label_field">Nombre:</label><br>
+        <input type="text" name="nombre" class="input_field" placeholder="Ej: Juan" required>
+    </div>
 
-    <label>Apellido:
-        <input type="text" name="apellido" required>
-    </label>
+    <div class="input_style">
+        <label class="label_field">Apellido:</label><br>
+        <input type="text" name="apellido" class="input_field" placeholder="Ej: García" required>
+    </div>
 
-    <label>Email:
-        <input type="email" name="email" required>
-    </label>
+    <div class="input_style">
+        <label class="label_field">Email:</label><br>
+        <input type="email" name="email" class="input_field" placeholder="correo@ejemplo.com" required>
+    </div>
 
-    <label>Teléfono:
-        <input type="text" name="telefono">
-    </label>
+    <div class="input_style">
+        <label class="label_field">Teléfono:</label><br>
+        <input type="text" name="telefono" class="input_field" placeholder="3001234567" required
+    </div>
 
-    <label>Dirección:
-        <input type="text" name="direccion">
-    </label>
+    <div class="input_style">
+        <label class="label_field">Dirección:</label><br>
+        <input type="text" name="direccion" class="input_field" placeholder="Calle 123 #22-45" required>
+    </div>
 
-    <label>Rol:
-        <select name="id_rol" required>
+    <div class="input_style">
+        <label class="label_field">Rol:</label><br>
+        <select name="id_rol" class="input_field" required>
             {% for rol in roles %}
             <option value="{{ rol.id_rol }}">{{ rol.rol }}</option>
             {% endfor %}
         </select>
-    </label>
+    </div>
 
+    <div class="input_style">
+        <label class="label_field">Contraseña:</label><br>
+        <input type="password" name="password" class="input_field" placeholder="Mínimo 8 caracteres" required>
+        <button type="button" id="togglePassword">
+            <i id="eyeOpen" class="bi bi-eye-slash-fill"></i>
+            <i id="eyeClosed" class="bi bi-eye-fill" style="display: none;"></i>
+        </button>
+    </div>
 
-    <label>Contraseña:
-        <input type="password" name="password" required>
-    </label>
-
-    <button type="submit">Registrar usuario</button>
+    <div class="submit_style">
+        <button type="submit" class="input_submit">Registrar usuario</button>
+    </div>
 </form>
 {% endblock %}
 
