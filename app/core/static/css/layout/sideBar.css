@@ -1,46 +1,67 @@
+/* ==========================================================================
+VARIABLES Y PALETA DE COLORES
+   ========================================================================== */
+
 :root {
-  --color_titulo: #021024;
-  --color_fondo_1: #c1e8ff;
-  --color_subtitulo: #052659;
-  --color_complementario_1: #5683b3;
-  --color_complementario_2: #7da0ca;
-
-    --david_color_1: #0095e0;
-    --david_color_2: #052659;
-    --davod_color_3: rgba(0, 0, 0, 0.397);
-    --david_color_4: #1f1f1f;
+  /* Colores principales de la paleta */
+  --color-primario: #0095e0;        /* Azul principal (antes david_color_1) */
+  --color-secundario: #052659;      /* Azul oscuro (antes david_color_2 y color_subtitulo) */
+  --color-fondo-oscuro: #1f1f1f;    /* Fondo oscuro (antes david_color_4) */
+  --color-texto-claro: #ffffff;  
+  
+  /* Colores adicionales utilizados */
+  --color-titulo: #021024;   
+  --color-text-dark: #000;
+  --color-subtitle: #052659; 
+  --color-text-light: #fff; 
+         /* Color para títulos */
+  --color-fondo-claro: #c1e8ff;  
+  --color-text-light: #fff;   /* Fondo claro (no utilizado en este componente) */
+  --color-complementario-1: #5683b3;/* Complementario 1 (no utilizado en este componente) */
+  --color-complementario-2: #7da0ca;/* Complementario 2 (no utilizado en este componente) */
 }
+/* ==========================================================================
+BARRA LATERAL (ASIDE)
+   ========================================================================== */
 
+/**
+ * Contenedor principal de la barra lateral
+ * Diseño colapsable que se expande al hacer hover
+ */
 #aside {
   position: relative;
   width: 60px;
-  background-color: var(--david_color_4);
+  background-color: var(--color-fondo-oscuro);
   height: 100%;
-  color: var(--david_color_1);
+  color: var(--color-primario);
 }
 
 #aside-container {
-    position: sticky;
-    z-index: 2;
-    top: 0;
-    left: 0;
-    width: 40px;
-    padding: 10px;
-    overflow-y: hidden;
-    min-height: 100vh;
-    background-color: #2a2a2a;
-    transition: ease 0.4s;
-
+  position: sticky;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 40px;
+  padding: 10px;
+  overflow-y: hidden;
+  min-height: 100vh;
+  background: radial-gradient(circle at bottom, var(--color-subtitle), var(--color-text-dark) 80%);
+  color: var(--color-text-light);
+  transition: ease 0.4s;
   display: flex;
   flex-direction: column;
   gap: 20px;
   scrollbar-width: none;
 }
 
+/* Efecto de expansión al hacer hover */
 #aside-container:hover {
   width: 300px;
-  /* backdrop-filter: blur(10px); */
 }
+
+/* ==========================================================================
+LOGOTIPO
+   ========================================================================== */
 
 #logo-container {
   display: flex;
@@ -48,27 +69,34 @@
   gap: 20px;
   white-space: nowrap;
   overflow: hidden;
-
-  & h2 {
-    margin: 0;
-    opacity: 0;
-    transition: opacity 0.4s;
-  }
 }
 
+#logo-container h2 {
+  font-size: 20px;
+  margin: 0;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+/* Texto del logo visible solo al expandir */
 #aside-container:hover #logo-container h2 {
   opacity: 1;
-  
 }
-#aside-container:hover #logo-container h2 a{
+
+#aside-container:hover #logo-container h2 a {
   text-decoration: none;
-  color: #0095e0;
+  color: var(--color-primario);
 }
+
 #the-finals-logo {
   width: 35px;
-  fill: var(--david_color_1);
+  fill: var(--color-primario);
   min-width: 35px;
 }
+
+/* ==========================================================================
+MENÚ DE OPCIONES
+   ========================================================================== */
 
 .admin-side-bar {
   list-style: none;
@@ -86,10 +114,11 @@
   align-items: center;
   gap: 20px;
   margin-bottom: 20px;
-  & svg {
-    width: 30px;
-    min-width: 30px;
-  }
+}
+
+.admin-side-bar-option svg {
+  width: 30px;
+  min-width: 30px;
 }
 
 .admin-side-bar-link {
@@ -101,13 +130,21 @@
   transition: opacity 0.4s;
   overflow: hidden;
   white-space: nowrap;
-  color: white;
+  color: var(--color-texto-claro);
 }
 
+/* Texto de opciones visible solo al expandir */
 #aside-container:hover .admin-side-bar-link {
   opacity: 1;
 }
 
+/* ==========================================================================
+EFECTOS DE ANIMACIÓN PARA ENLACES
+   ========================================================================== */
+
+/**
+ * Propiedad personalizada para animación de gradiente
+ */
 @property --angle {
   syntax: "<angle>";
   inherits: false;
@@ -120,10 +157,10 @@
   display: flex;
   justify-content: start;
   align-items: start;
-  /* background-color: var(--david_color_4); */
   position: relative;
 }
 
+/* Efecto de borde animado con gradiente */
 .admin-link-container::before,
 .admin-link-container::after {
   content: "";
@@ -135,26 +172,28 @@
   z-index: -1;
   background-image: conic-gradient(
     from var(--angle),
-    var(--david_color_1),
-    white,
-    var(--david_color_1)
+    var(--color-primario),
+    var(--color-texto-claro),
+    var(--color-primario)
   );
-  /* padding-bottom: 3px; */
   transition: 0.2s ease all;
   animation: spining-shadow-box 2s linear infinite;
 }
 
+/* Expansión del efecto al hacer hover */
 .admin-link-container:hover::before,
 .admin-link-container:hover::after {
   width: 100%;
   padding: 1px;
 }
 
+/* Efecto de desenfoque para la sombra */
 .admin-link-container::before {
   filter: blur(10px);
   opacity: 0.7;
 }
 
+/* Animación del gradiente rotatorio */
 @keyframes spining-shadow-box {
   from {
     --angle: 0deg;
@@ -164,7 +203,17 @@
   }
 }
 
+/* ==========================================================================
+ELEMENTOS ADICIONALES
+   ========================================================================== */
+
 .separator {
   width: 100%;
-  border: 1px solid white;
+  border: 1px solid var(--color-texto-claro);
+}
+
+.admin-side-bar-option .bi,
+#logo-container .bi {
+  color: var(--color-texto-claro);
+  font-size: 20px;
 }

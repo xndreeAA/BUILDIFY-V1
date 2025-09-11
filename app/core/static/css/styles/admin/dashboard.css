@@ -5,9 +5,16 @@
     --textoClaro: #FFFFFF;
     --davod_color_3: rgba(0, 0, 0, 0.397);
     --color_complementario_2: #7DA0CA;
+} 
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
-
-} #container_encabezado_dashboard {
+* {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-weight: normal; 
+}
+#container_encabezado_dashboard {
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -40,6 +47,7 @@
         font-size: 1.8rem;
         font-weight: bold;
         letter-spacing: 1px;
+
     }
 }
 

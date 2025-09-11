@@ -1,0 +1,438 @@
+/* ==========================================================================
+   ESTILOS COMPARTIDOS PARA VISTAS DE CREACIÓN (CRUDs) - DISEÑO SUTIL
+   ========================================================================== */
+
+/* ==========================================================================
+   VARIABLES Y PALETA DE COLORES
+   ========================================================================== */
+
+:root {
+    /* Colores principales */
+    --color-primary: #021024;
+    --color-secondary: #052659;
+    --color-accent: #0095e0;
+    --color-light-bg: #f8fafc;
+    
+    /* Colores complementarios */
+    --color-complementary-1: #5683B3;
+    --color-complementary-2: #7DA0CA;
+    
+    /* Colores neutros sutiles */
+    --color-text-dark: #2d3748;
+    --color-text-light: #FFFFFF;
+    --color-border: #e2e8f0;
+    --color-gray-medium: #a0aec0;
+    --color-gray-light: #f7fafc;
+    --color-success: #38a169;
+    --color-error: #e53e3e;
+    
+    /* Sombras sutiles */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================================================================
+   ESTILOS BASE PARA FORMULARIOS DE CREACIÓN
+   ========================================================================== */
+
+/**
+ * Contenedor principal para formularios de creación
+ * Diseño minimalista y centrado
+ */
+#content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: calc(100vh - 160px);
+    padding: 30px 20px;
+    background-color: var(--color-light-bg);
+}
+
+/* ==========================================================================
+   FORMULARIOS DE REGISTRO - DISEÑO ANGOSTO Y SUTIL
+   ========================================================================== */
+
+/**
+ * Estilo base para todos los formularios de creación
+ * Diseño minimalista, angosto y elegante
+ */
+#form-nueva-marca,
+#form-nueva-categoria,
+#form-nuevo-producto,
+#form-nuevo-usuario {
+    background-color: var(--color-text-light);
+    padding: 35px;
+    border-radius: 10px;
+    box-shadow: var(--shadow-md);
+    width: 100%;
+    max-width: 480px; /* Más angosto que el anterior */
+    margin: 0 auto;
+    border: 1px solid var(--color-border);
+}
+
+/* Títulos de formularios - diseño sutil */
+#form-nueva-marca h2,
+#form-nueva-categoria h2,
+#form-nuevo-producto h2,
+#form-nuevo-usuario h2 {
+    color: var(--color-primary);
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 28px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--color-border);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+}
+
+/* ==========================================================================
+   ETIQUETAS Y CAMPOS DE FORMULARIO - DISEÑO MINIMALISTA
+   ========================================================================== */
+
+/**
+ * Estilos para etiquetas de formulario
+ * Diseño sutil y elegante
+ */
+#form-nueva-marca label,
+#form-nueva-categoria label,
+#form-nuevo-producto label,
+#form-nuevo-usuario label {
+    display: block;
+    margin-bottom: 20px;
+    font-weight: 400;
+    color: var(--color-text-dark);
+    font-size: 14px;
+}
+
+/* Texto dentro de las etiquetas - más sutil */
+#form-nueva-marca label > span,
+#form-nueva-categoria label > span,
+#form-nuevo-producto label > span,
+#form-nuevo-usuario label > span {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: var(--color-secondary);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+/* ==========================================================================
+CAMPOS DE ENTRADA Y SELECTORES - DISEÑO DELGADO
+   ========================================================================== */
+
+/**
+ * Campos de entrada - diseño minimalista y angosto
+ */
+#form-nueva-marca input[type="text"],
+#form-nueva-marca input[type="number"],
+#form-nueva-marca input[type="email"],
+#form-nueva-marca input[type="password"],
+#form-nueva-categoria input[type="text"],
+#form-nuevo-producto input[type="text"],
+#form-nuevo-producto input[type="number"],
+#form-nuevo-producto input[type="file"],
+#form-nuevo-usuario input[type="text"],
+#form-nuevo-usuario input[type="email"],
+#form-nuevo-usuario input[type="password"],
+#form-nuevo-producto select,
+#form-nuevo-usuario select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+    background-color: var(--color-gray-light);
+    color: var(--color-text-dark);
+    height: 40px;
+}
+
+/* Efecto focus sutil */
+#form-nueva-marca input:focus,
+#form-nueva-categoria input:focus,
+#form-nuevo-producto input:focus,
+#form-nuevo-producto select:focus,
+#form-nuevo-usuario input:focus,
+#form-nuevo-usuario select:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(0, 149, 224, 0.08);
+    background-color: var(--color-text-light);
+}
+
+/* Selectores con diseño minimalista */
+#form-nuevo-producto select,
+#form-nuevo-usuario select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23546e87' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 14px;
+    padding-right: 35px;
+}
+
+/* ==========================================================================
+   BOTONES DE ENVÍO - DISEÑO SUTIL Y ELEGANTE
+   ========================================================================== */
+
+/**
+ * Botones de submit - diseño minimalista
+ */
+#form-nueva-marca button[type="submit"],
+#form-nueva-categoria button[type="submit"],
+#form-nuevo-producto button[type="submit"],
+#form-nuevo-usuario button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--color-secondary);
+    color: var(--color-text-light);
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 15px;
+    letter-spacing: 0.025em;
+}
+
+/* Efecto hover sutil */
+#form-nueva-marca button[type="submit"]:hover,
+#form-nueva-categoria button[type="submit"]:hover,
+#form-nuevo-producto button[type="submit"]:hover,
+#form-nuevo-usuario button[type="submit"]:hover {
+    background-color: var(--color-primary);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+/* ==========================================================================
+   ELEMENTOS ESPECÍFICOS - DISEÑO MINIMALISTA
+   ========================================================================== */
+
+/* Contenedor de detalles dinámicos */
+#detalles-dinamicos {
+    margin-bottom: 20px;
+    padding: 12px;
+    border: 1px dashed var(--color-border);
+    border-radius: 6px;
+    background-color: var(--color-gray-light);
+    font-size: 13px;
+}
+
+/* Campos de archivo con diseño sutil */
+#form-nuevo-producto input[type="file"] {
+    padding: 8px;
+    border: 1px dashed var(--color-border);
+    background-color: var(--color-gray-light);
+    font-size: 13px;
+    height: auto;
+}
+
+#form-nuevo-producto input[type="file"]:focus {
+    border-color: var(--color-accent);
+    background-color: var(--color-text-light);
+}
+
+/* Selector de imagen principal */
+#imagen-principal-select {
+    margin-top: 8px;
+    font-size: 13px;
+}
+
+/* ==========================================================================
+   ESPACIADO Y GRUPOS - MÁS COMPACTO
+   ========================================================================== */
+
+/* Espaciado reducido entre elementos */
+#form-nuevo-producto br {
+    margin-bottom: 10px;
+}
+
+/* Agrupación más compacta */
+#form-nuevo-usuario label,
+#form-nuevo-producto label {
+    position: relative;
+    margin-bottom: 18px;
+}
+
+/* ==========================================================================
+   ESTADOS DE VALIDACIÓN - SUTILES
+   ========================================================================== */
+
+/* Campos requeridos - indicador sutil */
+#form-nueva-marca input:required,
+#form-nueva-categoria input:required,
+#form-nuevo-producto input:required,
+#form-nuevo-producto select:required,
+#form-nuevo-usuario input:required,
+#form-nuevo-usuario select:required {
+    border-left: 2px solid var(--color-accent);
+}
+
+/* Campos válidos - feedback sutil */
+#form-nueva-marca input:valid,
+#form-nueva-categoria input:valid,
+#form-nuevo-producto input:valid,
+#form-nuevo-producto select:valid,
+#form-nuevo-usuario input:valid,
+#form-nuevo-usuario select:valid {
+    border-left-color: var(--color-success);
+}
+
+/* Campos inválidos - feedback discreto */
+#form-nueva-marca input:invalid,
+#form-nueva-categoria input:invalid,
+#form-nuevo-producto input:invalid,
+#form-nuevo-producto select:invalid,
+#form-nuevo-usuario input:invalid,
+#form-nuevo-usuario select:invalid {
+    border-left-color: var(--color-error);
+}
+
+/* ==========================================================================
+   RESPONSIVIDAD PARA DISEÑO ANGOSTO
+   ========================================================================== */
+
+@media (max-width: 640px) {
+    #content {
+        padding: 20px 15px;
+        min-height: calc(100vh - 140px);
+    }
+    
+    #form-nueva-marca,
+    #form-nueva-categoria,
+    #form-nuevo-producto,
+    #form-nuevo-usuario {
+        padding: 25px 20px;
+        max-width: 400px;
+        margin: 0 10px;
+    }
+    
+    #form-nueva-marca h2,
+    #form-nueva-categoria h2,
+    #form-nuevo-producto h2,
+    #form-nuevo-usuario h2 {
+        font-size: 21px;
+        margin-bottom: 24px;
+        padding-bottom: 10px;
+    }
+    
+    #form-nueva-marca label,
+    #form-nueva-categoria label,
+    #form-nuevo-producto label,
+    #form-nuevo-usuario label {
+        margin-bottom: 16px;
+        font-size: 13px;
+    }
+    
+    #form-nueva-marca input,
+    #form-nueva-categoria input,
+    #form-nuevo-producto input,
+    #form-nuevo-producto select,
+    #form-nuevo-usuario input,
+    #form-nuevo-usuario select {
+        padding: 9px 11px;
+        font-size: 13px;
+        height: 38px;
+    }
+    
+    #form-nueva-marca button[type="submit"],
+    #form-nueva-categoria button[type="submit"],
+    #form-nuevo-producto button[type="submit"],
+    #form-nuevo-usuario button[type="submit"] {
+        padding: 11px;
+        font-size: 13px;
+        margin-top: 12px;
+    }
+    
+    #detalles-dinamicos {
+        padding: 10px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    #form-nueva-marca,
+    #form-nueva-categoria,
+    #form-nuevo-producto,
+    #form-nuevo-usuario {
+        padding: 22px 18px;
+        max-width: 100%;
+        border-radius: 8px;
+    }
+    
+    #form-nueva-marca h2,
+    #form-nueva-categoria h2,
+    #form-nuevo-producto h2,
+    #form-nuevo-usuario h2 {
+        font-size: 20px;
+        margin-bottom: 22px;
+    }
+    
+    #form-nueva-marca input,
+    #form-nueva-categoria input,
+    #form-nuevo-producto input,
+    #form-nuevo-producto select,
+    #form-nuevo-usuario input,
+    #form-nuevo-usuario select {
+        padding: 8px 10px;
+        font-size: 12px;
+        height: 36px;
+    }
+}
+
+/* ==========================================================================
+   ANIMACIONES Y TRANSICIONES SUTILES
+   ========================================================================== */
+
+/* Transiciones suaves para todos los elementos */
+#form-nueva-marca *,
+#form-nueva-categoria *,
+#form-nuevo-producto *,
+#form-nuevo-usuario * {
+    transition: all 0.15s ease;
+}
+
+/* Efecto de click sutil en botones */
+#form-nueva-marca button[type="submit"]:active,
+#form-nueva-categoria button[type="submit"]:active,
+#form-nuevo-producto button[type="submit"]:active,
+#form-nuevo-usuario button[type="submit"]:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+/* ==========================================================================
+   ESTILOS ESPECÍFICOS PARA MEJOR LEGIBILIDAD
+   ========================================================================== */
+
+/* Placeholders sutiles */
+#form-nueva-marca input::placeholder,
+#form-nueva-categoria input::placeholder,
+#form-nuevo-producto input::placeholder,
+#form-nuevo-usuario input::placeholder {
+    color: var(--color-gray-medium);
+    font-size: 13px;
+}
+
+/* Texto en selects */
+#form-nuevo-producto select,
+#form-nuevo-usuario select {
+    color: var(--color-text-dark);
+    font-size: 13px;
+}
+
+/* Focus states mejorados para accesibilidad */
+#form-nueva-marca input:focus-visible,
+#form-nueva-categoria input:focus-visible,
+#form-nuevo-producto input:focus-visible,
+#form-nuevo-producto select:focus-visible,
+#form-nuevo-usuario input:focus-visible,
+#form-nuevo-usuario select:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 1px;
+}

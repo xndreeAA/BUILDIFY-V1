@@ -9,9 +9,16 @@
     --david_color_2: #052659;
     --davod_color_3: rgba(0, 0, 0, 0.397);
 }
-
+h2{
+    text-align: center;
+    color: var(--color_titulo);
+    font-size: 26px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--david_color_1);
+}
 /* ===============================
-   CONTENEDOR PRINCIPAL
+CONTENEDOR PRINCIPAL
    =============================== */
 #pedidos-container-section {
     box-sizing: border-box;
@@ -35,7 +42,7 @@
 }
 
 /* ===============================
-   TABLA DE PEDIDOS
+TABLA DE PEDIDOS
    =============================== */
 #tabla-pedidos_wrapper {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -59,7 +66,7 @@
 }
 
 /* ===============================
-   MODAL DETALLES PEDIDO
+MODAL DETALLES PEDIDO
    =============================== */
 .modal {
     display: none;
@@ -115,7 +122,7 @@
 }
 
 /* ===============================
-   BOTONES
+BOTONES
    =============================== */
 .btn-modal {
     background-color: white;
@@ -157,7 +164,7 @@
 }
 
 /* ===============================
-   CAMPOS INPUT
+CAMPOS INPUT
    =============================== */
 .label_field {
     font-size: 16px;
@@ -183,7 +190,7 @@
 }
 
 /* ===============================
-   TABLA DE PRODUCTOS EN EL MODAL
+TABLA DE PRODUCTOS EN EL MODAL
    =============================== */
 #pedido-productos {
     text-align: center;
@@ -196,7 +203,7 @@
 }
 
 /* ===============================
-   BADGES DE ESTADO
+BADGES DE ESTADO
    =============================== */
 .badge {
     padding: 5px 10px;
