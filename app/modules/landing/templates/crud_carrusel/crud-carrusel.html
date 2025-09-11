@@ -1,0 +1,57 @@
+{% extends "layout-admin.html" %}
+
+{% block styles %}
+    {{ super() }}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="{{ url_for('web_v1.productos.static', filename='css/crud_productos/datatables.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('web_v1.carrusel.static', filename='css/crud_carrusel/crud_carrusel.css') }}">
+{% endblock %}
+
+{% block content %}
+<section id="carrusel-container">
+    <article>
+        <button id="btn-crear-item" class="btn btn-create">➕ Crear item carrusel</button>
+        <br><br>
+        <table id="tabla-carrusel" class="display table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Descripción</th>
+                    <th>Imagen</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </article>
+</section>
+
+<!-- Modal de formulario -->
+<div id="modal-carrusel" class="modal" style="display:none;">
+    <div class="modal-content">
+        <span id="close-modal" style="float:right;cursor:pointer;">&times;</span>
+        <h2 id="modal-title">Crear Item Carrusel</h2>
+        <form id="form-carrusel" enctype="multipart/form-data">
+            <input type="hidden" name="id_carrusel" id="id_carrusel">
+            <label for="titulo">Título</label>
+            <input type="text" name="titulo" id="titulo" required>
+
+            <label for="descripcion">Descripción</label>
+            <textarea name="descripcion" id="descripcion"></textarea>
+
+            <label for="imagen">Imagen</label>
+            <input type="file" name="imagen" id="imagen">
+
+            <br><br>
+            <button type="submit" class="btn btn-create">Guardar</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('web_v1.productos.static', filename='js/crud_productos/datatables.min.js') }}"></script>
+    <script src="{{ url_for('web_v1.carrusel.static', filename='js/crud_carrusel/crud_carrusel.js') }}"></script>
+{% endblock %}

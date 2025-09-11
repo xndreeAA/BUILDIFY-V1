@@ -5,7 +5,6 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <link rel="stylesheet" href="{{ url_for('web_v1.user.static', filename='user/css/categorias.css') }}">
 <link rel="stylesheet" href="{{ url_for('web_v1.user.static', filename='user/css/btn_styled.css') }}">
-
 {% endblock %}
 
 {% block content %}
@@ -16,18 +15,26 @@
         </p>
     </div>
 
-    <h1 id="title_categorias">Productos de {{ category | upper }}</h1>
+    <!-- El atributo data-categoria se usa en filtros.js -->
+    <h1 id="title_categorias" data-categoria="{{ category|lower }}">
+        Productos de {{ category | upper }}
+    </h1>
 
+    <!-- Filtros -->
     <div class="filtros">
-        <p>Mostrar filtros</p>
+        <label for="marca">Filtrar por marca:</label>
+        <select id="marca">
+            <option value="">Todas</option>
+            <!-- Opciones dinámicas cargadas desde JS -->
+        </select>
+        <button id="aplicar-filtro">Aplicar</button>
     </div>
 
     {% if products %}
     <div class="products-container">
         {% for product in products %}
         <div class="cards_container">
-
-            <!-- IZQUIERDA -->
+            <!-- Columna izquierda -->
             <div class="product-left">
                 <a href="{{ url_for('web_v1.user.product_details', id=product['id_producto']) }}">
                     {% if product['imagenes'] and product['imagenes'][0]['ruta'] %}
@@ -36,7 +43,6 @@
                     <img src="{{ url_for('static', filename='img/default-product.png') }}" alt="Sin imagen" />
                     {% endif %}
                 </a>
-
                 <div class="product-info">
                     <p class="categoria">{{ category }}</p>
                     <a href="{{ url_for('web_v1.user.product_details', id=product['id_producto']) }}">
@@ -46,7 +52,7 @@
                 </div>
             </div>
 
-            <!-- DERECHA -->
+            <!-- Columna derecha -->
             <div class="product-right">
                 <div class="precio">
                     <p>${{ "{:,.0f}".format(product['precio']) }}</p>
@@ -65,7 +71,6 @@
                     </button>
                 </div>
             </div>
-
         </div>
         {% endfor %}
     </div>
@@ -78,4 +83,5 @@
 {% block scripts %}
 {{ super() }}
 <script src="{{ url_for('web_v1.carrito.static', filename='js/añadir_producto.js') }}"></script>
+<script src="{{ url_for('web_v1.user.static', filename='user/js/filtros.js') }}"></script>
 {% endblock %}

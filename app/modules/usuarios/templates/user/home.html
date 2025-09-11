@@ -24,15 +24,11 @@
 {% endif %}
 <!-- ----------------------------------------------------------------------------------------------------- -->
 <!-- -----------------------CARRUSEL----------------------- -->
-<article class="carrusel">
-    <img src="../../static/images/ella-don-l8MbHpjxg3A-unsplash.jpg" alt="">
-    <div class="carrusel-texto">
-        <h1>Arma tu poder, <br> pieza por pieza</h1>
-        <p>Desde chasis hasta procesadores, <br> todo lo que necesitas está aquí.</p>
-        <div class="btnH">
-            <button class="btn-styled">Explorar productos</button>
-        </div>
-</article>
+<!-- -----------------------CARRUSEL----------------------- -->
+<section id="carrusel-home" class="carrusel">
+    <!-- Aquí se inyectará el contenido desde la API -->
+</section>
+
 <!-- ----------------------------------------------------------------------------------------------------- -->
 <!-- -----------------------MAS VENDIDOS----------------------- -->
 <section class="seccion-fila-productos">
@@ -233,6 +229,8 @@
 <script src="{{ url_for('web_v1.user.static', filename='user/js/detalles_producto.js') }}"></script>
 <script src="{{ url_for('web_v1.user.static', filename='user/js/cheap_products.js') }}"></script>
 <script src="{{ url_for('web_v1.user.static', filename='user/js/home.js') }}"></script>
+<script src="{{ url_for('web_v1.user.static', filename='user/js/carrusel.js') }}"></script>
+
 
 
 {% endblock %}
