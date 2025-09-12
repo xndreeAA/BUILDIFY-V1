@@ -1,7 +1,7 @@
 from sqlalchemy.orm import joinedload
 from sqlalchemy import func
 from collections import defaultdict
-import datetime
+from datetime import datetime
 from app.modules.pedidos.models import Pedido, ProductoPedido, Estado
 from app.modules.productos.models import Producto, Categoria, Marca
 from app import db
@@ -418,3 +418,5 @@ class PedidoServices:
                 "factura": factura_data
             }
         }, 200
+
+        

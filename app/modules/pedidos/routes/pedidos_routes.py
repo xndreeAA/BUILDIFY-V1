@@ -17,3 +17,8 @@ pedidos_routes_bp = Blueprint(
 @login_required
 def pedidos_usuario():
     return render_template('pedidos_usuario.html')
+
+@pedidos_routes_bp.route('/listado_pedidos')
+@login_required
+def listado_pedidos():
+    return render_template('listado_pedidos.html')

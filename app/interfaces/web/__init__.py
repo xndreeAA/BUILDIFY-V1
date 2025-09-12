@@ -6,6 +6,7 @@ from app.modules.carrito.routes.carrito_routes import carrito_routes_bp
 from app.modules.pagos.routes.pagos_routes import pagos_routes_bp
 from app.modules.productos.routes.productos_routes import productos_routes_bp
 from app.modules.pedidos.routes.pedidos_routes import pedidos_routes_bp
+from app.modules.landing.routes.carrusel_routes import carrusel_routes_bp
 
 web_v1 = Blueprint('web_v1', __name__)
 
@@ -16,4 +17,5 @@ web_v1.register_blueprint(carrito_routes_bp, url_prefix='/carrito', name_prefix=
 web_v1.register_blueprint(pagos_routes_bp, url_prefix='/pagos', name_prefix='pagos.')
 web_v1.register_blueprint(productos_routes_bp, url_prefix='/productos', name_prefix='productos.')
 web_v1.register_blueprint(pedidos_routes_bp, url_prefix='/pedidos', name_prefix='pedidos.')
+web_v1.register_blueprint(carrusel_routes_bp, url_prefix='/carrusel', name_prefix='carrusel.')
 

@@ -1,76 +1,67 @@
 {% extends "layout-admin.html"%}
 
 {% block styles %}
-    {{ super() }}
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="{{ url_for('web_v1.admin.static', filename='css/crud_usuarios/datatables.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('web_v1.admin.static', filename='css/crud_usuarios/stock-styles.css') }}">
+{{ super() }}
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<link rel="stylesheet"
+    href="{{ url_for('web_v1.productos.static', filename='css/crud_productos/datatables.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('web_v1.productos.static', filename='css/crud_productos/stock-styles.css') }}">
 {% endblock %}
 
 {% block content %}
-    <section id="stock-container-section">
-        <article class="stock-container-article">
-                <table id="tabla-usuarios" class="display table table-striped">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Email</th>
-                            <th>Telefono</th>
-                            <th>Direccion</th>
-                            <th>id_rol</th>
-                        </tr>
-                    </thead>
-                    <tbody> </tbody>
-                </table>
-        </article>
-        <div id="information-container">
+<section id="stock-container-section">
+    <article class="stock-container-article">
+        <h2 id="h2">GESTION DE USUARIOS</h2>
+        <a id="btn-crear-usuario" href="{{ url_for('web_v1.admin.crear_usuarios')}}">Crear usuario</a>
+        <br>
+        <table id="tabla-usuarios" class="display table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Email</th>
+                    <th>Telefono</th>
+                    <th>Direccion</th>
+                    <th>Rol</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody> </tbody>
+        </table>
+    </article>
+</section>
 
-            <h2 >INFORMACION ADICIONAL</h2>
-            <article class="stock-container-article information-article">
-                <div class="informacion-div">
-                    <h4>Mas vendido Global:</h4>
-                </div>
-                <div class="informacion-div">
-                    <h4>Mas vendido mes:</h4>
-                </div>
-                <div class="informacion-div">
-                    <h4>Menos vendido:</h4>
-                </div>
-                <div class="informacion-div">
-                    <h4>Mas asequible:</h4>
-                </div>
-                <div class="informacion-div">
-                    <h4>Mas Costoso:</h4>
-                </div>
-            </article>
-        </div>
-    </section>
-    <section id="modal-usuario" class="modal">  
-        <form id="modal-usuario-content">
-            <article class="modal-article">
-                <div class="modal-header">
-                    <button id="open-modal-btn" class="btn-modal">❌</button>
-                    <h4 id="modal-title"></h4>
-                </div>
-                <picture class="modal-img-container">
-                    <img src="https://reset.net.co/wp-content/uploads/2020/10/Procesador_AMD_Ryzen_5_5600X_3.7GHz.webp" alt="imagen de producto">
-                </picture>
-            </article>
-            <article class="modal-article">
-                <div class="detalles-container">
-                    <h2>Detalles</h2>
-                </div>
-            </article>
-        </form>
-    </section>
+<!-- Modal detalles usuario -->
+<section id="modal-detalles-usuario" class="modal">
+    <form id="modal-usuario-content">
+        <article class="modal-article">
+            <div class="modal-header">
+                <button id="close-modal-btn-usuario" class="btn-modal">❌</button>
+                <h4 id="modal-usuario-title"></h4>
+            </div>
+            <picture class="modal-img-container">
+                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="imagen usuario">
+            </picture>
+        </article>
+        <article class="modal-article">
+            <div id="detalles-container-usuario">
+                <h2>Detalles</h2>
+                <!-- Aquí se cargan los campos dinámicamente con editar_usuarios.js -->
+            </div>
+        </article>
+    </form>
+</section>
 {% endblock %}
 
-
-{%  block scripts %} 
-    {{ super() }}
-    <script src="{{ url_for('web_v1.admin.static', filename='js/crud_usuarios/datatables.min.js') }}"></script>
-    <script src="{{ url_for('web_v1.admin.static', filename='js/crud_usuarios/script.js') }}"></script>
-    <script src="{{ url_for('web_v1.admin.static', filename='js/crud_usuarios/modal.js') }}"></script>
+{% block scripts %}
+{{ super() }}
+<!-- Cargar jQuery primero -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- <script src="{{ url_for('web_v1.admin.static', filename='js/crud_usuarios/datatables.min.js') }}"></script> -->
+<script src="{{ url_for('web_v1.productos.static', filename='js/crud_productos/datatables.min.js') }}"></script>
+<script src="{{ url_for('web_v1.admin.static', filename='js/crud_usuarios/crud_usuarios.js') }}"></script>
+<script src="{{ url_for('web_v1.admin.static', filename='js/crud_usuarios/crear_usuario.js') }}"></script>
+<script src="{{ url_for('web_v1.admin.static', filename='js/crud_usuarios/editar_usuarios.js') }}"></script>
+<script src="{{ url_for('web_v1.admin.static', filename='js/crud_usuarios/modal_borrar_usuario.js') }}"></script>
 {% endblock %}

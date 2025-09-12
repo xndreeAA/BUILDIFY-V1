@@ -55,6 +55,9 @@ HEADER GENERAL
         "news-row news-row news-row"
         "logo nav select";
 }
+.header img{
+    width: 90px;
+}
 /* ===========================
 MENÚ FLOTANTE USUARIO
    =========================== */

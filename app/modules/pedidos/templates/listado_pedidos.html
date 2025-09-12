@@ -1,0 +1,93 @@
+{% extends "layout-admin.html"%}
+
+{% block styles %}
+    {{ super() }}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="{{ url_for('web_v1.pedidos.static', filename='css/datatables.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('web_v1.pedidos.static', filename='css/pedidos-styles.css') }}">
+{% endblock %}
+
+{% block content %}
+    <section id="pedidos-container-section">
+        <article class="pedidos-container-article">
+            <h2>GESTION DE PEDIDOS</h2>
+            <table id="tabla-pedidos" class="display table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Cliente</th>
+                        <th>Fecha</th>
+                        <th>Total</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody> </tbody>
+            </table>
+        </article>
+    </section>
+
+    <!-- Modal detalles pedido -->
+    <section id="modal-detalles-pedido" class="modal">  
+        <form id="modal-detalles-pedido-content">
+            <article class="modal-article">
+                <div class="modal-header">
+                    <button id="close-modal-pedido" class="btn-modal">❌</button>
+                    <h4 id="modal-detalles-pedido-title">Detalles del Pedido</h4>
+                </div>
+                <picture class="modal-img-container">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2838/2838912.png" alt="imagen pedido">
+                </picture>
+            </article>
+
+            <article class="modal-article">
+                <div id="detalles-pedido-container">
+                    <h3>Información</h3>
+                    <p><strong>ID:</strong> <span id="pedido-id"></span></p>
+                    <p><strong>Cliente:</strong> <span id="pedido-cliente"></span></p>
+                    <p><strong>Fecha:</strong> <span id="pedido-fecha"></span></p>
+                    <p><strong>Total:</strong> $<span id="pedido-total"></span></p>
+                    
+                    <label for="estado-pedido" class="label_field">Estado:
+                        <div class="input-container">
+                            <select name="estado" id="estado-pedido" class="input_field">
+                                <option value="pendiente">Pendiente</option>
+                                <option value="en_proceso">En proceso</option>
+                                <option value="enviado">Enviado</option>
+                                <option value="entregado">Entregado</option>
+                                <option value="cancelado">Cancelado</option>
+                            </select>
+                            <button class="btn-guardar">💾 Guardar</button>
+                        </div>
+                    </label>
+                </div>
+            </article>
+
+            <article class="modal-article">
+                <h3>Productos</h3>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pedido-productos">
+                        <!-- Productos del pedido -->
+                    </tbody>
+                </table>
+            </article>
+        </form>
+    </section>
+{% endblock %}
+
+{%  block scripts %} 
+    {{ super() }}
+    <!-- Cargar jQuery primero -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- <script src="{{ url_for('web_v1.pedidos.static', filename='js/datatables.min.js') }}"></script> -->
+    <script src="{{ url_for('web_v1.productos.static', filename='js/crud_productos/datatables.min.js') }}"></script>
+    <script src="{{ url_for('web_v1.pedidos.static', filename='js/crud_pedidos.js') }}"></script>
+{% endblock %}

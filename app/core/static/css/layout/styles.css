@@ -33,6 +33,20 @@ body {
     "main main main"
     "footer footer footer";
 }
+/* ===========================
+HEADER
+   =========================== */
+#header {
+  grid-area: header;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--color-accent-2);
+}
+.header-container img {
+  height: 35px;
+  margin: 10px;
+}
 
 /* ===========================
 CONTENIDO PRINCIPAL
@@ -72,4 +86,72 @@ button svg {
 button:hover {
   background-color: var(--color-accent-1);
   transform: translateY(-2px);
+}
+/* ===========================
+FOOTER
+=========================== */
+footer {
+  background-color: var(--color-brand-2);
+  grid-area: footer;
+  color: var(--color-text-light);
+  text-align: center;
+  padding: 12px 0;
+  font-size: 14px;
+}
+
+
+/* ===========================
+CONTENEDOR DE ALERTAS
+=========================== */
+/* 📌 Contenedor donde se acumulan las alertas */
+#alert-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 320px;
+  z-index: 1050; /* Encima de modales/tablas */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* 📌 Estilo base */
+.alert {
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: #fff;
+  font-size: 14px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  animation: fadeIn 0.4s ease, fadeOut 0.4s ease 4.6s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 📌 Tipos */
+.alert-success { background-color: #28a745; }
+.alert-error   { background-color: #dc3545; }
+.alert-warning { background-color: #ffc107; color: #212529; }
+.alert-info    { background-color: #17a2b8; }
+
+/* 📌 Botón de cerrar */
+.alert button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  line-height: 1;
+  color: inherit;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-10px); }
 }

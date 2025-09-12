@@ -8,6 +8,7 @@ class UsuarioService:
     
     @staticmethod
     def obtener_current_user(*args, **kwargs):        
+        # Retorna el usuario autenticado actual (solo id_usuario para mayor seguridad)
         is_authenticated = current_user.is_authenticated
         
         if is_authenticated:
@@ -21,7 +22,7 @@ class UsuarioService:
     
     @staticmethod
     def obtener_usuarios(*args, **kwargs):        
-
+        # Se obtienen todos los usuarios sin exponer el hash de contraseña
         usuarios = Usuario.query.all()
         usuarios_data = [
             {
@@ -32,7 +33,7 @@ class UsuarioService:
                 "direccion": u.direccion,
                 "telefono": u.telefono,
                 "id_rol": u.id_rol,
-                "password": u.password,
+                "rol_nombre": u.rol_rel.rol if u.rol_rel else None,  # 👈 agregado
                 "stripe_customer_id": u.stripe_customer_id
             } for u in usuarios
         ]
@@ -40,10 +41,25 @@ class UsuarioService:
     
     @staticmethod
     def crear_usuario(payload):
+        # Configuración de Stripe en cada operación que lo requiera
         stripe.api_key = current_app.config.get('STRIPE_SECRET_KEY')
-        nuevo_usuario = Usuario(**payload)
+
+        # Se inicializa el nuevo usuario sin exponer password plano
+        nuevo_usuario = Usuario(
+            nombre=payload.get("nombre"),
+            apellido=payload.get("apellido"),
+            email=payload.get("email"),
+            direccion=payload.get("direccion"),
+            telefono=payload.get("telefono"),
+            id_rol=payload.get("id_rol")
+        )
+
+        # Password se maneja con hashing seguro mediante set_password()
+        if payload.get("password"):
+            nuevo_usuario.set_password(payload.get("password"))
 
         try:
+            # Si no tiene customer en Stripe, se crea automáticamente
             if not nuevo_usuario.stripe_customer_id:
                 customer = stripe.Customer.create(
                     email=payload.get("email"),
@@ -55,6 +71,7 @@ class UsuarioService:
                 )
                 nuevo_usuario.stripe_customer_id = customer.id
             else:
+                # Validación de cliente existente en Stripe
                 try:
                     stripe.Customer.retrieve(nuevo_usuario.stripe_customer_id)
                 except stripe.error.InvalidRequestError:
@@ -73,6 +90,7 @@ class UsuarioService:
 
             return {"success": True, "data": {"id_usuario": nuevo_usuario.id_usuario}}, 201
 
+        # Manejo específico de errores de Stripe y rollback en DB
         except stripe.error.StripeError as e:
             db.session.rollback()
             return {"success": False, "error": f"Error en Stripe: {str(e)}"}, 400
@@ -82,6 +100,7 @@ class UsuarioService:
         
     @staticmethod
     def traer_un_usuario(id_usuario):
+        # Obtiene un usuario por ID sin exponer hash de password
         usuario = Usuario.query.get(id_usuario)
 
         if not usuario:
@@ -97,14 +116,14 @@ class UsuarioService:
                 "direccion": usuario.direccion,
                 "telefono": usuario.telefono,
                 "id_rol": usuario.id_rol,
-                "password": usuario.password,
+                "rol_nombre": usuario.rol_rel.rol if usuario.rol_rel else None,  # 👈 agregado
                 "stripe_customer_id": usuario.stripe_customer_id
             }
         }, 200
 
     @staticmethod
     def modificar_un_usuario(id_usuario, payload):
-
+        # Configuración de Stripe en cada actualización
         stripe.api_key = current_app.config.get('STRIPE_SECRET_KEY')
 
         usuario = Usuario.query.get(id_usuario)
@@ -112,6 +131,7 @@ class UsuarioService:
             return {"success": False, "error": "Usuario no encontrado."}, 404
         
         try:
+            # Si no existe cliente en Stripe, se crea; si ya existe, se actualiza
             if not usuario.stripe_customer_id:
                 customer = stripe.Customer.create(
                     email=payload["email"],
@@ -133,13 +153,17 @@ class UsuarioService:
                     }
                 )
 
+            # Actualización de datos del usuario en la DB
             usuario.nombre = payload["nombre"]
             usuario.apellido = payload["apellido"]
             usuario.email = payload["email"]
             usuario.direccion = payload["direccion"]
             usuario.telefono = payload["telefono"]
             usuario.id_rol = payload["id_rol"]
-            usuario.password = payload["password"]
+
+            # Hash seguro de password si se actualiza
+            if "password" in payload and payload["password"]:
+                usuario.set_password(payload["password"])
 
             db.session.commit()
 
@@ -152,6 +176,7 @@ class UsuarioService:
     
     @staticmethod
     def eliminar_un_usuario(id_usuario):
+        # Eliminación de usuario en DB (no elimina cliente en Stripe por seguridad)
         usuario = Usuario.query.get(id_usuario)
         if not usuario:
             return {"success": False, "error": "Usuario no encontrado."}, 404

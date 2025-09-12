@@ -17,7 +17,6 @@ PALETA DE COLORES
     --color-text-muted: #666;
     --color-border-gray: #ccc;
 }
-
 /* ===========================
 USUARIOS AUTENTICADOS
    =========================== */
@@ -26,7 +25,7 @@ USUARIOS AUTENTICADOS
     position: absolute;
     top: 90px;
     left: 20px;
-    color: var(--color-text-light);
+    color: black;
 }
 
 .user_cliente a,

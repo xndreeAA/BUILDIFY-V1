@@ -1,0 +1,218 @@
+:root {
+    --color_titulo: #021024;
+    --color_fondo_1: #C1E8FF;
+    --color_subtitulo: #052659;
+    --color_complementario_1: #5683B3;
+    --color_complementario_2: #7DA0CA;
+
+    --david_color_1: #0095e0;
+    --david_color_2: #052659;
+    --davod_color_3: rgba(0, 0, 0, 0.397);
+}
+h2{
+    text-align: center;
+    color: var(--color_titulo);
+    font-size: 26px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--david_color_1);
+}
+/* ===============================
+CONTENEDOR PRINCIPAL
+   =============================== */
+#pedidos-container-section {
+    box-sizing: border-box;
+    padding: 40px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    gap: 20px;
+}
+
+.pedidos-container-article {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+.pedidos-container-article h2 {
+    color: var(--color_titulo);
+    margin-bottom: 15px;
+}
+
+/* ===============================
+TABLA DE PEDIDOS
+   =============================== */
+#tabla-pedidos_wrapper {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#tabla-pedidos thead th {
+    font-weight: 600;
+    background: var(--color_complementario_2);
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+#tabla-pedidos tbody td {
+    text-align: center;
+    padding: 8px;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 0.375rem 0.75rem;
+}
+
+/* ===============================
+MODAL DETALLES PEDIDO
+   =============================== */
+.modal {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+}
+
+#modal-detalles-pedido-content {
+    width: 75%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 20px;
+    gap: 20px;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.modal-article:first-child {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal-header {
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.modal-img-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal-img-container img {
+    width: 60px;
+}
+
+.modal-article h3 {
+    text-align: center;
+    padding: 10px;
+    color: var(--david_color_1);
+}
+
+/* ===============================
+BOTONES
+   =============================== */
+.btn-modal {
+    background-color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn-modal:hover {
+    background-color: rgba(0, 0, 0, 0.089);
+}
+
+.btn-detalles {
+    background-color: var(--color_complementario_1);
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.btn-detalles:hover {
+    background-color: var(--color_subtitulo);
+}
+
+.btn-guardar {
+    background-color: var(--david_color_1);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.btn-guardar:hover {
+    background-color: var(--color_subtitulo);
+}
+
+/* ===============================
+CAMPOS INPUT
+   =============================== */
+.label_field {
+    font-size: 16px;
+    color: var(--color_subtitulo);
+    width: 100%;
+}
+
+.input_field {
+    border: 1px solid #ccc;
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ===============================
+TABLA DE PRODUCTOS EN EL MODAL
+   =============================== */
+#pedido-productos {
+    text-align: center;
+}
+
+#pedido-productos td, 
+#pedido-productos th {
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+
+/* ===============================
+BADGES DE ESTADO
+   =============================== */
+.badge {
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #fff;
+}
+.estado-pendiente { background: orange; }
+.estado-en_proceso { background: dodgerblue; }
+.estado-enviado { background: teal; }
+.estado-entregado { background: green; }
+.estado-cancelado { background: crimson; }

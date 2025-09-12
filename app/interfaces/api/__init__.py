@@ -10,6 +10,7 @@ from app.modules.productos.api.api_detalles import detalles_bp
 from app.modules.pedidos.api.api_pedidos import pedidos_bp
 from app.modules.pagos.api.api_checkout import checkout_api_bp
 from app.modules.pagos.api.api_webhook import webhook_api_bp
+from app.modules.landing.api.api_carrusel import carrusel_bp
 
 api_v1 = Blueprint('api_v1', __name__, url_prefix='/api/v1')
 
@@ -24,3 +25,4 @@ api_v1.register_blueprint(detalles_bp, url_prefix='/detalles')
 api_v1.register_blueprint(pedidos_bp, url_prefix='/pedidos')
 api_v1.register_blueprint(checkout_api_bp, url_prefix='/checkout')
 api_v1.register_blueprint(webhook_api_bp, url_prefix='/checkout/webhook')
+api_v1.register_blueprint(carrusel_bp, url_prefix='/carrusel')

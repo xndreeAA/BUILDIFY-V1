@@ -4,11 +4,12 @@
     {{ super() }}
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/cruds/stock-styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('web_v1.productos.static', filename='css/crud_productos/crear.css') }}">
 {% endblock %}
 
 
 {% block content %}
-
+    <p>Volver - <a href="{{ url_for('web_v1.productos.crud_productos') }}">Listado productos</a> </p>
     <form id="form-nuevo-producto">
         <h2>Registrar nuevo producto</h2>
         <label>Nombre:

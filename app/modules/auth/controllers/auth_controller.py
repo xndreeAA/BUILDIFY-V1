@@ -42,8 +42,8 @@ def login():
 
             if usuario.rol == 'administrador':
                 resp = make_response(redirect(url_for('web_v1.admin.dashboard')))
-            elif usuario.rol == 'colaborador':
-                resp = make_response(redirect(url_for('web_v1.colaborador.dashboard')))
+            elif usuario.rol == 'moderador':
+                resp = make_response(redirect(url_for('web_v1.admin.dashboard')))
             elif usuario.rol == 'usuario':
                 resp = make_response(redirect(url_for('web_v1.user.home')))
             else:

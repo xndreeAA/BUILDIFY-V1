@@ -31,11 +31,12 @@
     color: var(--color-texto);
     margin-bottom: 20px;
 }
-
+/* ---------------------FILTROS */
 .filtros {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    gap: 10px;
     padding: 10px;
     background-color: var(--color-blanco);
     border-radius: 6px;
@@ -44,14 +45,51 @@
     font-size: 14px;
 }
 
-/* GRID DE PRODUCTOS */
+/* Estilo del select */
+.filtros select {
+    padding: 6px 10px;
+    border: 1px solid var(--color-gris-claro);
+    border-radius: 4px;
+    background-color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    max-width: 200px;
+}
+
+/* Forzar un alto máximo en el desplegable */
+.filtros select option {
+    padding: 5px 10px;
+}
+
+/* Scroll elegante en navegadores compatibles */
+.filtros select {
+    max-height: 180px; /* controla cuántas opciones se ven */
+    overflow-y: auto;
+}
+
+/* Scroll con estilo (Webkit: Chrome, Edge, Safari) */
+.filtros select::-webkit-scrollbar {
+    width: 8px;
+}
+
+.filtros select::-webkit-scrollbar-thumb {
+    background-color: var(--color-gris-claro);
+    border-radius: 4px;
+}
+
+.filtros select::-webkit-scrollbar-thumb:hover {
+    background-color: #999;
+}
+
+
+/*----------------------------------- GRID DE PRODUCTOS */
 .products-container {
     display: flex;
     flex-direction: column;
     gap: 30px;
 }
 
-/* CARD PRODUCTO */
+/*CARD PRODUCTO */
 .cards_container {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -229,7 +267,7 @@ a {
     }
 
     .boton_agregar_producto {
-        width: 60%;
-        font-size: 14px;
+        width: 100%;
+        font-size: 12px;
     }
 }

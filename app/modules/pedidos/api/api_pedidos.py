@@ -9,3 +9,4 @@ pedidos_bp.add_url_rule("/usuario/<int:id_usuario>", view_func=PedidoController.
 pedidos_bp.add_url_rule("/historial-ventas-totales", view_func=PedidoController.obtener_historial_ventas_totales, methods=['GET'])
 pedidos_bp.add_url_rule("/mas-menos", view_func=PedidoController.obtener_pedidos_mas_menos, methods=['GET'])
 pedidos_bp.add_url_rule("/get-pedido-by-session", view_func=PedidoController.get_pedido_by_session, methods=['GET'])
+
