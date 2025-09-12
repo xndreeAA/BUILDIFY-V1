@@ -20,7 +20,7 @@ serializer = None
 def create_app():
     load_dotenv()  
     app = Flask(__name__, template_folder='core/templates', static_folder='core/static')
-    app.config.from_object('app.config.DevelopmentConfig')
+    app.config.from_object('app.config.ProductionConfig')
 
     csrf = CSRFProtect()
     db.init_app(app) 

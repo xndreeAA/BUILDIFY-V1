@@ -52,5 +52,24 @@ class DevelopmentConfig:
     CLOUDINARY_API_KEY = os.getenv('CLOUDINARY_API_KEY')
     CLOUDINARY_API_SECRET = os.getenv('CLOUDINARY_API_SECRET')
     CLOUDINARY_FOLDER = os.getenv('CLOUDINARY_FOLDER', 'buildify')
+    
+
+# ------------------------------------------------------------------
+class ProductionConfig(DevelopmentConfig):
+    DEBUG = False
+
+    #Usar claves obligatorias (sin fallback inseguro)
+    SECRET_KEY = os.getenv('SECRET_KEY')
+    JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
+
+    # Cookies seguras en HTTPS
+    SESSION_COOKIE_SECURE = True
+    REMEMBER_COOKIE_SECURE = True
+
+    #Base de datos: usar DATABASE_URL de Railway
+    uri = os.getenv("DATABASE_URL")
+    if uri and uri.startswith("mysql://"):
+        uri = uri.replace("mysql://", "mysql+pymysql://", 1)
+    SQLALCHEMY_DATABASE_URI = uri
 
 
