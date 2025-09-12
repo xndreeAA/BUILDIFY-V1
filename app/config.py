@@ -54,7 +54,7 @@ class DevelopmentConfig:
     CLOUDINARY_FOLDER = os.getenv('CLOUDINARY_FOLDER', 'buildify')
     
 
-# ------------------------------------------------------------------
+# ------------------------------------------------------------
 class ProductionConfig(DevelopmentConfig):
     DEBUG = False
 
