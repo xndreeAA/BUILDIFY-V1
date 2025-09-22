@@ -1,7 +1,7 @@
 $(document).ready(function() {
     $('#tabla-marcas').DataTable({
         ajax: {
-            url: "/api/v1/marcas",
+            url: "/api/v1/marcas/",
             dataSrc: "data",
             error: function(xhr) { console.error('AJAX Error:', xhr); }
         },

@@ -15,7 +15,7 @@ formNuevaMarca.addEventListener('submit', async (e) => {
 
     console.log(payload);
     try {
-        const res = await fetch('/api/v1/marcas', {
+        const res = await fetch('/api/v1/marcas/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
