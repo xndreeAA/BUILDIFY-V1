@@ -27,7 +27,7 @@ const fetchMarcas = async () => {
 }
 
 const fetchData = async ({ id_producto }) => {
-  const url = `/api/v1/detalles/${id_producto}/`;   
+  const url = `/api/v1/detalles/${id_producto}`;   
   const res = await fetch(url, { credentials:'include' });
   const json = await res.json();
   
@@ -171,7 +171,7 @@ detallesContainer.addEventListener('click', e => {
       }
     });
 
-    fetch(`/api/v1/detalles/${productoGlobal.id_producto}/`, {   
+    fetch(`/api/v1/detalles/${productoGlobal.id_producto}`, {   
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

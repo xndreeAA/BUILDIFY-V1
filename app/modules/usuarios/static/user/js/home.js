@@ -8,9 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 
                 const contenedor = document.getElementById('fila-productos-mas-vendidos');
 
-                // for (let i = 0; i < productos.length; i++) {
-                    
-
                 for (let i = 0; i < 5 && i < productos.length; i++) {
                     
                     const elemento = document.createElement('a');
@@ -27,7 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
                                     </svg>
                                 </button>
                             
-                                <img src="${productos[i].imagenes[0].ruta}" alt="${productos[i].nombre}">
+                                <img src="${productos[i].imagenes[0]?.ruta || '/img/default.png'}" 
+                                    alt="${productos[i].nombre}">
                             </picture>
                             <div class="tarjeta-producto-info">
                                 <h4>${productos[i].nombre}</h4>

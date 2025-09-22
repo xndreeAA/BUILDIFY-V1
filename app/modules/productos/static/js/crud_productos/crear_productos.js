@@ -162,7 +162,7 @@ formNuevoProducto.addEventListener('submit', async (e) => {
                 });
 
                 try {
-                    const uploadRes = await fetch('/api/v1/productos/subir-imagen/', { 
+                    const uploadRes = await fetch('/api/v1/productos/subir-imagen', { 
                         method: 'POST',
                         body: imagenesFormData,
                         credentials: 'include',
