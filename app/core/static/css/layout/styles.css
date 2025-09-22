@@ -155,3 +155,61 @@ CONTENEDOR DE ALERTAS
   from { opacity: 1; transform: translateY(0); }
   to { opacity: 0; transform: translateY(-10px); }
 }
+/* ----------------------------------------------- */
+.flash-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 320px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-family: Arial, sans-serif;
+}
+
+.flash-message {
+    padding: 12px 16px;
+    border-radius: 6px;
+    background-color: red;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease, fadeOut 0.3s ease 4.5s;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+/* Colores según categoría */
+.flash-message.success {
+    background-color: #28a745;
+    border-left: 5px solid #1e7e34;
+}
+
+.flash-message.error {
+    background-color: #dc3545;
+    border-left: 5px solid #a71d2a;
+}
+
+.flash-message.warning {
+    background-color: #ffc107;
+    border-left: 5px solid #d39e00;
+    color: #212529;
+}
+
+.flash-message.info {
+    background-color: #17a2b8;
+    border-left: 5px solid #117a8b;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 0.95; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+    from { opacity: 0.95; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-10px); }
+}
