@@ -2,7 +2,7 @@
 $(document).ready(function() {
     $('#tabla-productos').DataTable({
         ajax: {
-            url: "/api/v1/productos",
+            url: "/api/v1/productos/",
             dataSrc: "data",
             error: function(xhr) { console.error('AJAX Error:', xhr); }
         },

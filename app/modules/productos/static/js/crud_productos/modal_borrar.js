@@ -4,7 +4,7 @@ function viewDeleteProduct({ id_producto }) {
     const confirmado = confirm("¿Estás seguro de que deseas eliminar este producto?");
     if (!confirmado) return;
 
-    fetch(`/api/v1/productos/${id_producto}`, {
+    fetch(`/api/v1/productos/${id_producto}/`, {
         method: 'DELETE',
         headers: {
             'X-CSRFToken': csrfToken

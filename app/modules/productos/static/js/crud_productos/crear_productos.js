@@ -7,7 +7,7 @@ const imagenPrincipalSelect = document.getElementById('imagen-principal-select')
 const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
 async function cargarCategorias() {
-    const res = await fetch('/api/v1/categorias');
+    const res = await fetch('/api/v1/categorias/');  
     const json = await res.json();
     const categorias = json.data;
 
@@ -21,7 +21,7 @@ async function cargarCategorias() {
 }
 
 async function cargarMarcas() {
-    const res = await fetch('/api/v1/marcas');
+    const res = await fetch('/api/v1/marcas/');  
     const json = await res.json();
     const marcas = json.data;
 
@@ -63,7 +63,7 @@ categoriaSelect.addEventListener('change', async (e) => {
         return;
     }
 
-    const res = await fetch(`/api/v1/detalles/campos/${id_categoria}`);
+    const res = await fetch(`/api/v1/detalles/campos/${id_categoria}`); 
     const json = await res.json();
 
     if (!json.success) {
@@ -132,7 +132,7 @@ formNuevoProducto.addEventListener('submit', async (e) => {
     console.log(payload);
     
     try {
-        const res = await fetch('/api/v1/productos', {
+        const res = await fetch('/api/v1/productos/', {   
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -162,7 +162,7 @@ formNuevoProducto.addEventListener('submit', async (e) => {
                 });
 
                 try {
-                    const uploadRes = await fetch('/api/v1/productos/subir-imagen', {
+                    const uploadRes = await fetch('/api/v1/productos/subir-imagen/', { 
                         method: 'POST',
                         body: imagenesFormData,
                         credentials: 'include',

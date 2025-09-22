@@ -4,7 +4,6 @@ const closeModalBtn = document.getElementById('close-modal-btn');
 const detallesContainer = document.getElementById('detalles-container');
 const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-
 let productoGlobal = null;
 
 const closeModal = () => modalDetalles.style.display = 'none';
@@ -19,7 +18,7 @@ window.addEventListener('click', e => {
 });
 
 const fetchMarcas = async () => {
-  const url = '/api/v1/marcas';
+  const url = '/api/v1/marcas/';   
   const res = await fetch(url, { credentials:'include' });
   const json = await res.json();
   
@@ -28,7 +27,7 @@ const fetchMarcas = async () => {
 }
 
 const fetchData = async ({ id_producto }) => {
-  const url = `/api/v1/detalles/${id_producto}`
+  const url = `/api/v1/detalles/${id_producto}/`;   
   const res = await fetch(url, { credentials:'include' });
   const json = await res.json();
   
@@ -172,7 +171,7 @@ detallesContainer.addEventListener('click', e => {
       }
     });
 
-    fetch(`/api/v1/detalles/${productoGlobal.id_producto}`, {
+    fetch(`/api/v1/detalles/${productoGlobal.id_producto}/`, {   
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
