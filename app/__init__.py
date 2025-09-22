@@ -8,6 +8,7 @@ from flask_wtf.csrf import CSRFProtect
 from flask_jwt_extended import JWTManager
 
 from dotenv import load_dotenv
+import os
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -20,7 +21,13 @@ serializer = None
 def create_app():
     load_dotenv()  
     app = Flask(__name__, template_folder='core/templates', static_folder='core/static')
-    app.config.from_object('app.config.DevelopmentConfig')
+
+    # Selección de config según entorno
+    env = os.getenv("FLASK_ENV", "development")
+    if env == "production":
+        app.config.from_object("app.config.ProductionConfig")
+    else:
+        app.config.from_object("app.config.DevelopmentConfig")
 
     csrf = CSRFProtect()
     db.init_app(app) 
@@ -40,7 +47,6 @@ def create_app():
     def load_user(user_id):
         return Usuario.query.get(int(user_id))
     
-
     from app.modules.pagos.api.api_checkout import checkout_api_bp
     from app.modules.pagos.api.api_webhook import webhook_api_bp
     from app.modules.usuarios.api.api_usuarios import usuarios_api_bp
@@ -54,8 +60,6 @@ def create_app():
 
     app.register_blueprint(api_v1)
     app.register_blueprint(web_v1)
-
-
 
     return app
 
