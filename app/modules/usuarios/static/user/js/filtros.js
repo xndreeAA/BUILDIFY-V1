@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", async function () {
      * Cargar marcas dinámicamente desde la API y añadirlas al <select>.
      */
     try {
-        const res = await fetch("/api/v1/marcas");
+        const res = await fetch("/api/v1/marcas/");
         const result = await res.json();
 
         if (result.success) {
