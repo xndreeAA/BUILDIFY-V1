@@ -66,8 +66,8 @@ MENÚ FLOTANTE USUARIO
 }
 .user-menu {
     position: absolute;
-    top: 70px;        /* debajo del header */
-    right: 20px;
+    top: 80px;        /* debajo del header */
+    right: 5px;
     background: #fff;
     border: 1px solid #ccc;
     border-radius: 6px;
@@ -312,7 +312,7 @@ RESPONSIVIDAD
     }
 
     /* Ocultar icono usuario (para sustituirlo con "Cuenta") */
-    .select #user-icon {
+    /* .select #user-icon {
         display: none;
-    }
+    } */
 }
