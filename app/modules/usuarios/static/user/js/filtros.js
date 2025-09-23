@@ -12,13 +12,15 @@ document.addEventListener("DOMContentLoaded", async function () {
     const filtroMarca = document.getElementById("marca");
     const aplicarFiltro = document.getElementById("aplicar-filtro");
     const productosContainer = document.querySelector(".products-container");
-    const categoria = document.getElementById("title_categorias").dataset.categoria;
+    const categoria = document.getElementById("title_categorias")?.dataset.categoria;
+
+    if (!productosContainer || !categoria) return; // Evitar errores si la página no tiene productos
 
     /**
      * Cargar marcas dinámicamente desde la API y añadirlas al <select>.
      */
     try {
-        const res = await fetch("/api/v1/marcas/");
+        const res = await fetch(`${window.location.origin}/api/v1/marcas/`);
         const result = await res.json();
 
         if (result.success) {
@@ -40,13 +42,15 @@ document.addEventListener("DOMContentLoaded", async function () {
         const marca = filtroMarca.value;
 
         // Construir URL con parámetros de categoría y, opcionalmente, marca
-        let url = `/api/v1/productos?categoria=${categoria}`;
+        let url = `${window.location.origin}/api/v1/productos?categoria=${encodeURIComponent(categoria)}`;
         if (marca) {
-            url += `&marca=${marca}`;
+            url += `&marca=${encodeURIComponent(marca)}`;
         }
 
         try {
             const response = await fetch(url);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
             const result = await response.json();
 
             productosContainer.innerHTML = ""; // Limpiar contenedor antes de renderizar
@@ -83,7 +87,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                                 value="1" 
                                                 min="1" 
                                                 max="${product.stock}" />
-                                        </div>
+                                    </div>
                                 </div>
                                 <div class="boton_agregar_producto">
                                     <button class="btn-styled btn-agregar" data-id="${product.id_producto}">
