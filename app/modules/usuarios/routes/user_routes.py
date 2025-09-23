@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template
 from flask_login import login_required, current_user 
-import requests
 import os
+from app.modules.productos.services.producto_services import ProductoServices
 
 # Rutas de templates y estáticos
 template_dir = os.path.join(os.path.dirname(__file__), '..', 'templates')
@@ -25,11 +25,13 @@ def home():
 @usuario_routes_bp.route('/section/<category>')
 def section(category):
     try:
-        response = requests.get(f"{BASE_URL}/api/v1/productos?categoria={category}")
-        if response.ok:
-            products = response.json().get("data", [])
-        else:
-            products = []
+        # Llamada directa al servicio en lugar de requests.get
+        data, status = ProductoServices.obtener_productos(
+            busqueda=None,
+            categoria_nombre=category.lower(),
+            marca_nombre=None
+        )
+        products = data.get("data", []) if status == 200 else []
     except Exception as e:
         print(f"Error al obtener productos de {category}: {e}")
         products = []
