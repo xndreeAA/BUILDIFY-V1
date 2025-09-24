@@ -107,8 +107,8 @@ class PagosServices:
                 invoice_creation={
                     "enabled": True
                 },
-                success_url="http://localhost:5000/pagos/success?session_id={CHECKOUT_SESSION_ID}",
-                cancel_url=STRIPE_CANCEL_URL or "http://localhost:5000/pagos/cancel",
+                success_url=f"{STRIPE_SUCCESS_URL}?session_id={{CHECKOUT_SESSION_ID}}",
+                cancel_url=STRIPE_CANCEL_URL or "https://buildify.up.railway.app/pagos/cancel",  # Se agrega una URL de cancelación por defecto, se usan variables de entorno
             )
 
             return {'url': checkout_session.url}, 200
