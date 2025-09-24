@@ -19,14 +19,20 @@ class DevelopmentConfig:
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    # ----- Configuración de Flask-Mail -----
+    # ----- Configuración de Flask-Mail (NO SE USA, SOLO REFERENCIA) -----
+    """
     MAIL_SERVER = os.getenv('MAIL_SERVER', 'smtp.gmail.com')
     MAIL_PORT = int(os.getenv('MAIL_PORT', 587))
     MAIL_USE_TLS = os.getenv('MAIL_USE_TLS', 'true').lower() == 'true'
     MAIL_USE_SSL = os.getenv('MAIL_USE_SSL', 'false').lower() == 'true'
     MAIL_USERNAME = os.getenv('MAIL_USERNAME')
     MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
-    MAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER')  # ✅ usar solo la variable de entorno
+    MAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER')
+    """
+
+    # ----- Configuración de SendGrid -----
+    SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
+    SENDGRID_SENDER = os.getenv('SENDGRID_SENDER')
 
     # ----- Configuración de Cookies -----
     SESSION_COOKIE_SECURE = False

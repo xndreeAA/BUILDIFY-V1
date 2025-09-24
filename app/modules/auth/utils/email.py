@@ -1,40 +1,44 @@
-from flask_mail import Message
 from flask import url_for, current_app
-from app import mail
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+import os
 
-# Correo generico para restablecer la contraseña
 def send_reset_email(usuario):
-    # Genera el token para restablecimiento de contraseña
+    print("✅ Entrando a send_reset_email con SendGrid...")
+
+    # Genera el token
     token = usuario.get_reset_token()
-    
-    # Construye el enlace absoluto con el token
+    print(f"✅ Token generado: {token}")
+
+    # Construye el link
     link = url_for('web_v1.auth.reset_password', token=token, _external=True)
+    print(f"✅ Link generado: {link}")
 
-    # Crea el mensaje del correo
-    msg = Message(
+    # Crear el correo
+    message = Mail(
+        from_email=os.getenv("SENDGRID_SENDER"),
+        to_emails=usuario.email,
         subject='Restablecer contraseña',
-        sender=current_app.config['MAIL_DEFAULT_SENDER'],  # ✅ usar remitente verificado en SendGrid
-        recipients=[usuario.email]
-    )
+        plain_text_content=f'''Hola 👋 {usuario.nombre},
 
-    # Cuerpo del correo (texto plano)
-    msg.body = f'''Hola 👋 {usuario.nombre},
+Hemos recibido una solicitud para restablecer tu contraseña en Buildify. Si fuiste tú quien la solicitó, haz clic en el siguiente enlace:
 
-Hemos recibido una solicitud para restablecer tu contraseña en Buildify. Si fuiste tú quien la solicitó, por favor haz clic en el siguiente enlace para continuar con el proceso:
+🪄 {link}
 
-🪄{link}
+Este enlace estará disponible por un tiempo limitado.
 
-Este enlace estará disponible por un tiempo limitado por motivos de seguridad.
-
-Si no solicitaste este cambio, puedes ignorar este mensaje con total tranquilidad. Tu información permanece segura.
+Si no solicitaste este cambio, puedes ignorar este mensaje.
 
 Gracias por confiar en nosotros.😊✌️
 
 Atentamente,
 El equipo Buildify
 '''
+    )
 
-    msg.charset = 'utf-8'  # ✅ Forzar codificación UTF-8
-
-    # Envía el correo
-    mail.send(msg)
+    try:
+        sg = SendGridAPIClient(os.getenv("SENDGRID_API_KEY"))
+        response = sg.send(message)
+        print(f"✅ Correo enviado con status code: {response.status_code}")
+    except Exception as e:
+        print(f"❌ Error al enviar correo: {e}")
