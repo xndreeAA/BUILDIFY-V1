@@ -332,10 +332,6 @@ Ver `requirements.txt` para lista completa.
 
 Proyecto privado. Todos los derechos reservados.
 
-## 👤 Autor
-
-**Cairon29** (Jose W. Junco)
-
 ## 📞 Soporte
 
 Para reportar bugs o solicitar features, crear un issue en el repositorio.
